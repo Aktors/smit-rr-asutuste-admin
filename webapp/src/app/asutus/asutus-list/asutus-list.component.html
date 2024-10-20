@@ -1,0 +1,7 @@
+<button (click)="fetchItems()">Fetch Items</button>
+
+<ul *ngIf="items.length > 0">
+  <li *ngFor="let item of items">
+    <strong>{{ item.date }}</strong>: {{ item.summary }}
+  </li>
+</ul>

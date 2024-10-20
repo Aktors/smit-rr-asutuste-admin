@@ -1,11 +1,21 @@
-version: '3.8'
-
 services:
   api:
     build:
-      context: .
-      dockerfile: src/asutus.api/Dockerfile
+      context: ./core/src/asutus.api
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+
+  web-ui:
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    depends_on:
+      - api
+    environment:
+      - API_URL=http://api:8080
