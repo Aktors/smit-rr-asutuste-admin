@@ -1,0 +1,23 @@
+Info that later should be moved to readme:
+
+* The information systems data and publishing channels are presented in the current solution as is, there is no functionality to manage these objects. Out of the scope. There are pre registered ones:
+	*e-rahvastiku registered (RR)
+	* menetlus tarkvara (MT)
+	* iseteenindus portaal (RRKP)
+
+
+
+cd asutus.api
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+cd asutus.domain 
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+
+dotnet tool install --global dotnet-ef --version 8.*
+
+dotnet ef migrations add InitialCreate --project asutus.domain --startup-project asutus.api
+
+
+TODO:
+add later start for upi until db is up
+add unique constraint to system instance table

@@ -1,5 +1,7 @@
 using asutus.api.services;
 using asutus.api.services.rabbitMq;
+using asutus.domain.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +30,29 @@ builder.Services.AddRabbitMqConfiguration();
 //MQ client
 builder.Services.AddSingleton<RabbitMQService>();
 
+//Database
+builder.Services.AddDbContext<AsutusContext>(options => {
+    options.UseNpgsql(builder.Configuration.GetConnectionString("AsutusConnection"));
+});
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AsutusContext>();
+    dbContext.Database.Migrate();
+}
+
+//seed
+var useTestData = builder.Configuration.GetValue<bool>("UseTestData");
+if (useTestData)
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<AsutusContext>();
+        AsutusTestData.Seed(context);
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

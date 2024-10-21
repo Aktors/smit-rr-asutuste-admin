@@ -17,11 +17,6 @@ public static class RabbitMqServiceCollectionExtensions
             UserName = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME") ?? "guest",
             Password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest"
         };
-        Console.WriteLine("Factory created:" +
-                          "\n\tHost:" + factory.HostName +
-                          "\n\tPort:" + factory.Port +
-                          "\n\tUsername:" + factory.UserName+
-                          "\n\tPassword:" +factory.Password);
         services.AddSingleton(factory);
     }
 }
