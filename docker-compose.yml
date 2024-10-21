@@ -8,6 +8,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
+      - RABBITMQ_HOSTNAME=mq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+    depends_on:
+      - mq
 
   web-ui:
     build:
@@ -19,3 +25,15 @@ services:
       - api
     environment:
       - API_URL=http://api:8080
+
+  mq:
+    image: rabbitmq:4.0-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    expose:
+      - "5672"
+      - "15672"

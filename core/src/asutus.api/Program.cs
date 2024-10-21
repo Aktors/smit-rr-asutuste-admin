@@ -1,3 +1,6 @@
+using asutus.api.services;
+using asutus.api.services.rabbitMq;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//CORS
 builder.Services.AddCors(options =>
 {
     //TODO: configuring env properly
@@ -17,6 +21,12 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
     });
 });
+
+//MQ
+builder.Services.AddRabbitMqConfiguration();
+
+//MQ client
+builder.Services.AddSingleton<RabbitMQService>();
 
 var app = builder.Build();
 
