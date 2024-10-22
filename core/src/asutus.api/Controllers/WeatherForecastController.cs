@@ -1,5 +1,7 @@
 using asutus.api.Domain;
+using asutus.api.Facades;
 using asutus.api.services;
+using asutus.common.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace asutus.api.Controllers;
@@ -8,10 +10,10 @@ namespace asutus.api.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private readonly RabbitMQService _rabbitMQService;
-    public WeatherForecastController(RabbitMQService rabbitMQService)
+    private readonly AsutusFacade _asutusFacade;
+    public WeatherForecastController(AsutusFacade asutusFacade)
     {
-        _rabbitMQService = rabbitMQService;
+        _asutusFacade = asutusFacade;
     }
     
     private static readonly string[] Summaries = new[]
@@ -21,9 +23,23 @@ public class WeatherForecastController : ControllerBase
 
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    public async Task<IEnumerable<WeatherForecast>> Get()
     {
-        _rabbitMQService.SendMessage($"GetWeatherForecast request was made to RabbitMQ at {DateTime.Now.ToShortTimeString()}");
+        await _asutusFacade.UpdateRecord( new AsutusDto
+        {
+            Code = "IPV",
+            Name = "Tallina Perekonnaseisuamet",
+            Translations =
+            [
+                new Translation { Code = "ENG", Text = "Some text1" },
+                new Translation { Code = "Rus", Text = "Some text2" }
+            ]
+        },new []
+        {
+            new ReplicationDto{ Code = "RRKP" , Enviroments = ["DEV","TEST"] },
+        });
+       
+        
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

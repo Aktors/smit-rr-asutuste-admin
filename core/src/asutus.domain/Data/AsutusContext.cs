@@ -13,6 +13,8 @@ public class AsutusContext: DbContext
     public DbSet<SystemInstance> SystemInstances { get; set; }
     public DbSet<Classifier> Classifiers { get; set; }
     
+    public DbSet<MessageLog> MessageLogs { get; set; }
+    
     public AsutusContext(DbContextOptions<AsutusContext> options) 
         : base(options) { }
 

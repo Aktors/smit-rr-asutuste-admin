@@ -7,6 +7,9 @@ public class AsutusTestData
 {
     public static void Seed(AsutusContext context)
     {
+        if(context.Classifiers.Any())
+            return;
+        
         //Klassifikaatorit
         var dev = new Classifier{ Group = "Instance" , Code = "DEV",Name = "Arendus"};
         var test = new Classifier{ Group = "Instance" , Code = "TEST",Name = "Test"};

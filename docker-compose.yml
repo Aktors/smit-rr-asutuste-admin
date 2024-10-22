@@ -14,8 +14,8 @@ services:
       - RABBITMQ_USERNAME=guest
       - RABBITMQ_PASSWORD=guest
     depends_on:
-      - mq
       - db
+      - mq
 
   web-ui:
     container_name: web-ui
@@ -51,3 +51,8 @@ services:
       POSTGRES_DB: asutused
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

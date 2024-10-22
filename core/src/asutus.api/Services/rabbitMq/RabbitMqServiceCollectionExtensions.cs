@@ -15,7 +15,9 @@ public static class RabbitMqServiceCollectionExtensions
             HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOSTNAME") ?? "localhost",
             Port = int.Parse(Environment.GetEnvironmentVariable("RABBITMQ_PORT") ?? "5672"),
             UserName = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME") ?? "guest",
-            Password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest"
+            Password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest",
+            //TODO: add some vhost config? 
+           // VirtualHost = Environment.GetEnvironmentVariable("RABBITMQ_VHOST") ?? "./"
         };
         services.AddSingleton(factory);
     }

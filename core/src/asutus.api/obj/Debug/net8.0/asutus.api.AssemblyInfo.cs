@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("asutus.api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12330d5000e98d1cab4685b5686542e1b68f315f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf5903fe1a37d6ab947c4b895aa8f2bc0d2136a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("asutus.api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("asutus.api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
