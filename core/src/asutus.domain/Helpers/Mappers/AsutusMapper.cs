@@ -15,12 +15,26 @@ public static class AsutusMapper
         };
     }
 
-    public static AsutusDto Map(this Asutus entity)
+    public static AsutusShortDto MapShortDto(this Asutus entity)
     {
         return new AsutusDto
         {
             Code = entity.Code,
-            Name = entity.Name
+            Name = entity.Name,
+            StartDate = entity.StartDate,
+            EndDate = entity.EndDate
+        };
+    }
+    
+    
+    public static AsutusDto Map(this Asutus entity)
+    {   
+        return new AsutusDto
+        {
+            Code = entity.Code,
+            Name = entity.Name,
+            StartDate = entity.StartDate,
+            EndDate = entity.EndDate
         };
     }
 }

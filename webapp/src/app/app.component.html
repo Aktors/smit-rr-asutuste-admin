@@ -1,1 +1,14 @@
-<router-outlet />
+<div class="v-vertical-menu-layout">
+  <app-header class="v-header"/>
+  <app-nav-menu class="v-side-menu v-side-menu--visible">
+    <app-nav-menu-item></app-nav-menu-item>
+  </app-nav-menu>
+  <main class="v-container v-pt-6 v-pt-lg-8 v-pb-10 v-pb-lg-12 v-flex v-flex-column v-gap-7">
+    <app-card>
+      <router-outlet />
+    </app-card>
+    <app-card>
+      <app-replication-log></app-replication-log>
+    </app-card>
+  </main>
+</div>

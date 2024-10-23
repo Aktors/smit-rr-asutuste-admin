@@ -35,6 +35,7 @@ builder.Services.AddScoped<IMessageListener, RabbitMqListener>();
 builder.Services.AddScoped<IMessageLogService, DbMessageLogService>();
 
 builder.Services.AddScoped<AsutusFacade>();
+builder.Services.AddScoped<ReplicationFacade>();
 
 //Database
 builder.Services.AddDbContext<AsutusContext>(options => {

@@ -932,11 +932,22 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+      "asutus.common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/asutus.common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/asutus.common.dll": {}
+        }
+      },
       "asutus.domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.10"
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.10",
+          "asutus.common": "1.0.0"
         },
         "compile": {
           "bin/placeholder/asutus.domain.dll": {}
@@ -2617,6 +2628,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "asutus.common/1.0.0": {
+      "type": "project",
+      "path": "../asutus.common/asutus.common.csproj",
+      "msbuildProject": "../asutus.common/asutus.common.csproj"
+    },
     "asutus.domain/1.0.0": {
       "type": "project",
       "path": "../asutus.domain/asutus.domain.csproj",
@@ -2628,6 +2644,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 8.0.10",
       "RabbitMQ.Client >= 6.8.1",
       "Swashbuckle.AspNetCore >= 6.6.2",
+      "asutus.common >= 1.0.0",
       "asutus.domain >= 1.0.0"
     ]
   },
@@ -2666,6 +2683,9 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+            "D:\\Workspace\\Work\\smit-rr-asutuste-admin\\core\\src\\asutus.common\\asutus.common.csproj": {
+              "projectPath": "D:\\Workspace\\Work\\smit-rr-asutuste-admin\\core\\src\\asutus.common\\asutus.common.csproj"
+            },
             "D:\\Workspace\\Work\\smit-rr-asutuste-admin\\core\\src\\asutus.domain\\asutus.domain.csproj": {
               "projectPath": "D:\\Workspace\\Work\\smit-rr-asutuste-admin\\core\\src\\asutus.domain\\asutus.domain.csproj"
             }

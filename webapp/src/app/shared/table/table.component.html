@@ -1,0 +1,14 @@
+﻿<table class="v-table">
+  <thead>
+    <tr>
+      <th *ngFor="let column of columns">{{ column.header }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of dataSource">
+      <td *ngFor="let column of columns">
+        <ng-container [ngTemplateOutlet]="column.template" [ngTemplateOutletContext]="{ $implicit: row[column.field] }"></ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>

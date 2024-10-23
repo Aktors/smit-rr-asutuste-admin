@@ -43,6 +43,7 @@ Info that later should be moved to readme:
 * Proto template
 https://www.figma.com/design/nzp5HtFAZfdBiXaFSwWPpi/Proovit%C3%B6%C3%B6?node-id=0-1&node-type=canvas
 * Asutus code cannot be changed
+* Facade should encapsulate whole logic interaction with services and only api related topic should stay on controller level (f.e return action)
 
 //Add migration library
 cd asutus.api
@@ -77,3 +78,9 @@ add later start for upi until db is up
 add unique constraint to system instance table
 resolve problem with vhost on rabbitMq: if it is specified there should be a way to create it on rabbitMq container before testing application.
 apply some lint validation tool for back and front (low priority)
+
+
+*Helper projects:
+	* Veera Design:
+		cd e-service-design-system
+		npm run storybook

@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\asutus.common\asutus.common.csproj" />
+      <ProjectReference Include="..\asutus.common\asutus.common.csproj" />
       <ProjectReference Include="..\asutus.domain\asutus.domain.csproj" />
     </ItemGroup>
 

@@ -4,5 +4,5 @@ public class ReplicationDto
 {
     public string Code { get; set; }
     
-    public string[] Enviroments { get; set; }
+    public string[] Environments { get; set; }
 }

@@ -1,0 +1,10 @@
+﻿<app-loader [isLoading]="(isDataLoading$ | async)!">
+  <app-table [dataSource]="items">
+    <app-table-text-column field="caption" header="Destination" />
+    <app-table-date-column field="sentDate" header="Confirmed at:" />
+    <app-table-text-column field="referenceId" header="Id:" />
+    <!--TODO: Add content as expandable column -->
+  </app-table>
+</app-loader>
+
+<button type="button" class="v-button v-button--primary v-button--md" (click)="fetchItems()">Primary</button>

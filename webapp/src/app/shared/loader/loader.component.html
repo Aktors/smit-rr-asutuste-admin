@@ -1,0 +1,6 @@
+﻿<ng-container *ngIf="isLoading; else content">
+  <div class="v-loader"></div>
+</ng-container>
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>

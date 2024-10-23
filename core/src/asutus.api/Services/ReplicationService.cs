@@ -23,7 +23,7 @@ public class ReplicationService : IReplicationService
     public async Task Replicate(AsutusDto asutusDto,ReplicationDto[] replications)
     {
         foreach (var rep in replications)
-            foreach (var env in rep.Enviroments)
+            foreach (var env in rep.Environments)
                 {
                     var queueName = $"{rep.Code}_{env}";
                     var referenceId = await _messageLog.InitMessage($"{asutusDto.Code}_{queueName}");
