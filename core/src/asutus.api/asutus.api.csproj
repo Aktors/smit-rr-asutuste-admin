@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="8.0.10" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
@@ -26,6 +27,10 @@
     <ItemGroup>
       <ProjectReference Include="..\asutus.common\asutus.common.csproj" />
       <ProjectReference Include="..\asutus.domain\asutus.domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Model\" />
     </ItemGroup>
 
 </Project>

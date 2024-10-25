@@ -1,22 +1,24 @@
-﻿using asutus.api.Facades;
+﻿using asutus.api.Commands;
 using asutus.api.Model;
 using asutus.common.Model;
+using MediatR;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("asutus")]
 public class AsutusController : ControllerBase
 {
-    private readonly AsutusFacade _asutusFacade;
+    private readonly IMediator _mediator;
     
-    public AsutusController(AsutusFacade asutusFacade)
+    public AsutusController(IMediator mediator)
     {
-        _asutusFacade = asutusFacade;
+       _mediator = mediator;
     }
     
     [HttpGet("{code}")]
     public async Task<IActionResult> Get(string code)
     {
-        var result = await _asutusFacade.SearchByCodeAsync(code);
+        var result = await _mediator.Send(new AsutusByKoodCommand(code));
         if (result == null)
             return NotFound();
         return Ok(result);
@@ -25,25 +27,22 @@ public class AsutusController : ControllerBase
     [HttpGet("list")]
     public async Task<IActionResult> GetList(AsutusteQuery query)
     {
-        return Ok(await _asutusFacade.SearchAsync(query));
+        var searchQuery = new AsutusteLoeteluCommand(query);
+        return Ok(await _mediator.Send(searchQuery));
     }
-
+    
     [HttpPatch("{code}")]
-    public async Task<IActionResult> Update()
+    public async Task<IActionResult> Update(string code, [FromBody] JsonPatchDocument<AsutusDto> patchDoc)
     {
-        await _asutusFacade.UpdateRecord(new AsutusDto
-        {
-            Code = "IPV",
-            Name = "Tallina Perekonnaseisuamet",
-            Translations =
-            [
-                new Translation { Code = "ENG", Text = "Some text1" },
-                new Translation { Code = "Rus", Text = "Some text2" }
-            ]
-        }, new[]
-        {
-            new ReplicationDto { Code = "RRKP", Environments = ["DEV", "TEST"] },
-        });
+        var asutus = await _mediator.Send(new AsutusByKoodCommand(code));
+        if (asutus == null)
+            return NotFound();
+        
+        //TODO: Add validation.
+        patchDoc.ApplyTo(asutus);
+
+        var command = new UuendaAsutusCommand(asutus);
+        await _mediator.Send(command);
         return Ok();
     }
 }

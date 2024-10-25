@@ -1,22 +1,34 @@
-﻿using asutus.api.Facades;
+﻿using asutus.api.Commands;
+using asutus.api.Helpers;
 using asutus.api.Model;
+using asutus.common.Model;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace asutus.api.Controllers;
 
 [Route("/replication")]
 public class ReplicationLogController : ControllerBase
-{
-    private readonly ReplicationFacade _facade;
+{    
+    private readonly IMediator _mediator;
     
-    public ReplicationLogController(ReplicationFacade facade)
+    public ReplicationLogController(IMediator mediator)
     {
-        _facade = facade;   
+        _mediator = mediator;
     }
 
     [HttpGet("log")]
     public async Task<IActionResult> GetLogs(ReplicationLogQuery query)
     {
-        return Ok(await _facade.GetLogs(query));
+        var searchQuery = new ReplicationLogQueryCommand(query.Map());
+        return Ok(await _mediator.Send(searchQuery));
+    }
+    
+    [HttpPost("/add")]
+    public async Task<IActionResult> Update([FromBody]ReplicationDto[] request)
+    {
+        foreach (var replication in request)
+            await _mediator.Send(new ReplicateAsutusCommand(replication));
+        return Ok();
     }
 }

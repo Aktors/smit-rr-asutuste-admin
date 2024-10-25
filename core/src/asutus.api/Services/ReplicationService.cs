@@ -20,16 +20,15 @@ public class ReplicationService : IReplicationService
         _listener.MessageArrived += OnMessageArrived;
     }
 
-    public async Task Replicate(AsutusDto asutusDto,ReplicationDto[] replications)
+    public async Task Replicate(AsutusDto asutusDto,ReplicationDto replication)
     {
-        foreach (var rep in replications)
-            foreach (var env in rep.Environments)
-                {
-                    var queueName = $"{rep.Code}_{env}";
-                    var referenceId = await _messageLog.InitMessage($"{asutusDto.Code}_{queueName}");
-                    _listener.StartListening(queueName);
-                    _publisher.SendMessage(queueName, asutusDto, referenceId.ToString());
-                }
+        foreach (var env in replication.Environments)
+        {
+            var queueName = $"{replication.Code}_{env}";
+            var referenceId = await _messageLog.InitMessage($"{asutusDto.Code}_{queueName}");
+            _listener.StartListening(queueName);
+            _publisher.SendMessage(queueName, asutusDto, referenceId.ToString());
+        }
     }
     
     private void OnMessageArrived(object? sender, MessageArrivedEventArgs e)

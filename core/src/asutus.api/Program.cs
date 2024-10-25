@@ -1,8 +1,9 @@
-using asutus.api.Facades;
+using System.Reflection;
 using asutus.api.services;
 using asutus.api.services.rabbitMq;
 using asutus.domain.Data;
 using asutus.domain.Data.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,8 +35,7 @@ builder.Services.AddScoped<IMessagePublisherService, RabbitMqPublisherService>()
 builder.Services.AddScoped<IMessageListener, RabbitMqListener>();
 builder.Services.AddScoped<IMessageLogService, DbMessageLogService>();
 
-builder.Services.AddScoped<AsutusFacade>();
-builder.Services.AddScoped<ReplicationFacade>();
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 //Database
 builder.Services.AddDbContext<AsutusContext>(options => {
@@ -72,9 +72,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

@@ -147,3 +147,8 @@ D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\as
 D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\asutus.domain.dll
 D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\asutus.common.pdb
 D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\asutus.domain.pdb
+D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\MediatR.dll
+D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\MediatR.Contracts.dll
+D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\Newtonsoft.Json.dll
