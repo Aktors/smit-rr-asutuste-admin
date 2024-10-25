@@ -7,7 +7,6 @@ namespace asutus.domain.Data.Repositories;
 
 public class DbMessageLogRepository : IMessageLogRepository
 {
-    //TODO: may be separate context by topics
     private readonly AsutusContext _asutusContext;
 
     public DbMessageLogRepository(AsutusContext asutusContext)

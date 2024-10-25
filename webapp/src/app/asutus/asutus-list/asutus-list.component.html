@@ -1,51 +1,7 @@
-
-<h1>Asutused</h1>
-<div class="v-flex v-flex-column v-gap-6">
-  <div class="v-table-wrapper">
-    <div class="v-table-scroll">
-      <app-loader [isLoading]="(isDataLoading$ | async)!">
-        <app-table [dataSource]="items">
-          <app-table-text-column field="code" header="Kood"></app-table-text-column>
-          <app-table-text-column field="name" header="Asutuse nimi"></app-table-text-column>
-          <app-table-date-column field="startDate" header="Kihtiv alates:"></app-table-date-column>
-          <app-table-date-column field="endDate" header="Kehtiv kuni:"></app-table-date-column>
-          <!-- TODO: Lisa toimingute nupp-->
-        </app-table>
-      </app-loader>
-    </div>
-    <div class="v-pagination">
-      <span class="v-text-body-sm v-color-text-secondary">170 tulemust</span>
-      <div class="v-pagination__pager">
-        <button type="button" class="v-button v-button--neutral v-button--md v-button--icon-only material-icons" disabled="" aria-label="Eelmine lehekülg">
-          west
-        </button>
-        <nav aria-label="Tabeli leheküljed" class="v-pagination__pages">
-          <button class="v-pagination__page v-pagination__page--selected" aria-label="Lehekülg 1" aria-current="page">
-            1</button><button class="v-pagination__page" aria-label="Lehekülg 2">
-          2</button><button class="v-pagination__page" aria-label="Lehekülg 3">
-          3</button><button class="v-pagination__page" aria-label="Lehekülg 4">
-          4</button><button class="v-pagination__page" aria-label="Lehekülg 5">
-          5
-        </button>
-          <div class="v-pagination__page v-pagination__page--static">
-            ...
-          </div>
-          <button class="v-pagination__page" aria-label="Lehekülg 10">
-            10
-          </button>
-        </nav>
-        <button type="button" class="v-button v-button--neutral v-button--md v-button--icon-only material-icons" aria-label="Järgmine lehekülg">
-          east
-        </button>
-      </div>
-      <label class="v-pagination__items-limit">Kuva korraga
-        <div class="v-select">
-          <button class="v-form-control v-form-control--sm" role="combobox" aria-haspopup="listbox" aria-expanded="false">
-            <span class="v-select__text">5</span><span class="material-icons v-select__icon" aria-hidden="true">arrow_drop_down</span>
-          </button>
-        </div></label>
-    </div>
-  </div>
-</div>
-
-<button (click)="fetchItems()">load</button>
+<app-table [dataProvider]="asutusDataProvider">
+  <app-table-text-column field="code" header="Kood"></app-table-text-column>
+  <app-table-text-column field="name" header="Asutuse nimi"></app-table-text-column>
+  <app-table-date-column field="startDate" header="Kihtiv alates:"></app-table-date-column>
+  <app-table-date-column field="endDate" header="Kehtiv kuni:"></app-table-date-column>
+  <app-table-template-column></app-table-template-column>
+</app-table>

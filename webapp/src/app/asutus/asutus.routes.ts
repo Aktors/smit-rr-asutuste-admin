@@ -1,13 +1,18 @@
-﻿import {AsutusListComponent} from './asutus-list/asutus-list.component';
-import {NgModule} from '@angular/core';
+﻿import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AsutusFormComponent} from './asutus-form/asutus-form.component';
+import {AsutusComponent} from './asutus.component';
+import {AsutusListComponent} from './asutus-list/asutus-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AsutusListComponent,
+    component: AsutusComponent,
     children: [
+      {
+        path: '',
+        component: AsutusListComponent,
+      },
       {
         path:'new',
         component: AsutusFormComponent

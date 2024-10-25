@@ -8,8 +8,8 @@ export interface AsutusteQuery extends PagedQuery {
   endDate?: Date,
 }
 
-export interface AsutusteQueryResponse {
-  result: AsutusShortDto[],
+export interface QueryResponse<T> {
+  result: T[],
   page: number,
   totalPages: number,
   pageSize: number,

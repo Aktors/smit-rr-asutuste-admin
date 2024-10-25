@@ -1,10 +1,12 @@
-﻿<app-loader [isLoading]="(isDataLoading$ | async)!">
-  <app-table [dataSource]="items">
-    <app-table-text-column field="caption" header="Destination" />
-    <app-table-date-column field="sentDate" header="Confirmed at:" />
-    <app-table-text-column field="referenceId" header="Id:" />
-    <!--TODO: Add content as expandable column -->
-  </app-table>
-</app-loader>
+﻿<app-table [dataProvider]="logDataProvider" [expandedTemplate]="recordDetails">
+  <app-table-text-column field="caption" header="Destination" />
+  <app-table-date-column field="sentDate" header="Confirmed at:" />
+  <app-table-text-column field="referenceId" header="Id:" />
 
-<button type="button" class="v-button v-button--primary v-button--md" (click)="fetchItems()">Primary</button>
+  <ng-template #recordDetails let-element>
+    <!-- Content for the expanded row goes here -->
+    <div class="expanded-details">
+      <p>Additional Info: {{ element['content'] }}</p>
+    </div>
+  </ng-template>
+</app-table>

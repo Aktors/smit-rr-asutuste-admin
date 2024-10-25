@@ -1,14 +1,47 @@
-﻿<table class="v-table">
-  <thead>
-    <tr>
-      <th *ngFor="let column of columns">{{ column.header }}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let row of dataSource">
-      <td *ngFor="let column of columns">
-        <ng-container [ngTemplateOutlet]="column.template" [ngTemplateOutletContext]="{ $implicit: row[column.field] }"></ng-container>
+<div class="mat-elevation-z2">
+  <table mat-table matSort [multiTemplateDataRows]="!!expandedTemplate">
+    @for (column of columns; track column){
+      <ng-container matColumnDef="{{column.field}}">
+        <th mat-header-cell *matHeaderCellDef>{{column.header}}</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container [ngTemplateOutlet]="column.template" [ngTemplateOutletContext]="{ $implicit: element[column.field] }"></ng-container>
+        </td>
+      </ng-container>
+    }
+
+    <ng-container *ngIf="expandedTemplate" matColumnDef="expand">
+      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="toggleRow(element);$event.stopPropagation()">
+          <mat-icon>{{ expandedElement === element ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+        </button>
       </td>
-    </tr>
-  </tbody>
-</table>
+    </ng-container>
+
+    <ng-container  matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedHeaders.length">
+        <div class="expanded-details" [@detailExpand]="expandedElement === element ? 'expanded' : 'collapsed'">
+          <ng-container *ngIf="expandedTemplate" [ngTemplateOutlet]="expandedTemplate" [ngTemplateOutletContext]="{ $implicit: element }"></ng-container>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedHeaders"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedHeaders;"
+        class="expandable-row"
+        [class.expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    <tr mat-row  class="expandable-row-details"></tr>
+
+
+  </table>
+
+  <mat-paginator #paginator
+      [length]="dataProvider.totalRecords"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20]"
+      aria-label="Select page"
+  >
+  </mat-paginator>
+</div>

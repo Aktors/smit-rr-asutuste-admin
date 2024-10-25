@@ -1,31 +1,20 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {AsutusService} from '../../../services/asutus.service';
-import {AsutusShortDto} from '../../shared/model/asutus.model';
+import {AsutusDataProvider} from './asutus-list.model';
 
 @Component({
   selector: 'asutus-list',
   templateUrl: './asutus-list.component.html',
   styleUrl: './asutus-list.component.scss'
 })
-export class AsutusListComponent {
-  items: AsutusShortDto[] = [];
+export class AsutusListComponent implements OnInit{
   isDataLoading$ = new BehaviorSubject<boolean>(false);
+  asutusDataProvider!: AsutusDataProvider;
 
-  constructor(private asutusService: AsutusService) {
-  }
+  constructor(private asutusService: AsutusService) {  }
 
-  fetchItems(): void {
-    this.isDataLoading$.next(true);
-    this.asutusService.search().subscribe({
-      next: (response) => {
-        this.items = response.result;
-        console.log(this.items);
-        this.isDataLoading$.next(false);
-      },
-      error: err => {
-        this.isDataLoading$.next(false);
-      }
-    });
+  ngOnInit(): void {
+    this.asutusDataProvider = new AsutusDataProvider(this.asutusService);
   }
 }

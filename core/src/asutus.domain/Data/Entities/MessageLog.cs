@@ -2,6 +2,7 @@
 
 namespace asutus.domain.Entities;
 
+
 public class MessageLog
 {
     [Key]

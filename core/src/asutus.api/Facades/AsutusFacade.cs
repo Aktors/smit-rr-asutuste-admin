@@ -6,7 +6,6 @@ using asutus.domain.Data.Repositories;
 
 namespace asutus.api.Facades;
 
-//TODO: Use UoF template
 public class AsutusFacade
 {
     private readonly IReplicationService _replicationService;

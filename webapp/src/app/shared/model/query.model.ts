@@ -4,7 +4,7 @@ export interface PagedQuery {
   page?: number,
   pageSize?: number,
   sortBy?: string,
-  srtOrder: "desc" | "asc",
+  srtOrder: "desc" | "asc" | "" | undefined,
 }
 
 export interface QueryResultDto {
