@@ -1,9 +1,10 @@
-﻿using asutus.api.services;
-using asutus.api.services.rabbitMq;
+﻿using asutus.api.Configuration;
+using asutus.api.services;
 using asutus.domain.Data;
 using asutus.domain.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 
 namespace asutus.api.Extensions;
 
@@ -33,7 +34,6 @@ public static class ServiceCollectionExtensions
     {
         services.AddCors(options =>
         {
-            //TODO: configuring env properly
             options.AddPolicy("AllowAllOrigins", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -43,9 +43,21 @@ public static class ServiceCollectionExtensions
         });
     }
 
-    public static void AddRabbitMqImplementation(this IServiceCollection services)
+    public static void AddRabbitMqImplementation(this IServiceCollection services,
+        RabbitMqOptions rabbitMqOptions,
+        Action<ConnectionFactory> setupAction)
     {
-        services.AddRabbitMqConfiguration();
+        var factory = new ConnectionFactory
+        {
+            HostName = rabbitMqOptions.HostName,
+            Port = rabbitMqOptions.Port,
+            UserName = rabbitMqOptions.UserName,
+            Password = rabbitMqOptions.Password,
+            VirtualHost = rabbitMqOptions.VirtualHost
+        };
+        setupAction?.Invoke(factory);
+        services.AddSingleton(factory);
+        
         services.AddScoped<IReplicationService, ReplicationService>();
         services.AddScoped<IMessagePublisherService, RabbitMqPublisherService>();
         services.AddScoped<IMessageListener, RabbitMqListener>();

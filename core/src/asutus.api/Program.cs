@@ -1,16 +1,30 @@
 using System.Reflection;
+using asutus.api.Configuration;
 using asutus.api.Extensions;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddEnvironmentVariables()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
 builder.Services.AddControllers();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AllowCors();
-builder.Services.AddRabbitMqImplementation();
+
+var rabbitMqOptions = builder.Configuration.GetSection("RabbitMQ").Get<RabbitMqOptions>();
+if(rabbitMqOptions == null)
+    throw new ArgumentException("RabbitMQ configuration is missing");
+builder.Services.AddRabbitMqImplementation(rabbitMqOptions, factory =>
+{
+    factory.AutomaticRecoveryEnabled = true; 
+});
+
 builder.AddPostgresDbStorageImplementation();
 
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
@@ -23,7 +37,7 @@ if (useTestData)
     app.ApplySeed();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsContainer())
 {
     app.UseSwagger();   
     app.UseSwaggerUI(c =>

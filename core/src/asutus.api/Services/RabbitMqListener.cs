@@ -34,13 +34,9 @@ public class RabbitMqListener : IMessageListener, IDisposable
         {
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
-            //TODO: add come constant that will be vilible from all places or move code to same service that will hide this detail
-            // Update the message log to mark as confirmed
             if (Guid.TryParse(ea.BasicProperties.MessageId, out var referenceId))
-            {
                 MessageArrived?.Invoke(this,
                     new MessageArrivedEventArgs(message){ ReferenceId = referenceId });
-            }
         };
 
         _channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);

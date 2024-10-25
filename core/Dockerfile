@@ -7,6 +7,8 @@ ARG BUILD_CONFIGURATION=Development
 WORKDIR /src
 COPY ["rr.asutus-admin.sln", "./"]
 COPY ["src/", "./src/"]
+COPY ["tests/", "./tests/"]
+
 RUN dotnet restore "rr.asutus-admin.sln"
 RUN dotnet build "src/asutus.api/asutus.api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

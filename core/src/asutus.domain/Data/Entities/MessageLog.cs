@@ -2,16 +2,27 @@
 
 namespace asutus.domain.Entities;
 
-
 public class MessageLog
 {
+    /// <summary>
+    /// System identifier.
+    /// </summary>
     [Key]
     public int Id { get; set; }
+    /// <summary>
+    /// Tracking reference used for message conformation.
+    /// </summary>
     public Guid ReferenceId { get; set; }
-    //TODO: add description: something used to identify message purpose, surrogate key like structure that contains sybsystem code, instance code and codificator code
+    /// <summary>
+    /// Caption is a message identifier composed of destination system code and environment name with asutus code. 
+    /// </summary>
     public string Caption { get; set; }
-    //TODO: add description: actual content received from message
+    /// <summary>
+    /// The message content received from queue.
+    /// </summary>
     public string? Content { get; set; }
-    //TODO: add description: used to capture the timewhem message went to queue. When it is set, means message were confirmed from queue. Add something better and mor straightforward 
+    /// <summary>
+    /// The date when message was received from queue. If date is set, then message was confirmed.
+    /// </summary>
     public DateTime? SentDate { get; set; }
 }

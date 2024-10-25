@@ -3,7 +3,6 @@ using asutus.domain.Entities;
 
 namespace asutus.domain.Helpers.Mappers;
 
-//TODO: Add mapper logic 
 public static class AsutusMapper
 {
     public static Asutus Map(this AsutusDto dto)
@@ -12,6 +11,7 @@ public static class AsutusMapper
         {
             Code = dto.Code,
             Name = dto.Name
+            //TODO: Add mapper logic with messages
         };
     }
 

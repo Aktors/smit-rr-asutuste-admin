@@ -74,11 +74,10 @@ dotnet ef migrations remove --project asutus.domain --startup-project asutus.api
 dotnet ef migrations add <MigrationName> --project asutus.domain --startup-project asutus.api
 
 TODO:
-add later start for upi until db is up
 add unique constraint to system instance table
 resolve problem with vhost on rabbitMq: if it is specified there should be a way to create it on rabbitMq container before testing application.
 apply some lint validation tool for back and front (low priority)
-add note about test coverage. That only one class is covered from each layer. For demo purposes.
+add note to final documentation about test coverage. That only one class is covered from each layer. For demo purposes.
 
 *Helper projects:
 	* Veera Design:
