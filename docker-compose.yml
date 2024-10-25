@@ -13,6 +13,7 @@ services:
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=guest
       - RABBITMQ_PASSWORD=guest
+      - APP_USE_TEST_DATA=true
     depends_on:
       - db
       - mq

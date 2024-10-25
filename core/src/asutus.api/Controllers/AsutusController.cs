@@ -4,8 +4,9 @@ using asutus.common.Model;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
-[Route("asutus")]
+[Route("api/v1/asutus")]
 public class AsutusController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -16,33 +17,58 @@ public class AsutusController : ControllerBase
     }
     
     [HttpGet("{code}")]
+    [SwaggerOperation(
+        Summary = "Tagastab asutuse andmestiku", 
+        Description = "Tagastab asutuse andmestiku koodi järgi.")]
+    [SwaggerResponse(200, "Asutus leitud", typeof(AsutusDto))]
+    [SwaggerResponse(404, "Asutus antud koodiga ei eksisteeri")]
     public async Task<IActionResult> Get(string code)
     {
-        var result = await _mediator.Send(new AsutusByKoodCommand(code));
+        var result = await _mediator.Send(new AsutusByKoodRequest(code));
         if (result == null)
             return NotFound();
         return Ok(result);
     }
     
     [HttpGet("list")]
+    [SwaggerOperation(
+        Summary = "Asutuste nimekiri", 
+        Description = "Tagastab lühendatud andmestiku asutuste kohta.")]
+    [SwaggerResponse(200, "Asutuste nimekiri", typeof(QueryResultDto<AsutusShortDto>))]
+    [SwaggerResponse(400, "Otsingu parameetrid ei ole valiidsed")]
     public async Task<IActionResult> GetList(AsutusteQuery query)
     {
-        var searchQuery = new AsutusteLoeteluCommand(query);
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        var searchQuery = new AsutusteLoeteluRequest(query);
         return Ok(await _mediator.Send(searchQuery));
     }
     
     [HttpPatch("{code}")]
-    public async Task<IActionResult> Update(string code, [FromBody] JsonPatchDocument<AsutusDto> patchDoc)
+    [SwaggerOperation(
+        Summary = "Uuenda asutuse andmestik", 
+        Description = "Uuendab olemasoleva asutuse andmestiku koodi järgi.")]
+    [SwaggerResponse(201, "Asutuse andmesik on edukalt uuendatud")]
+    [SwaggerResponse(400, "Päringu sisu on vale")]
+    [SwaggerResponse(404, "Asutus selle koodiga ei leia")]
+    public async Task<IActionResult> Update(
+        [FromRoute]
+        [SwaggerParameter(Description = "Asutuse kood")] 
+        string code, 
+        [FromBody]
+        [SwaggerParameter(Description = "Asutuse andmestiku muudatused")] 
+        JsonPatchDocument<AsutusDto> patchDoc)
     {
-        var asutus = await _mediator.Send(new AsutusByKoodCommand(code));
+        var asutus = await _mediator.Send(new AsutusByKoodRequest(code));
         if (asutus == null)
             return NotFound();
         
-        //TODO: Add validation.
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
         patchDoc.ApplyTo(asutus);
 
-        var command = new UuendaAsutusCommand(asutus);
+        var command = new UuendaAsutusRequest(asutus);
         await _mediator.Send(command);
-        return Ok();
+        return Created();
     }
 }

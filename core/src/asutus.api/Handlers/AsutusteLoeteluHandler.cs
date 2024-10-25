@@ -6,7 +6,7 @@ using MediatR;
 
 namespace asutus.api.Handlers;
 
-public class AsutusteLoeteluHandler : IRequestHandler<AsutusteLoeteluCommand, QueryResultDto<AsutusShortDto>>
+public class AsutusteLoeteluHandler : IRequestHandler<AsutusteLoeteluRequest, QueryResultDto<AsutusShortDto>>
 {
     private readonly IAsutusRepository _asutusRepository;
 
@@ -15,8 +15,9 @@ public class AsutusteLoeteluHandler : IRequestHandler<AsutusteLoeteluCommand, Qu
         _asutusRepository = asutusRepository;
     }
 
-    public async Task<QueryResultDto<AsutusShortDto>> Handle(AsutusteLoeteluCommand command, CancellationToken cancellationToken)
+    public async Task<QueryResultDto<AsutusShortDto>> Handle(AsutusteLoeteluRequest request
+        , CancellationToken cancellationToken)
     {
-        return await _asutusRepository.SearchAsync(command.Query.Map());
+        return await _asutusRepository.SearchAsync(request.Query.Map(), cancellationToken);
     }
 }

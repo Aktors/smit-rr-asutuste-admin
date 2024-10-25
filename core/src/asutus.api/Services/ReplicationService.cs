@@ -17,22 +17,25 @@ public class ReplicationService : IReplicationService
         _publisher = publisher;
         _listener = listener;
 
-        _listener.MessageArrived += OnMessageArrived;
+        _listener.MessageArrived += async (sender, e) => await OnMessageArrived(sender, e);
     }
 
-    public async Task Replicate(AsutusDto asutusDto,ReplicationDto replication)
+    public async Task ReplicateAsync(AsutusDto asutusDto,ReplicationDto replication
+        , CancellationToken cancelationToken = default)
     {
         foreach (var env in replication.Environments)
         {
             var queueName = $"{replication.Code}_{env}";
-            var referenceId = await _messageLog.InitMessage($"{asutusDto.Code}_{queueName}");
+            var referenceId = await _messageLog.InitMessageAsync(
+                $"{asutusDto.Code}_{queueName}", cancelationToken);
             _listener.StartListening(queueName);
             _publisher.SendMessage(queueName, asutusDto, referenceId.ToString());
         }
     }
     
-    private void OnMessageArrived(object? sender, MessageArrivedEventArgs e)
+    private async Task  OnMessageArrived(object? sender, MessageArrivedEventArgs e
+        , CancellationToken cancelationToken = default)
     {
-        _messageLog.ConfirmMessageAsync(e.ReferenceId, e.Message);
+        await _messageLog.ConfirmMessageAsync(e.ReferenceId, e.Message, cancelationToken);
     }
 }

@@ -3,11 +3,11 @@ using MediatR;
 
 namespace asutus.api.Commands;
 
-public class UuendaAsutusCommand : IRequest<Unit>
+public class UuendaAsutusRequest : IRequest<Unit>
 {
     public AsutusDto Asutus { get; }
     
-    public UuendaAsutusCommand(AsutusDto asutus)
+    public UuendaAsutusRequest(AsutusDto asutus)
     {
         Asutus = asutus;
     }

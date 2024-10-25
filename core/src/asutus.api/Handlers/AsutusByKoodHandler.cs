@@ -5,7 +5,7 @@ using MediatR;
 
 namespace asutus.api.Handlers;
 
-public class AsutusByKoodHandler:  IRequestHandler<AsutusByKoodCommand, AsutusDto?>
+public class AsutusByKoodHandler:  IRequestHandler<AsutusByKoodRequest, AsutusDto?>
 {    
     private readonly IAsutusRepository _asutusRepository;
 
@@ -14,8 +14,8 @@ public class AsutusByKoodHandler:  IRequestHandler<AsutusByKoodCommand, AsutusDt
         _asutusRepository = asutusRepository;
     }
 
-    public async Task<AsutusDto?> Handle(AsutusByKoodCommand command, CancellationToken cancellationToken)
+    public async Task<AsutusDto?> Handle(AsutusByKoodRequest request, CancellationToken cancellationToken)
     {
-        return await _asutusRepository.GetAsutusAsync(command.Code);
+        return await _asutusRepository.GetAsutusAsync(request.Code, cancellationToken);
     }
 }

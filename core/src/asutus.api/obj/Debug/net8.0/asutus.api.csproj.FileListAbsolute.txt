@@ -152,3 +152,7 @@ D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\Me
 D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
 D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
 D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
+D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\FluentValidation.dll
+D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
+D:\Workspace\Work\smit-rr-asutuste-admin\core\src\asutus.api\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll

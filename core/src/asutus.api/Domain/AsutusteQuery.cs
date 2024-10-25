@@ -15,5 +15,4 @@ public class AsutusteQuery : PagedQuery
 
     [FromQuery(Name = "endDate")]
     public DateTime? EndDate { get; set; }
-    
 }

@@ -1,73 +1,35 @@
 using System.Reflection;
-using asutus.api.services;
-using asutus.api.services.rabbitMq;
-using asutus.domain.Data;
-using asutus.domain.Data.Repositories;
+using asutus.api.Extensions;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-//CORS
-builder.Services.AddCors(options =>
-{
-    //TODO: configuring env properly
-    options.AddPolicy("AllowAllOrigins", builder =>
-    {
-        builder.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
-    });
-});
-
-//TODO: fix scopes
-//MQ
-builder.Services.AddRabbitMqConfiguration();
-builder.Services.AddScoped<IReplicationService, ReplicationService>();
-builder.Services.AddScoped<IMessagePublisherService, RabbitMqPublisherService>();
-builder.Services.AddScoped<IMessageListener, RabbitMqListener>();
-builder.Services.AddScoped<IMessageLogService, DbMessageLogService>();
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+builder.Services.AddSwaggerDocumentation();
+builder.Services.AllowCors();
+builder.Services.AddRabbitMqImplementation();
+builder.AddPostgresDbStorageImplementation();
 
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
-//Database
-builder.Services.AddDbContext<AsutusContext>(options => {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("AsutusConnection"));
-});
-builder.Services.AddScoped<IMessageLogRepository, DbMessageLogRepository>();
-builder.Services.AddScoped<IAsutusRepository, DbAsutusRepository>();
-
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<AsutusContext>();
-    dbContext.Database.Migrate();
-}
-
-//seed
-var useTestData = builder.Configuration.GetValue<bool>("UseTestData");
+app.ApplyMigration();
+bool.TryParse(Environment.GetEnvironmentVariable("APP_USE_TEST_DATA"), out bool useTestData);
 if (useTestData)
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<AsutusContext>();
-        AsutusTestData.Seed(context);
-    }
-}
+    app.ApplySeed();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger();   
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Asutus API V1");
+    });
     app.UseCors("AllowAllOrigins");
 }
 

@@ -2,6 +2,6 @@
 
 public interface IMessageLogService
 {
-    Task<Guid> InitMessage(String caption);
-    Task ConfirmMessageAsync(Guid referenceId, String content);
+    Task<Guid> InitMessageAsync(String caption, CancellationToken cancellationToken = default);
+    Task ConfirmMessageAsync(Guid referenceId, String content, CancellationToken cancellationToken = default);
 }

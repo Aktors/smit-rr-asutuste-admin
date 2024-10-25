@@ -14,46 +14,57 @@ public class DbMessageLogRepository : IMessageLogRepository
         _asutusContext = asutusContext;
     }
     
-    public async Task AddMessageAsync(MessageLog messageLog)
+    public async Task AddMessageAsync(MessageLog messageLog, CancellationToken cancellationToken = default)
     {
         _asutusContext.MessageLogs.Add(messageLog);
-        await _asutusContext.SaveChangesAsync();
+        await _asutusContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<MessageLog?> GetMessageAsync(Guid referenceId)
+    public async Task<MessageLog?> GetMessageAsync(Guid referenceId, CancellationToken cancellationToken = default)
     {
         return await _asutusContext.MessageLogs
-            .FirstOrDefaultAsync(m => m.ReferenceId.Equals(referenceId));
+            .FirstOrDefaultAsync(m => m.ReferenceId.Equals(referenceId), cancellationToken);
     }
 
-    public async Task UpdateAsync(MessageLog messageLog)
+    public async Task UpdateAsync(MessageLog messageLog, CancellationToken cancellationToken = default)
     {
         _asutusContext.Entry(messageLog).State = EntityState.Modified;
-        await _asutusContext.SaveChangesAsync();
+        await _asutusContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<QueryResultDto<ReplicationLogDto>> GetLogs(ReplicationLogQueryDto query)
+    public async Task<QueryResultDto<ReplicationLogDto>> GetLogsAsync(ReplicationLogQueryDto query,
+        CancellationToken cancellationToken = default)
     { 
         var queryable = _asutusContext.MessageLogs.AsQueryable();
-        
-        var isDesc = query.Pagination.SortOrder.ToLower().Equals("desc");
-        queryable = query.Pagination.SortBy.ToLower() switch
+
+        if (query.Pagination is { SortOrder: not null, SortBy: not null })
         {
-            nameof(ReplicationLogDto.Caption) => isDesc ? queryable.OrderByDescending(e => e.Caption) : queryable.OrderBy(e => e.Caption),
-            _ => isDesc ? queryable.OrderByDescending(e => e.SentDate) : queryable.OrderBy(e => e.SentDate)
-        };
+            var isDesc = query.Pagination.SortOrder.ToLower().Equals("desc");
+            queryable = query.Pagination.SortBy.ToLower() switch
+            {
+                nameof(ReplicationLogDto.Caption) => isDesc ? 
+                    queryable.OrderByDescending(e => e.Caption) :
+                    queryable.OrderBy(e => e.Caption),
+                _ => isDesc ? 
+                    queryable.OrderByDescending(e => e.SentDate) :
+                    queryable.OrderBy(e => e.SentDate)
+            };
+        }
         
         var totalEntries = queryable.Count();
-        var totalPages = (int)Math.Ceiling(totalEntries / (double)query.Pagination.PageSize);
-        
-        var paginatedEntries = await queryable
-            .Skip((query.Pagination.Page - 1) * query.Pagination.PageSize)
-            .Take(query.Pagination.PageSize)
-            .Select(ml => ml.Map()).ToArrayAsync();
+        var totalPages = 0;
 
+        if (query.Pagination is { PageSize: not null, Page: not null })
+        {
+            totalPages = (int)Math.Ceiling(totalEntries / (double)query.Pagination.PageSize.Value);
+            queryable = queryable
+                .Skip((query.Pagination.Page.Value - 1) * query.Pagination.PageSize.Value)
+                .Take(query.Pagination.PageSize.Value);
+        }
+        
         return new QueryResultDto<ReplicationLogDto>
         {
-            Result = paginatedEntries,
+            Result = await queryable.Select(ml => ml.Map()).ToArrayAsync(cancellationToken),
             Total = totalEntries,
             Page = query.Pagination.Page,
             PageSize = query.Pagination.PageSize,

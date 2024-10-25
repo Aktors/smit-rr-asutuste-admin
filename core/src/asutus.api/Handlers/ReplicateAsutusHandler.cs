@@ -5,7 +5,7 @@ using MediatR;
 
 namespace asutus.api.Handlers;
 
-public class ReplicateAsutusHandler: IRequestHandler<ReplicateAsutusCommand, Unit>
+public class ReplicateAsutusHandler: IRequestHandler<ReplicateAsutusRequest, Unit>
 {
     private readonly IAsutusRepository _asutusRepository;
     private readonly IReplicationService _replicationService;
@@ -16,11 +16,11 @@ public class ReplicateAsutusHandler: IRequestHandler<ReplicateAsutusCommand, Uni
         _replicationService = replicationService;
     }
 
-    public async Task<Unit> Handle(ReplicateAsutusCommand command, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(ReplicateAsutusRequest request, CancellationToken cancellationToken)
     {
         //TODO: Add error handling
-        var asutus = await _asutusRepository.GetAsutusAsync(command.Replication.Code);
-        await _replicationService.Replicate(asutus, command.Replication);
+        var asutus = await _asutusRepository.GetAsutusAsync(request.Code, cancellationToken);
+        await _replicationService.ReplicateAsync(asutus, request.Replication, cancellationToken);
         return Unit.Value;
     }
 }

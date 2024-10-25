@@ -4,7 +4,7 @@ using MediatR;
 
 namespace asutus.api.Handlers;
 
-public class UuendaAsutusHandler: IRequestHandler<UuendaAsutusCommand,Unit>
+public class UuendaAsutusHandler: IRequestHandler<UuendaAsutusRequest,Unit>
 {
     private readonly IAsutusRepository _asutusRepository;
 
@@ -13,9 +13,9 @@ public class UuendaAsutusHandler: IRequestHandler<UuendaAsutusCommand,Unit>
         _asutusRepository = asutusRepository;
     }
 
-    public async Task<Unit> Handle(UuendaAsutusCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UuendaAsutusRequest request, CancellationToken cancellationToken)
     {
-        await _asutusRepository.AddOrUpdateAsync(request.Asutus);
+        await _asutusRepository.AddOrUpdateAsync(request.Asutus, cancellationToken);
         return Unit.Value;
     }
 }

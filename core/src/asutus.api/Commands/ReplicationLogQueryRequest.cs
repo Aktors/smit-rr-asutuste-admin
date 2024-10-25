@@ -3,11 +3,11 @@ using MediatR;
 
 namespace asutus.api.Commands;
 
-public class ReplicationLogQueryCommand: IRequest<QueryResultDto<ReplicationLogDto>>
+public class ReplicationLogQueryRequest: IRequest<QueryResultDto<ReplicationLogDto>>
 {
     public ReplicationLogQueryDto Query { get; }
 
-    public ReplicationLogQueryCommand(ReplicationLogQueryDto query)
+    public ReplicationLogQueryRequest(ReplicationLogQueryDto query)
     {
         Query = query;
     }

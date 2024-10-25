@@ -5,7 +5,7 @@ using MediatR;
 
 namespace asutus.api.Handlers;
 
-public class ReplicationLogQueryHandler: IRequestHandler<ReplicationLogQueryCommand, QueryResultDto<ReplicationLogDto>>
+public class ReplicationLogQueryHandler: IRequestHandler<ReplicationLogQueryRequest, QueryResultDto<ReplicationLogDto>>
 {
     private readonly IMessageLogRepository _messageLogRepository;
 
@@ -15,8 +15,8 @@ public class ReplicationLogQueryHandler: IRequestHandler<ReplicationLogQueryComm
     }
 
     public async Task<QueryResultDto<ReplicationLogDto>> Handle(
-        ReplicationLogQueryCommand command, CancellationToken cancellationToken)
+        ReplicationLogQueryRequest request, CancellationToken cancellationToken)
     {
-        return await _messageLogRepository.GetLogs(command.Query);
+        return await _messageLogRepository.GetLogsAsync(request.Query);
     }
 }

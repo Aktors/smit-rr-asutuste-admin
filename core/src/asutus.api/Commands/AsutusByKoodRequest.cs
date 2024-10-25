@@ -3,11 +3,11 @@ using MediatR;
 
 namespace asutus.api.Commands;
 
-public class AsutusByKoodCommand: IRequest<AsutusDto?>
+public class AsutusByKoodRequest: IRequest<AsutusDto?>
 {
     public string Code { get; }
 
-    public AsutusByKoodCommand(string code)
+    public AsutusByKoodRequest(string code)
     {
         Code = code;
     }

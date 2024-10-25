@@ -4,11 +4,11 @@ using MediatR;
 
 namespace asutus.api.Commands;
 
-public class AsutusteLoeteluCommand: IRequest<QueryResultDto<AsutusShortDto>>
+public class AsutusteLoeteluRequest: IRequest<QueryResultDto<AsutusShortDto>>
 {
     public AsutusteQuery Query { get; }
 
-    public AsutusteLoeteluCommand(AsutusteQuery query)
+    public AsutusteLoeteluRequest(AsutusteQuery query)
     {
         Query = query;
     }

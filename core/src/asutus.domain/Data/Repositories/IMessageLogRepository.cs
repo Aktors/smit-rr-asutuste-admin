@@ -5,8 +5,9 @@ namespace asutus.domain.Data.Repositories;
 
 public interface IMessageLogRepository
 {
-    Task AddMessageAsync(MessageLog messageLog);
-    Task<MessageLog?> GetMessageAsync(Guid referenceId);
-    Task UpdateAsync(MessageLog messageLog);
-    Task<QueryResultDto<ReplicationLogDto>> GetLogs(ReplicationLogQueryDto query);
+    Task AddMessageAsync(MessageLog messageLog, CancellationToken cancellationToken = default);
+    Task<MessageLog?> GetMessageAsync(Guid referenceId, CancellationToken cancellationToken = default);
+    Task UpdateAsync(MessageLog messageLog, CancellationToken cancellationToken = default);
+    Task<QueryResultDto<ReplicationLogDto>> GetLogsAsync(ReplicationLogQueryDto query,
+        CancellationToken cancellationToken = default);
 }

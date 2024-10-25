@@ -13,10 +13,11 @@ public class DbAsutusRepository : IAsutusRepository
     {
         _asutusContext = context;
     }
-    public async Task AddOrUpdateAsync(AsutusDto asutusDto)
+    public async Task AddOrUpdateAsync(AsutusDto asutusDto
+        ,CancellationToken cancellationToken = default)
     {
         var asutus = await _asutusContext.Asutused
-            .FirstOrDefaultAsync(a => a.Code.Equals(asutusDto.Code));
+            .FirstOrDefaultAsync(a => a.Code.Equals(asutusDto.Code),cancellationToken);
 
         if (asutus == null)
         {
@@ -28,17 +29,19 @@ public class DbAsutusRepository : IAsutusRepository
         //TODO: add translations mapping logic
         asutus.Name = asutusDto.Name;
         
-        await _asutusContext.SaveChangesAsync();
+        await _asutusContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<AsutusDto?> GetAsutusAsync(string code)
+    public async Task<AsutusDto?> GetAsutusAsync(string code
+        ,CancellationToken cancellationToken = default)
     {
         var result = await _asutusContext.Asutused
-            .FirstOrDefaultAsync(a => a.Code.Equals(code));
-        return result != null ? result.Map() : null;
+            .FirstOrDefaultAsync(a => a.Code.Equals(code), cancellationToken);
+        return result?.Map();
     }
 
-    public async Task<QueryResultDto<AsutusShortDto>> SearchAsync(AsutusteQueryDto query)
+    public async Task<QueryResultDto<AsutusShortDto>> SearchAsync(AsutusteQueryDto query
+        ,CancellationToken cancellationToken = default)
     {
         var queryable = _asutusContext.Asutused.AsQueryable();
         
@@ -54,31 +57,37 @@ public class DbAsutusRepository : IAsutusRepository
         if (query.EndDate.HasValue)
             queryable = queryable.Where(a => a.EndDate <= query.EndDate);
 
-        var isDesc = query.Pagination.SortOrder.ToLower().Equals("desc");
-        // Sorting
-        queryable = query.Pagination.SortBy.ToLower() switch
+        if (query.Pagination is { SortOrder: not null, SortBy: not null })
         {
-            nameof(AsutusShortDto.Name) => isDesc  ? queryable.OrderByDescending(e => e.Name) : queryable.OrderBy(e => e.Name),
-            nameof(AsutusShortDto.StartDate) => isDesc ? queryable.OrderByDescending(e => e.StartDate) : queryable.OrderBy(e => e.StartDate),
-            nameof(AsutusShortDto.EndDate) => isDesc ? queryable.OrderByDescending(e => e.EndDate) : queryable.OrderBy(e => e.EndDate),
-            _ => isDesc ? queryable.OrderByDescending(e => e.Code) : queryable.OrderBy(e => e.Code),
-        };
+            var isDesc = query.Pagination.SortOrder.ToLower().Equals("desc");
+            // Sorting
+            queryable = query.Pagination.SortBy.ToLower() switch
+            {
+                nameof(AsutusShortDto.Name) => isDesc  ? queryable.OrderByDescending(e => e.Name) : queryable.OrderBy(e => e.Name),
+                nameof(AsutusShortDto.StartDate) => isDesc ? queryable.OrderByDescending(e => e.StartDate) : queryable.OrderBy(e => e.StartDate),
+                nameof(AsutusShortDto.EndDate) => isDesc ? queryable.OrderByDescending(e => e.EndDate) : queryable.OrderBy(e => e.EndDate),
+                _ => isDesc ? queryable.OrderByDescending(e => e.Code) : queryable.OrderBy(e => e.Code),
+            };
+        }
         
         // Pagination
         var totalEntries = queryable.Count();
-        var totalPages = (int)Math.Ceiling(totalEntries / (double)query.Pagination.PageSize);
+        var totalPages = 0;
         
-        var paginatedEntries = await queryable
-            .Skip((query.Pagination.Page - 1) * query.Pagination.PageSize)
-            .Take(query.Pagination.PageSize)
-            .Select(a => a.MapShortDto()).ToArrayAsync();
+        if (query.Pagination is { PageSize: not null, Page: not null })
+        {
+            totalPages = (int)Math.Ceiling(totalEntries / (double)query.Pagination.PageSize);
+            queryable = queryable
+                .Skip((query.Pagination.Page.Value - 1) * query.Pagination.PageSize.Value)
+                .Take(query.Pagination.PageSize.Value);
+        }
 
         return new QueryResultDto<AsutusShortDto>
         {
-            Result = paginatedEntries,
+            Result = await queryable.Select(a => a.MapShortDto()).ToArrayAsync(cancellationToken),
             Total = totalEntries,
-            Page = query.Pagination.Page,
-            PageSize = query.Pagination.PageSize,
+            Page = query.Pagination?.Page,
+            PageSize = query.Pagination?.PageSize,
             TotalPages = totalPages
         };
     }
