@@ -44,7 +44,7 @@ public class AsutusController : ControllerBase
         return Ok(await _mediator.Send(searchQuery));
     }
     
-    [HttpPatch("{code}")]
+    [HttpPut("{code}")]
     [SwaggerOperation(
         Summary = "Uuenda asutuse andmestik", 
         Description = "Uuendab olemasoleva asutuse andmestiku koodi järgi.")]
@@ -57,16 +57,11 @@ public class AsutusController : ControllerBase
         string code, 
         [FromBody]
         [SwaggerParameter(Description = "Asutuse andmestiku muudatused")] 
-        JsonPatchDocument<AsutusDto> patchDoc)
+        AsutusDto asutus)
     {
-        var asutus = await _mediator.Send(new AsutusByKoodRequest(code));
-        if (asutus == null)
-            return NotFound();
-        
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
-        patchDoc.ApplyTo(asutus);
-
+        
         var command = new UuendaAsutusRequest(asutus);
         await _mediator.Send(command);
         return Created();

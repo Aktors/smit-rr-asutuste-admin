@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace asutus.api.Domain.Validations;
 
-public class TranslationValidator : AbstractValidator<Translation>
+public class TranslationValidator : AbstractValidator<TranslationDto>
 {
     public TranslationValidator()
     {

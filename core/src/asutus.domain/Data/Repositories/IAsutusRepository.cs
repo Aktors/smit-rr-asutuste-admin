@@ -9,4 +9,7 @@ public interface IAsutusRepository
         CancellationToken cancellationToken = default);
     Task<QueryResultDto<AsutusShortDto>> SearchAsync(AsutusteQueryDto query, 
         CancellationToken cancellationToken = default);
+    Task<ClassifierDto[]> GetClassifierByGroup(string code,
+        CancellationToken cancellationToken = default);
+    Task<InformationSystemDto[]> ListInformationSystems(CancellationToken cancellationToken = default);
 }

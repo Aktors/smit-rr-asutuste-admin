@@ -2,10 +2,10 @@
 
 public class AsutusDto : AsutusShortDto
 {
-    public List<Translation> Translations { get; set; }
+    public List<TranslationDto> Translations { get; set; }
 }
 
-public class Translation
+public class TranslationDto
 {
     public string Code { get; set; }
     public string Text { get; set; }
