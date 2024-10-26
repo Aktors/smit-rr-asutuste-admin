@@ -1,7 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {merge, observable, Observable, of, switchMap, tap} from 'rxjs';
+import {merge, Observable, of, switchMap, tap} from 'rxjs';
 import { PagedQuery } from '../model/query.model';
 import {map} from 'rxjs/operators';
 import {QueryResponse} from '../model/asutus.model';
@@ -19,7 +19,7 @@ export abstract class DataProvider<T> extends DataSource<T> {
             page: this.paginator?.pageIndex,
             pageSize: this.paginator?.pageSize,
             sortBy: this.sort?.active,
-            srtOrder: this.sort?.direction
+            sortOrder: this.sort?.direction
         }})
       );
 

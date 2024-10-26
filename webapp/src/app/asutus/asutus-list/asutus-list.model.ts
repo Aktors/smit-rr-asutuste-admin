@@ -1,11 +1,11 @@
 ﻿import {AsutusShortDto, QueryResponse} from '../../shared/model/asutus.model';
 import {DataProvider} from '../../shared/table/table.model';
-import {AsutusService} from '../../../services/asutus.service';
+import {AsutusClient} from '../../../services/api/asutus.client';
 import {PagedQuery} from '../../shared/model/query.model';
 import {Observable} from 'rxjs';
 
 export class AsutusDataProvider extends DataProvider<AsutusShortDto> {
-  constructor(private asutusService: AsutusService) {
+  constructor(private asutusService: AsutusClient) {
     super();
   }
 

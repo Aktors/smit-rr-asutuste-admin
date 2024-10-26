@@ -1,5 +1,4 @@
 ﻿import {PagedQuery} from './query.model';
-import {ReplicationLog} from './replication.model';
 
 export interface AsutusteQuery extends PagedQuery {
   code?: string,
@@ -23,11 +22,11 @@ export interface AsutusShortDto {
   endDate?: Date,
 }
 
-export interface Translation {
+export interface TranslationDto {
   code: string,
   text: string,
 }
 
 export interface AsutusDto extends AsutusShortDto{
-  translations: Translation[];
+  translations: TranslationDto[];
 }

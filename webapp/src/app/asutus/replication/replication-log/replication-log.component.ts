@@ -1,9 +1,8 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {ReplicationService} from '../../../../services/replication.service';
+import {ReplicationClient} from '../../../../services/api/replication.client';
 import {ReplicationLog} from '../../../shared/model/replication.model';
 import {ReplicationLogDataProvider} from './replication-log.model';
-import {AsutusDataProvider} from '../../asutus-list/asutus-list.model';
 
 @Component({
   selector: 'app-replication-log',
@@ -14,7 +13,7 @@ export class ReplicationLogComponent implements OnInit{
   isDataLoading$ = new BehaviorSubject<boolean>(false);
   logDataProvider!: ReplicationLogDataProvider;
 
-  constructor(private replicationService: ReplicationService) {  }
+  constructor(private replicationService: ReplicationClient) {  }
 
   ngOnInit(): void {
     this.logDataProvider = new ReplicationLogDataProvider(this.replicationService);

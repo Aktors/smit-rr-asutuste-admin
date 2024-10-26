@@ -7,8 +7,8 @@ export interface  ReplicationLogQuery extends PagedQuery {
 export interface ReplicationLog {
   referenceId: string,
   caption: number,
-  sentDate: string,
-  content: string
+  sentDate?: string,
+  content?: string
 }
 
 export interface ReplicationDto {

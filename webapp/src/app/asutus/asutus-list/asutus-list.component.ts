@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {AsutusService} from '../../../services/asutus.service';
+import {AsutusClient} from '../../../services/api/asutus.client';
 import {AsutusDataProvider} from './asutus-list.model';
 
 @Component({
@@ -12,7 +12,7 @@ export class AsutusListComponent implements OnInit{
   isDataLoading$ = new BehaviorSubject<boolean>(false);
   asutusDataProvider!: AsutusDataProvider;
 
-  constructor(private asutusService: AsutusService) {  }
+  constructor(private asutusService: AsutusClient) {  }
 
   ngOnInit(): void {
     this.asutusDataProvider = new AsutusDataProvider(this.asutusService);
