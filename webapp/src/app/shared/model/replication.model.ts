@@ -11,7 +11,7 @@ export interface ReplicationLog {
   content?: string
 }
 
-export interface ReplicationDto {
+export interface ReplicationSystemDto {
   code: string,
   environments: string[],
 }

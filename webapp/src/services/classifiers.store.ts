@@ -12,22 +12,35 @@ export class ClassifierStore {
   private langSubject = new BehaviorSubject<ClassifierDto[]>([]);
   lang$: Observable<ClassifierDto[]> = this.langSubject.asObservable();
 
+  private instanceSubject = new BehaviorSubject<ClassifierDto[]>([]);
+  instance$: Observable<ClassifierDto[]> = this.instanceSubject.asObservable();
+
   constructor(private systemClient: SystemClient) {
-    // Initialize the store by fetching and caching language values
     this.loadLanguages();
+    this.loadInstances();
   }
 
-  // Method to load language values from the API only once
   private loadLanguages(): void {
     this.systemClient.getClassifier('Language')
       .pipe(
-        tap((data) => this.langSubject.next(data)) // Populate lang with API data
+        tap((data) => this.langSubject.next(data))
       )
       .subscribe();
   }
 
-  // Method to get the cached language values directly
+  private loadInstances(): void {
+    this.systemClient.getClassifier('Instance')
+      .pipe(
+        tap((data) => this.instanceSubject.next(data))
+      )
+      .subscribe();
+  }
+
   getLang(): ClassifierDto[] {
     return this.langSubject.getValue();
+  }
+
+  getInstance(): ClassifierDto[] {
+    return this.instanceSubject.getValue();
   }
 }

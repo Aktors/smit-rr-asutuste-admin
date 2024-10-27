@@ -1,7 +1,7 @@
 ﻿import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ReplicationLog, ReplicationLogQuery} from '../../app/shared/model/replication.model';
+import {ReplicationSystemDto, ReplicationLog, ReplicationLogQuery} from '../../app/shared/model/replication.model';
 import {QueryResponse} from '../../app/shared/model/asutus.model';
 import {environment} from '../../environments/environment';
 
@@ -29,7 +29,7 @@ export class ReplicationClient {
     return this.http.get<QueryResponse<ReplicationLog>>(url_);
   }
 
-  publish(code: string, body: ReplicationLog[]): Observable<void> {
+  publish(code: string, body: ReplicationSystemDto[]): Observable<void> {
     let url_ = this.baseUrl + "/api/v1/replication/publish/{code}";
     url_ = url_.replace("{code}", encodeURIComponent("" + code));
     url_ = url_.replace(/[?&]$/, "");

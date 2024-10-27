@@ -1,0 +1,18 @@
+﻿<div class="replication-system-item" [formGroup]="form">
+  <!-- Header row with system code, name, and delete button -->
+  <div class="header-row">
+    <h3>{{ informationSystem.code }} - {{ informationSystem.name }}</h3>
+    <button mat-icon-button color="warn" (click)="removeItem()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+  <!-- Row of checkboxes for environments -->
+  <div class="environment-checkboxes">
+    <mat-checkbox *ngFor="let instance of availableInstances; let i = index"
+                  [formControl]="form.controls.environments.at(i)"
+                  matTooltip="{{ instance.name }}">
+      {{ instance.code }}
+    </mat-checkbox>
+  </div>
+</div>

@@ -4,7 +4,7 @@ import {AsutusListComponent} from './asutus-list/asutus-list.component';
 import {AsutusRoutesModule} from './asutus.routes';
 import {SharedModule} from '../shared/shared.module';
 import {AsutusDetailsShowComponent} from './asutus-details-show/asutus-details-show.component';
-import {ReplicationDetails} from './replication/replication-details/replication-details.component';
+import {ReplicationDetailsComponent} from './replication/replication-details/replication-details.component';
 import {AsutusFormComponent} from './asutus-form/asutus-form.component';
 import { AsutusComponent } from './asutus.component';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -32,6 +32,11 @@ import {MatSelect} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
 import {TranslationItemComponent} from './asutus-details-edit/translation-item/translation-item.component';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
+import {
+  ReplicationSystemItemComponent
+} from './replication/replication-details/replication-system-item/replication-system-item.component';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -40,7 +45,8 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/m
     AsutusDetailsEditComponent,
     TranslationItemComponent,
     AsutusListComponent,
-    ReplicationDetails,
+    ReplicationDetailsComponent,
+    ReplicationSystemItemComponent,
     AsutusComponent,
     ReplicationLogComponent,
   ],
@@ -77,6 +83,8 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/m
     MatDatepickerToggle,
     MatDatepickerInput,
     MatSuffix,
+    MatCheckbox,
+    MatTooltip,
   ]
 })
 export class AsutusModule { }
