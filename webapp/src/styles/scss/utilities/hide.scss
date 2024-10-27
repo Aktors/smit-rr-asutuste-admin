@@ -1,0 +1,28 @@
+@use '../constants';
+@use '../mixins/media';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-hide-lg-down {
+  @include media.breakpoint-down('lg') {
+    display: none !important;
+  }
+}
+
+.#{$prefix}-hide-md-down {
+  @include media.breakpoint-down('md') {
+    display: none !important;
+  }
+}
+
+.#{$prefix}-hide-md-up {
+  @include media.breakpoint-up('md') {
+    display: none !important;
+  }
+}
+
+.#{$prefix}-hide-lg-up {
+  @include media.breakpoint-up('lg') {
+    display: none !important;
+  }
+}

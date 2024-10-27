@@ -1,0 +1,160 @@
+@use '../mixins/text-styles';
+@use '../constants';
+@use '../mixins/focus';
+@use '../mixins/button-styles';
+
+$prefix: constants.$veera-prefix;
+
+@mixin base-size-styles($self) {
+  @include button-styles.medium;
+
+  &#{ $self }--neutral {
+    @include button-styles.medium-neutral;
+  }
+
+  &#{ $self }--icon-only {
+    @include button-styles.medium-icon-only;
+  }
+
+  &:not(#{ $self }--icon-only) {
+    @include text-styles.body-medium-bold;
+  }
+}
+
+.#{$prefix}-button {
+  $self: &;
+
+  @include button-styles.base;
+  @include base-size-styles($self);
+
+  // VARIANTS
+  &--primary {
+    @include button-styles.primary;
+  }
+
+  &--secondary {
+    @include button-styles.secondary;
+  }
+
+  &--neutral {
+    @include button-styles.neutral;
+  }
+
+  &--success {
+    @include button-styles.success;
+  }
+
+  &--danger {
+    @include button-styles.danger;
+  }
+
+  // SIZING
+  &--sm {
+    @include button-styles.small;
+
+    &#{ $self }--neutral {
+      @include button-styles.small-neutral;
+    }
+
+    &#{ $self }--icon-only {
+      @include button-styles.small-icon-only;
+    }
+
+    &:not(#{ $self }--icon-only) {
+      @include text-styles.body-small-bold;
+    }
+  }
+
+  &--md {
+    @include base-size-styles($self);
+  }
+
+  &--lg {
+    @include button-styles.large;
+
+    &#{ $self }--neutral {
+      @include button-styles.large-neutral;
+    }
+
+    &#{ $self }--icon-only {
+      @include button-styles.large-icon-only;
+    }
+
+    &:not(#{ $self }--icon-only) {
+      @include text-styles.body-large-bold;
+    }
+  }
+
+  &--floating {
+    box-shadow: var(--#{$prefix}-box-shadow-elevation-4px);
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+}
+
+@mixin x-icon {
+  &::after {
+    content: '';
+    height: 24px;
+    width: 24px;
+    mask-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' fill='black' fill-opacity='0.01'/%3E%3Cpath d='M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z' fill='%23131317'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' fill='black' fill-opacity='0.01'/%3E%3Cpath d='M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z' fill='%23131317'/%3E%3C/svg%3E");
+    position: absolute;
+    display: block;
+    background: var(--#{$prefix}-close-button-text-default);
+  }
+}
+
+@mixin close-btn-state-colors($state) {
+  background: var(--#{$prefix}-close-button-background-#{$state});
+
+  &::after {
+    background: var(--#{$prefix}-close-button-text-#{$state});
+  }
+}
+
+.#{$prefix}-close-button {
+  all: unset;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 100%;
+  flex-shrink: 0;
+  height: var(--#{$prefix}-close-button-sizing-md-width-height);
+  width: var(--#{$prefix}-close-button-sizing-md-width-height);
+  background: var(--#{$prefix}-close-button-background-default);
+
+  @include focus.focus-ring;
+  @include x-icon;
+
+  &:focus {
+    @include close-btn-state-colors('focus');
+  }
+
+  &:hover {
+    @include close-btn-state-colors('hover');
+  }
+
+  &:active {
+    @include close-btn-state-colors('active');
+  }
+
+  &:disabled {
+    @include close-btn-state-colors('disabled');
+
+    pointer-events: none;
+  }
+
+  &--sm {
+    height: var(--#{$prefix}-close-button-sizing-sm-width-height);
+    width: var(--#{$prefix}-close-button-sizing-sm-width-height);
+
+    &::after {
+      transform: scale(0.67);
+    }
+  }
+}

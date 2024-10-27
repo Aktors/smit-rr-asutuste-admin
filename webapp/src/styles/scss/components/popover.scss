@@ -1,0 +1,108 @@
+@use '../constants';
+@use '../mixins/text-styles';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-popover {
+  $self: &;
+
+  display: none;
+  filter: drop-shadow(0 1px 5px rgba(0, 0, 0, 0.2));
+
+  &--visible {
+    display: block;
+  }
+
+  &__content {
+    width: 100%;
+    width: var(--#{$prefix}-popover-sizing-width);
+    display: flex;
+    flex-direction: column;
+    gap: var(--#{$prefix}-modals-sizing-inner-spacing);
+    padding: var(--#{$prefix}-popover-sizing-padding-y) var(--#{$prefix}-popover-sizing-padding-x);
+    border-radius: var(--#{$prefix}-popover-sizing-corner-radius);
+    border: 1px solid var(--#{$prefix}-popover-border-default);
+    background: var(--#{$prefix}-popover-background-default);
+  }
+
+  &--top,
+  &[data-popper-placement^='top'] {
+    #{ $self }__content::before,
+    #{ $self }__content::after {
+      top: 100%;
+      left: 50%;
+    }
+  }
+
+  &--right,
+  &[data-popper-placement^='right'] {
+    #{ $self }__content::before,
+    #{ $self }__content::after {
+      top: 50%;
+      left: 0;
+    }
+  }
+
+  &--bottom,
+  &[data-popper-placement^='bottom'] {
+    #{ $self }__content::before,
+    #{ $self }__content::after {
+      top: 0;
+      left: 50%;
+    }
+  }
+
+  &--left,
+  &[data-popper-placement^='left'] {
+    #{ $self }__content::before,
+    #{ $self }__content::after {
+      top: 50%;
+      left: 100%;
+    }
+  }
+
+  &__content::before {
+    content: '';
+    position: absolute;
+    background: var(--#{$prefix}-popover-background-default);
+    width: 22px;
+    height: 22px;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &__content::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    background: var(--#{$prefix}-popover-border-default);
+    width: 24px;
+    height: 24px;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &__title {
+    @include text-styles.headings-large-h4;
+
+    margin: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__body {
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--#{$prefix}-spacing-baseline-06);
+  }
+
+  .#{$prefix}-close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}

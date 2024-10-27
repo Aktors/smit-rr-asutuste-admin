@@ -8,6 +8,6 @@ import {TABLE_COLUMN_TOKEN} from './table-column.token';
 })
 export class TableColumnComponent {
   @Input() field!: string;
-  @Input() header!: string;
+  @Input() header?: string;
   @ViewChild(TemplateRef) template!: TemplateRef<any>;
 }

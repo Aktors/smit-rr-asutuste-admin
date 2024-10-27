@@ -1,0 +1,120 @@
+@use '../constants';
+@use '../mixins/text-styles';
+@use '../mixins/borders';
+@use '../mixins/focus';
+
+$prefix: constants.$veera-prefix;
+
+@mixin completed-step-colors($stepper, $state) {
+  color: var(--#{$prefix}-stepper-text-completed-#{$state});
+  background: var(--#{$prefix}-stepper-background-completed-#{$state});
+
+  #{ $stepper }__step-number {
+    background: var(--#{$prefix}-stepper-background-number-completed-#{$state});
+  }
+}
+
+.#{$prefix}-stepper {
+  $stepper: &;
+
+  display: flex;
+  overflow-x: hidden;
+
+  #{&}__step {
+    @include text-styles.body-medium;
+
+    $arrow-height: calc((2 * var(--#{$prefix}-stepper-sizing-padding-y) + 24px) / 2);
+    $arrow-width: calc($arrow-height * 0.8);
+
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    padding: var(--#{$prefix}-stepper-sizing-padding-y) var(--#{$prefix}-stepper-sizing-padding-x);
+    align-items: center;
+    gap: var(--#{$prefix}-stepper-sizing-inner-spacing);
+    color: var(--#{$prefix}-stepper-text-default);
+    background: var(--#{$prefix}-stepper-background-default);
+    border: none;
+    white-space: nowrap;
+
+    &:first-child {
+      @include borders.set-border-left-radius(4px);
+    }
+
+    &:last-child {
+      @include borders.set-border-right-radius(4px);
+    }
+
+    &--active {
+      color: var(--#{$prefix}-stepper-text-active);
+      background: var(--#{$prefix}-stepper-background-active);
+      font-weight: 700;
+      border-right: 0.1px solid var(--#{$prefix}-stepper-background-active); // fixes the gap between arrow on some browser zooms
+
+      @include borders.set-border-right-radius(1px);
+
+      &:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        left: 100%;
+        top: 0;
+        display: block;
+        width: 0;
+        height: 0;
+        border: $arrow-height solid transparent;
+        border-left-width: $arrow-width;
+        border-right-width: 0;
+        border-left-color: var(--#{$prefix}-stepper-background-active);
+      }
+
+      & + .#{$prefix}-stepper__step {
+        padding-left: calc(var(--#{$prefix}-stepper-sizing-padding-x) + $arrow-width);
+      }
+
+      #{ $stepper }__step-number {
+        background: var(--#{$prefix}-stepper-background-number-active);
+        color: var(--#{$prefix}-stepper-text-number-active);
+      }
+    }
+
+    &--completed {
+      @include focus.focus-ring-inset;
+
+      color: var(--#{$prefix}-stepper-text-completed);
+      background: var(--#{$prefix}-stepper-background-completed);
+
+      #{ $stepper }__step-number {
+        background: var(--#{$prefix}-stepper-background-number-completed);
+        color: var(--#{$prefix}-stepper-text-number-completed);
+      }
+
+      &:focus {
+        @include completed-step-colors($stepper, 'focus');
+      }
+
+      &:hover {
+        @include completed-step-colors($stepper, 'hover');
+      }
+
+      &:active {
+        @include completed-step-colors($stepper, 'active');
+      }
+    }
+  }
+
+  &__step-number {
+    @include text-styles.body-small-bold;
+
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--#{$prefix}-stepper-background-number-default);
+    color: var(--#{$prefix}-stepper-text-number-default);
+  }
+}

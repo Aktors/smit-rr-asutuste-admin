@@ -22,6 +22,9 @@ import {MatOption, provideNativeDateAdapter} from '@angular/material/core';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSelect} from '@angular/material/select';
+import {RouterLink} from "@angular/router";
+import {TableButtonColumnComponent} from './table/table-button-column/table-button-column.component';
+import {TableActionsColumnComponent} from './table/table-action-column/table-actions-column.component';
 
 @NgModule({
   declarations: [
@@ -36,26 +39,29 @@ import {MatSelect} from '@angular/material/select';
     TableDateColumnComponent,
     TableTemplateColumnComponent,
     TableLinkColumnComponent,
+    TableButtonColumnComponent,
+    TableActionsColumnComponent,
   ],
   providers:[
     provideNativeDateAdapter()
   ],
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatIconButton,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSelect,
-    MatOption,
-    MatButton
-  ],
+    imports: [
+        CommonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatIconButton,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSelect,
+        MatOption,
+        MatButton,
+        RouterLink
+    ],
   exports: [
     FormComponent,
     FormTextInputComponent,
@@ -66,7 +72,9 @@ import {MatSelect} from '@angular/material/select';
     TableTextColumnComponent,
     TableDateColumnComponent,
     TableTemplateColumnComponent,
-    TableLinkColumnComponent
+    TableLinkColumnComponent,
+    TableButtonColumnComponent,
+    TableActionsColumnComponent
   ]
 })
 export class SharedModule {}

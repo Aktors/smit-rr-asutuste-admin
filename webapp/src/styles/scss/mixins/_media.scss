@@ -1,0 +1,39 @@
+@use '../breakpoints';
+@use '../scss-utils/helper-functions' as helpers;
+@use 'sass:map';
+
+@mixin breakpoint-up($bp) {
+  $min: map.get(breakpoints.$breakpoints, $bp);
+
+  @if not helpers.is-zero($min) {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin breakpoint-down($bp) {
+  $max: map.get(breakpoints.$breakpoints, $bp);
+
+  @if not helpers.is-zero($max) {
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin desktop-and-up {
+  @include breakpoint-up('lg') {
+    @content;
+  }
+}
+
+@mixin tablet-and-up {
+  @include breakpoint-up('md') {
+    @content;
+  }
+}

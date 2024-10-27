@@ -1,0 +1,49 @@
+@use '../mixins/text-styles';
+@use '../constants';
+@use '../mixins/focus';
+
+$prefix: constants.$veera-prefix;
+
+a,
+.#{$prefix}-link {
+  @include text-styles.links-medium;
+  @include focus.focus-ring;
+
+  outline: none;
+  font-size: inherit;
+  color: var(--#{$prefix}-colors-link-default);
+
+  &:hover {
+    color: var(--#{$prefix}-colors-link-hover);
+  }
+
+  &:active,
+  &:visited {
+    color: var(--#{$prefix}-colors-link-active);
+  }
+
+  &.#{$prefix}-link--md {
+    @include text-styles.links-medium;
+  }
+
+  &.#{$prefix}-link--sm {
+    @include text-styles.links-small;
+  }
+
+  &.#{$prefix}-link--xs {
+    @include text-styles.links-extra-small;
+  }
+
+  &.#{$prefix}-link--with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--#{$prefix}-links-sizing-inner-spacing);
+
+    .material-icons,
+    .material-icons-outlined,
+    .#{$prefix}-link-icon {
+      font-size: inherit;
+      overflow: hidden;
+    }
+  }
+}

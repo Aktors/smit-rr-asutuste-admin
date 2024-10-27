@@ -1,0 +1,78 @@
+@use '../constants';
+@use '../mixins/text-styles';
+@use '../mixins/focus';
+
+$prefix: constants.$veera-prefix;
+
+@mixin base-sizing {
+  max-width: 552px;
+  padding: var(--#{$prefix}-modals-sizing-padding-medium);
+}
+
+.#{$prefix}-modal {
+  $self: &;
+
+  @include base-sizing;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}-modals-sizing-inner-spacing);
+  border: 1px solid var(--#{$prefix}-modals-border-default);
+  background: var(--#{$prefix}-modals-background-default);
+  color: var(--#{$prefix}-modals-text-default);
+  border-radius: var(--#{$prefix}-modals-sizing-corner-radius);
+  width: 100%;
+  box-shadow: var(--#{$prefix}-box-shadow-elevation-2px);
+
+  &__title {
+    @include text-styles.headings-large-h4;
+
+    margin: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__body {}
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--#{$prefix}-spacing-baseline-05);
+  }
+
+  &--sm {
+    max-width: 312px;
+    padding: var(--#{$prefix}-modals-sizing-padding-small);
+  }
+
+  &--md {
+    @include base-sizing;
+  }
+
+  &--lg {
+    max-width: 840px;
+    padding: var(--#{$prefix}-modals-sizing-padding-large);
+  }
+
+  &--fluid {
+    max-width: 90%;
+  }
+
+  &--scrollable {
+    max-height: 80dvh;
+
+    #{ $self }__body {
+      overflow: auto;
+    }
+  }
+
+  .#{$prefix}-close-button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+  }
+}

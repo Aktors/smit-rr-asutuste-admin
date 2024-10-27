@@ -17,7 +17,7 @@
 
   <!-- List of added replication system items -->
   <div formArrayName="replicationSystems">
-    <div *ngFor="let systemForm of replicationSystems.controls; let i = index" [formGroupName]="i">
+    <div *ngFor="let systemForm of this.form.controls.replicationSystems.controls; let i = index" [formGroupName]="i">
       <!-- Each replication item is rendered as a child component -->
       <app-replication-system-item
         [formGroup]="systemForm"
@@ -25,5 +25,8 @@
         (remove)="removeReplicationSystem(i)">
       </app-replication-system-item>
     </div>
+  </div>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="replicate()" type="button" [disabled]="this.form.controls.replicationSystems.controls.length == 0">Publitseeri</button>
   </div>
 </form>

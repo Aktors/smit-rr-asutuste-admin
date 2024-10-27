@@ -1,8 +1,8 @@
 ﻿import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import {FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
-import {InformationSystemDto} from '../../../../shared/model/common.model';
-import {ClassifierStore} from '../../../../../services/classifiers.store';
-import {ReplicationSystemItemFormGroup} from './replication-system.model';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { InformationSystemDto } from '../../../../shared/model/common.model';
+import { ClassifierStore } from '../../../../../services/classifiers.store';
+import { ReplicationSystemItemFormGroup, EnvironmentFormGroup } from './replication-system.model';
 
 @Component({
   selector: 'app-replication-system-item',
@@ -22,7 +22,7 @@ export class ReplicationSystemItemComponent implements OnInit {
   ) {
     this.form = this.fb.group<ReplicationSystemItemFormGroup>({
       code: new FormControl<string>(this.informationSystem?.code || ''),
-      environments: this.fb.array<FormControl<string | null>>([])
+      environments: this.fb.array<FormGroup<EnvironmentFormGroup>>([]) // Array for environments
     });
   }
 
@@ -37,12 +37,26 @@ export class ReplicationSystemItemComponent implements OnInit {
 
   private createEnvironmentControls(): void {
     const environmentsArray = this.form.get('environments') as FormArray;
+
     this.availableInstances.forEach((instance) => {
-      environmentsArray.push(new FormControl(false));
+      const environmentGroup = this.fb.group<EnvironmentFormGroup>({
+        code: new FormControl<string>(instance.code),
+        isChecked: new FormControl<boolean>(false)
+      });
+      environmentsArray.push(environmentGroup);
     });
+  }
+
+  updateCheckboxValue(index: number, isChecked: boolean): void {
+    const environment = this.form.controls.environments.at(index);
+    environment.controls.isChecked.setValue(isChecked);
   }
 
   removeItem(): void {
     this.remove.emit();
+  }
+
+  get environments(): FormArray<FormGroup<EnvironmentFormGroup>> {
+    return this.form.get('environments') as FormArray<FormGroup<EnvironmentFormGroup>>;
   }
 }

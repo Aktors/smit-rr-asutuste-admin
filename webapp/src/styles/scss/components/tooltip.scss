@@ -1,0 +1,95 @@
+@use '../constants';
+@use '../mixins/text-styles';
+
+$prefix: constants.$veera-prefix;
+
+@mixin tooltip-body {
+  display: none;
+  position: absolute;
+  max-width: var(--#{$prefix}-tooltip-max-width);
+  color: var(--#{$prefix}-tooltip-text);
+  padding: var(--#{$prefix}-tooltip-padding-y) var(--#{$prefix}-tooltip-padding-x);
+  border-radius: var(--#{$prefix}-tooltip-border-radius);
+  background: var(--#{$prefix}-tooltip-background);
+}
+
+@mixin tooltip-arrow {
+  content: '';
+  background: var(--#{$prefix}-tooltip-background);
+  width: 8px;
+  height: 8px;
+  position: absolute;
+}
+
+[data-#{$prefix}-tooltip] {
+  position: relative;
+
+  &:hover,
+  &:focus {
+    &::after {
+      @include tooltip-body;
+
+      width: max-content;
+      content: attr(data-#{$prefix}-tooltip);
+      display: block;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    &::before {
+      @include tooltip-arrow;
+
+      left: 50%;
+      bottom: 100%;
+      transform: translateX(-50%) rotate(45deg);
+    }
+  }
+}
+
+.#{$prefix}-tooltip {
+  @include text-styles.body-small;
+  @include tooltip-body;
+
+  &--visible {
+    display: block;
+  }
+
+  &--top,
+  &[data-popper-placement^='top'] {
+    &::before {
+      top: 100%;
+      left: 50%;
+    }
+  }
+
+  &--right,
+  &[data-popper-placement^='right'] {
+    &::before {
+      top: 50%;
+      left: 0;
+    }
+  }
+
+  &--bottom,
+  &[data-popper-placement^='bottom'] {
+    &::before {
+      top: 0;
+      left: 50%;
+    }
+  }
+
+  &--left,
+  &[data-popper-placement^='left'] {
+    &::before {
+      top: 50%;
+      left: 100%;
+    }
+  }
+
+  &::before {
+    @include tooltip-arrow;
+
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+}

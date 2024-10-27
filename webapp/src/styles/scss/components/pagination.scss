@@ -1,0 +1,72 @@
+@use '../constants';
+@use '../mixins/text-styles';
+@use '../mixins/media';
+@use '../mixins/focus';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--#{$prefix}-spacing-baseline-04);
+  border-top: 1px solid var(--#{$prefix}-table-cells-header-border-border);
+  padding: var(--#{$prefix}-paging-sizing-small-padding-top)
+    var(--#{$prefix}-paging-sizing-small-padding-x)
+    var(--#{$prefix}-paging-sizing-small-padding-bottom)
+    var(--#{$prefix}-paging-sizing-small-padding-x);
+
+  @include media.desktop-and-up {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__pager {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__pages {
+  }
+
+  &__page {
+    @include text-styles.body-small-bold;
+    @include focus.focus-ring;
+
+    $page: &;
+
+    outline: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--#{$prefix}-buttons-sizing-sm-icon-button-width-height);
+    width: var(--#{$prefix}-buttons-sizing-sm-icon-button-width-height);
+    border-radius: var(--#{$prefix}-buttons-sizing-lg-corner-radius);
+    flex-shrink: 0;
+    background: var(--#{$prefix}-buttons-theme-neutral-background-default);
+    border: 2px solid var(--#{$prefix}-buttons-theme-neutral-border-default);
+    color: var(--#{$prefix}-buttons-theme-neutral-text-default);
+
+    &#{$page}--selected {
+      background: var(--#{$prefix}-buttons-theme-primary-background-default);
+      border-color: var(--#{$prefix}-buttons-theme-primary-border-default);
+      color: var(--#{$prefix}-buttons-theme-primary-text-default);
+    }
+  }
+
+  &__items-limit {
+    @include text-styles.body-small;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--#{$prefix}-colors-text-secondary);
+
+    .#{$prefix}-form-control,
+    .#{$prefix}-select {
+      width: 82px;
+    }
+  }
+}

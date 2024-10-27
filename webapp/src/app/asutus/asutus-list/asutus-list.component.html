@@ -1,6 +1,16 @@
+<h1>Asututed</h1>
+<hr>
+<app-asutuste-search-form (search)="onSearch($event)"></app-asutuste-search-form>
 <app-table [dataProvider]="asutusDataProvider">
-  <app-table-text-column field="code" header="Kood"></app-table-text-column>
+  <app-table-link-column field="code" header="Kood" [locationPrefix]="'/asutused/manage'"></app-table-link-column>
   <app-table-text-column field="name" header="Asutuse nimi"></app-table-text-column>
   <app-table-date-column field="startDate" header="Kihtiv alates:"></app-table-date-column>
   <app-table-date-column field="endDate" header="Kehtiv kuni:"></app-table-date-column>
+  <app-table-actions-column key="actions" header="Toimingut">
+    <ng-template let-element>
+      <button type="button" class="v-button v-button--neutral v-button--sm" (click)="editItem(element)">
+        <span class="material-icons" aria-hidden="true">edit</span>Muuda
+      </button>
+    </ng-template>
+  </app-table-actions-column>
 </app-table>

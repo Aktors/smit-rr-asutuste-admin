@@ -1,0 +1,11 @@
+@use '../constants';
+@use '../mixins/media';
+
+$prefix: constants.$veera-prefix;
+$borders: 'border', 'border-top', 'border-bottom', 'border-left', 'border-right';
+
+@each $border in $borders {
+  .#{$prefix}-#{$border} {
+    #{$border}: 1px solid var(--#{$prefix}-colors-borders);
+  }
+}

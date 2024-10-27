@@ -1,0 +1,10 @@
+@use '../constants';
+
+$prefix: constants.$veera-prefix;
+$focus-rings: 'focus-ring-outset', 'focus-ring-inset';
+
+@each $focus-ring in $focus-rings {
+  .#{$prefix}-#{$focus-ring}:focus {
+    box-shadow: var(--#{$prefix}-box-shadow-#{$focus-ring});
+  }
+}

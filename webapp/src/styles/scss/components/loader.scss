@@ -1,0 +1,31 @@
+@use '../constants';
+@use '../mixins/text-styles';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-loader {
+  --#{$prefix}-spin-animation-duration: 1s;
+
+  box-sizing: border-box;
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  border: 4px solid var(--#{$prefix}-loader-background-circular);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: spin var(--#{$prefix}-spin-animation-duration) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: calc(var(--#{$prefix}-spin-animation-duration) * 2);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

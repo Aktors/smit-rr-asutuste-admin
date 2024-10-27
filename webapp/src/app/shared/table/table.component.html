@@ -9,14 +9,14 @@
       </ng-container>
     }
 
-    <ng-container *ngIf="expandedTemplate" matColumnDef="expand">
-      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="toggleRow(element);$event.stopPropagation()">
-          <mat-icon>{{ expandedElement === element ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+    @for (action of actions; track action){
+      <ng-container matColumnDef="{{action.key}}">
+        <th mat-header-cell *matHeaderCellDef>{{ action.header }}</th>
+        <td mat-cell *matCellDef="let element">
+            <ng-container [ngTemplateOutlet]="action.actionTemplate" [ngTemplateOutletContext]="{ $implicit: element }"></ng-container>
+        </td>
+      </ng-container>
+    }
 
     <ng-container  matColumnDef="expandedDetail">
       <td mat-cell *matCellDef="let element" [attr.colspan]="displayedHeaders.length">

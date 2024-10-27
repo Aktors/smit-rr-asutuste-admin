@@ -14,6 +14,7 @@ import {DataProvider} from './table.model';
 import {TableColumnComponent} from './table-column/table-column.component';
 import {TABLE_COLUMN_TOKEN} from './table-column/table-column.token';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {TableActionsColumnComponent} from './table-action-column/table-actions-column.component';
 
 @Component({
   selector: 'app-table',
@@ -36,6 +37,8 @@ export class TableComponent<T> implements  AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<T>;
 
   @ContentChildren(TABLE_COLUMN_TOKEN) columns!: QueryList<TableColumnComponent>;
+  @ContentChildren(TableActionsColumnComponent) actions!: QueryList<TableActionsColumnComponent<T>>;
+
   displayedHeaders: string[] = [];
   displayedHeadersWithDetails: string[] = [];
   expandedElement: T | null = null;
@@ -47,7 +50,7 @@ export class TableComponent<T> implements  AfterViewInit {
     this.dataProvider.paginator = this.paginator;
     this.table.dataSource = this.dataProvider;
 
-    this.displayedHeaders = this.columns.map(col => col.field);
+    this.displayedHeaders =[...this.columns.map(col => col.field), ...this.actions.map(col => col.key)];
     this.displayedHeadersWithDetails = [...this.displayedHeaders];
     if(this.expandedTemplate){
       this.displayedHeadersWithDetails.push("expanded");

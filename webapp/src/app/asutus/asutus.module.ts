@@ -37,6 +37,8 @@ import {
 } from './replication/replication-details/replication-system-item/replication-system-item.component';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatTooltip} from '@angular/material/tooltip';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {AsutusteSearchFormComponent} from './asutus-list/asutuste-search-form/asutuste-search-form.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import {MatTooltip} from '@angular/material/tooltip';
     AsutusDetailsEditComponent,
     TranslationItemComponent,
     AsutusListComponent,
+    AsutusteSearchFormComponent,
     ReplicationDetailsComponent,
     ReplicationSystemItemComponent,
     AsutusComponent,
@@ -85,6 +88,7 @@ import {MatTooltip} from '@angular/material/tooltip';
     MatSuffix,
     MatCheckbox,
     MatTooltip,
+    MatProgressSpinner,
   ]
 })
 export class AsutusModule { }

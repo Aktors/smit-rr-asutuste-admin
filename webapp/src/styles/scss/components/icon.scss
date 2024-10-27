@@ -1,0 +1,11 @@
+@use '../constants';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-icon {
+  font-size: 24px;
+
+  &--sm {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,17 @@
+@use '../constants';
+@use '../mixins/text-styles';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-tag {
+  @include text-styles.body-small;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--#{$prefix}-tags-sizing-inner-spacing);
+  padding: var(--#{$prefix}-tags-sizing-padding-y) var(--#{$prefix}-tags-sizing-padding-x);
+  border-radius: var(--#{$prefix}-tags-sizing-corner-radius);
+  background: var(--#{$prefix}-tags-colors-background);
+  box-shadow: var(--#{$prefix}-box-shadow-elevation-2px);
+}

@@ -1,0 +1,13 @@
+@use '../constants';
+
+@mixin focus-ring {
+  &:focus {
+    box-shadow: var(--#{constants.$veera-prefix}-box-shadow-focus-ring-outset);
+  }
+}
+
+@mixin focus-ring-inset {
+  &:focus {
+    box-shadow: var(--#{constants.$veera-prefix}-box-shadow-focus-ring-inset);
+  }
+}

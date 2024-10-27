@@ -1,0 +1,21 @@
+﻿.search-form-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.form-field {
+  flex: 0 0 auto;
+}
+
+.form-field--large {
+  flex: 1;
+}
+
+.form-field--button {
+  flex: 0 0 auto;
+}
+
+mat-form-field{
+  width: 100%;
+}

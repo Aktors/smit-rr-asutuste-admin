@@ -1,0 +1,33 @@
+@use '../../breakpoints';
+@use '../../constants';
+@use '../../scss-utils/helper-functions' as helpers;
+@use '../../mixins/media';
+@use 'sass:map';
+
+@mixin create-gutter-classes($spacing, $breakpoint-prefix) {
+  &.#{constants.$veera-prefix}-g#{$breakpoint-prefix}-#{$spacing},
+  &.#{constants.$veera-prefix}-gx#{$breakpoint-prefix}-#{$spacing} {
+    --#{constants.$veera-prefix}-gx: var(
+      --#{constants.$veera-prefix}-spacing-baseline-#{helpers.pad-number($spacing)}
+    );
+  }
+
+  &.#{constants.$veera-prefix}-g#{$breakpoint-prefix}-#{$spacing},
+  &.#{constants.$veera-prefix}-gy#{$breakpoint-prefix}-#{$spacing} {
+    --#{constants.$veera-prefix}-gy: var(
+      --#{constants.$veera-prefix}-spacing-baseline-#{helpers.pad-number($spacing)}
+    );
+  }
+}
+
+@mixin create-gutters() {
+  @each $breakpoint in map-keys(breakpoints.$breakpoints) {
+    @for $spacing from 0 through constants.$max-spacing {
+      @include create-gutter-classes($spacing, '');
+
+      @include media.breakpoint-up($breakpoint) {
+        @include create-gutter-classes($spacing, '-#{$breakpoint}');
+      }
+    }
+  }
+}

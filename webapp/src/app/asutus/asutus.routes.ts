@@ -3,6 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {AsutusFormComponent} from './asutus-form/asutus-form.component';
 import {AsutusComponent} from './asutus.component';
 import {AsutusListComponent} from './asutus-list/asutus-list.component';
+import {AsutusDetailsShowComponent} from './asutus-details-show/asutus-details-show.component';
+import {AsutusDetailsEditComponent} from './asutus-details-edit/asutus-details-edit.component';
 
 const routes: Routes = [
   {
@@ -14,17 +16,23 @@ const routes: Routes = [
         component: AsutusListComponent,
       },
       {
-        path:'new',
-        component: AsutusFormComponent
+        path: 'manage',
+        component: AsutusFormComponent,
+        children: [
+          {
+            path:'new',
+            component: AsutusDetailsEditComponent,
+          },
+          {
+            path: ':code',
+            component: AsutusDetailsShowComponent
+          },
+          {
+            path:':code/edit',
+            component: AsutusDetailsEditComponent
+          }
+        ]
       },
-      {
-        path:':code',
-        component: AsutusFormComponent
-      },
-      {
-        path:':code/edit',
-        component: AsutusFormComponent
-      }
     ]
   }
 ]

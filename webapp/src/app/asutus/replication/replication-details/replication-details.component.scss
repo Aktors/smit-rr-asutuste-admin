@@ -8,6 +8,8 @@
   flex: 1;
 }
 
-.add-button {
-  margin-left: auto;
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 }

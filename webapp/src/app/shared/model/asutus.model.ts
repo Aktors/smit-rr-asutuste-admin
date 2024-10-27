@@ -1,8 +1,8 @@
 ﻿import {PagedQuery} from './query.model';
 
 export interface AsutusteQuery extends PagedQuery {
-  code?: string,
-  name?: string,
+  code?: string | null,
+  name?: string | null,
   startDate?: Date,
   endDate?: Date,
 }

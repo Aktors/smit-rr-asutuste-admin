@@ -1,0 +1,98 @@
+@use '../constants';
+@use '../mixins/text-styles';
+@use '../mixins/borders';
+@use '../mixins/focus';
+
+$prefix: constants.$veera-prefix;
+
+@mixin state-colors($state) {
+  background: var(--#{$prefix}-dropdown-menu-menuitem-#{$state});
+  color: var(--#{$prefix}-dropdown-menu-menuitem-text-#{$state});
+}
+
+.#{$prefix}-dropdown {
+  $self: &;
+
+  z-index: 10;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  overflow: auto;
+  max-width: var(--#{$prefix}-dropdown-menu-max-width);
+  max-height: var(--#{$prefix}-dropdown-menu-max-height);
+  border-radius: var(--#{$prefix}-dropdown-menu-menu-corner-radius);
+  border: 1px solid var(--#{$prefix}-dropdown-menu-menu-border);
+  background: var(--#{$prefix}-dropdown-menu-menu-background);
+  box-shadow: var(--#{$prefix}-box-shadow-elevation-2px);
+
+  &--top {
+    bottom: 100%;
+    top: unset;
+  }
+
+  &__option {
+    @include text-styles.body-medium;
+    @include state-colors('default');
+
+    $option: &;
+
+    cursor: pointer;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    gap: var(--#{$prefix}-dropdown-menu-menuitem-sizing-singleselect-inner-spacing);
+    width: 100%;
+    padding: var(--#{$prefix}-dropdown-menu-menuitem-sizing-singleselect-padding-top)
+      var(--#{$prefix}-dropdown-menu-menuitem-sizing-singleselect-padding-x)
+      var(--#{$prefix}-dropdown-menu-menuitem-sizing-singleselect-padding-bottom)
+      var(--#{$prefix}-dropdown-menu-menuitem-sizing-singleselect-padding-x);
+
+    &:first-child {
+      @include borders.set-border-top-radius(var(--#{$prefix}-dropdown-menu-menu-corner-radius));
+    }
+
+    &:last-child {
+      @include borders.set-border-bottom-radius(var(--#{$prefix}-dropdown-menu-menu-corner-radius));
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--#{$prefix}-dropdown-menu-menu-border);
+    }
+
+    @include focus.focus-ring-inset;
+
+    &:focus {
+      @include state-colors('focus');
+    }
+
+    &:hover {
+      @include state-colors('hover');
+    }
+
+    &:active {
+      @include state-colors('active');
+    }
+
+    &--selected {
+      @include state-colors('selected');
+    }
+
+    &:disabled {
+      @include state-colors('disabled');
+
+      pointer-events: none;
+    }
+  }
+
+  &--multiselect {
+    #{$self}__option {
+      padding: var(--#{$prefix}-dropdown-menu-menuitem-sizing-multiselect-padding-top)
+        var(--#{$prefix}-dropdown-menu-menuitem-sizing-multiselect-padding-x)
+        var(--#{$prefix}-dropdown-menu-menuitem-sizing-multiselect-padding-bottom)
+        var(--#{$prefix}-dropdown-menu-menuitem-sizing-multiselect-padding-x);
+      gap: var(---#{$prefix}-dropdown-menu-menuitem-sizing-multiselect-inner-spacing);
+    }
+  }
+}
