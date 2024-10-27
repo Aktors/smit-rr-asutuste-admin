@@ -1,2 +1,7 @@
-<app-nav-menu />
-
+<div class="v-vertical-menu-layout">
+  <app-header />
+  <app-side-menu [items]="navigationItems" />
+  <main id="main">
+    <router-outlet />
+  </main>
+</div>

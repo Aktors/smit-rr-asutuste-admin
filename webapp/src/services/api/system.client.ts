@@ -15,7 +15,7 @@ export class SystemClient {
 
   getClassifier(group: string): Observable<ClassifierDto[]> {
     let url_ = this.baseUrl + "/api/v1/system/classifier/{group}/list";
-    url_ = url_.replace("{code}", encodeURIComponent("" + group));
+    url_ = url_.replace("{group}", encodeURIComponent("" + group));
     url_ = url_.replace(/[?&]$/, "");
 
     return this.http.get<ClassifierDto[]>(url_);

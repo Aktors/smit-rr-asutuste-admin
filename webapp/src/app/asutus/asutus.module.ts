@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {AsutusListComponent} from './asutus-list/asutus-list.component';
 import {AsutusRoutesModule} from './asutus.routes';
 import {SharedModule} from '../shared/shared.module';
-import {AustusDetailsComponent} from './asutus-details/austus-details.component';
+import {AsutusDetailsShowComponent} from './asutus-details-show/asutus-details-show.component';
 import {ReplicationDetails} from './replication/replication-details/replication-details.component';
 import {AsutusFormComponent} from './asutus-form/asutus-form.component';
 import { AsutusComponent } from './asutus.component';
@@ -12,7 +12,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {AppModule} from "../app.module";
 import {ReplicationLogComponent} from './replication/replication-log/replication-log.component';
 import {
   MatCell,
@@ -25,12 +24,21 @@ import {
 } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
-import {TableExpandableRowsExample} from "../shared/table/test-table/table-expandable-rows-example.component";
+import {AsutusDetailsEditComponent} from './asutus-details-edit/asutus-details-edit.component';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatOption} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
+import {ReactiveFormsModule} from '@angular/forms';
+import {TranslationItemComponent} from './asutus-details-edit/translation-item/translation-item.component';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
     AsutusFormComponent,
-    AustusDetailsComponent,
+    AsutusDetailsShowComponent,
+    AsutusDetailsEditComponent,
+    TranslationItemComponent,
     AsutusListComponent,
     ReplicationDetails,
     AsutusComponent,
@@ -38,28 +46,37 @@ import {TableExpandableRowsExample} from "../shared/table/test-table/table-expan
   ],
   exports: [
   ],
-    imports: [
-        CommonModule,
-        SharedModule,
-        AsutusRoutesModule,
-        MatGridListModule,
-        MatCardModule,
-        MatMenuModule,
-        MatIconModule,
-        MatButtonModule,
-        MatCell,
-        MatCellDef,
-        MatColumnDef,
-        MatHeaderCell,
-        MatHeaderRow,
-        MatHeaderRowDef,
-        MatPaginator,
-        MatRow,
-        MatRowDef,
-        MatSort,
-        MatSortHeader,
-        MatTable,
-        TableExpandableRowsExample
-    ]
+  imports: [
+    CommonModule,
+    SharedModule,
+    AsutusRoutesModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatPaginator,
+    MatRow,
+    MatRowDef,
+    MatSort,
+    MatSortHeader,
+    MatTable,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatOption,
+    MatSelect,
+    ReactiveFormsModule,
+    MatDatepicker,
+    MatDatepickerToggle,
+    MatDatepickerInput,
+    MatSuffix,
+  ]
 })
 export class AsutusModule { }

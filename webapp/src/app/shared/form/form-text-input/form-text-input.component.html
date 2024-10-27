@@ -1,13 +1,4 @@
-﻿<div class="v-form-row">
-  <label class="v-form-row-label v-form-row-label--required" for="text-input">Text input</label>
-  <div class="v-form-row-input">
-    <input
-      type="text"
-      placeholder="Placeholder"
-      class="v-form-control v-form-control--md"
-      id="text-input"
-      required=""
-      aria-describedby="0.5148798529417811">
-    <span id="0.5148798529417811" class="v-form-feedback">Helper text</span>
-  </div>
-</div>
+﻿<mat-form-field appearance="fill">
+  <mat-label>{{label}}</mat-label>
+  <input matInput placeholder="{{label}}">
+</mat-form-field>

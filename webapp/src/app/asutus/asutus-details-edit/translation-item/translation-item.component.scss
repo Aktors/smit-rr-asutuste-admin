@@ -1,0 +1,14 @@
+﻿.translation-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .language-code {
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  .translation-text {
+    flex: 1;
+  }
+}

@@ -1,10 +1,15 @@
-﻿<div class="v-container">
-  <div class="v-row">
-    <div class="v-col">
-      <app-austus-details />
-    </div>
-    <div class="v-col">
-      <app-replication-details/>
-    </div>
+﻿
+<h1 class="v-mb-6">Asutus</h1>
+<div class="v-row">
+  <div class="v-col-6">
+    <h3 class="v-mb-6">Asutuse info</h3>
+    <app-card variant="secondary" [flat]="true">
+      <app-asutud-details-edit />
+    </app-card>
+  </div>
+  <div class="v-col-6">
+    <h3 class="v-mb-6">Replikatsiooni seaded</h3>
+    <app-card variant="secondary" [flat]="true"></app-card>
   </div>
 </div>
+
