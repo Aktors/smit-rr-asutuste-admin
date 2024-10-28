@@ -1,10 +1,4 @@
-﻿import {PagedQuery} from './query.model';
-
-export interface  ReplicationLogQuery extends PagedQuery {
-
-}
-
-export interface ReplicationLog {
+﻿export interface ReplicationLog {
   referenceId: string,
   caption: number,
   sentDate?: string,

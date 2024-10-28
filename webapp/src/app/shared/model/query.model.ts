@@ -1,4 +1,5 @@
 ﻿export interface PagedQuery {
+  criteria?: QueryCriterionDto[],
   page?: number,
   pageSize?: number,
   sortBy?: string,
@@ -11,4 +12,9 @@ export interface QueryResultDto {
   totalPages: number,
   pageSize: number,
   total: number
+}
+
+export interface QueryCriterionDto {
+  field: string,
+  value: string
 }

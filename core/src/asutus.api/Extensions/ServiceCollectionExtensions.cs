@@ -60,8 +60,9 @@ public static class ServiceCollectionExtensions
         
         services.AddScoped<IReplicationService, ReplicationService>();
         services.AddScoped<IMessagePublisherService, RabbitMqPublisherService>();
-        services.AddScoped<IMessageListener, RabbitMqListener>();
         services.AddScoped<IMessageLogService, DbMessageLogService>();
+        //TODO: should be running separately, Web app does not fit for the purpose.
+        services.AddScoped<IMessageListener, RabbitMqListener>();
     }
 
     public static void AddPostgresDbStorageImplementation(this IHostApplicationBuilder builder)

@@ -1,9 +1,10 @@
 ﻿import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ReplicationSystemDto, ReplicationLog, ReplicationLogQuery} from '../../app/shared/model/replication.model';
+import {ReplicationSystemDto, ReplicationLog} from '../../app/shared/model/replication.model';
 import {QueryResponse} from '../../app/shared/model/asutus.model';
 import {environment} from '../../environments/environment';
+import {PagedQuery} from '../../app/shared/model/query.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ReplicationClient {
   constructor(private http: HttpClient) {
     this.baseUrl = environment.asutusApiUrl;
   }
-  getLog(query: ReplicationLogQuery): Observable<QueryResponse<ReplicationLog>> {
+  getLog(query: PagedQuery): Observable<QueryResponse<ReplicationLog>> {
     let url_ = this.baseUrl + "/api/v1/replication/log?";
 
     if (query.page)
@@ -24,6 +25,7 @@ export class ReplicationClient {
       url_ += "sortBy=" + encodeURIComponent("" + query.sortBy) + "&";
     if (query.sortOrder)
       url_ += "sortOrder=" + encodeURIComponent("" + query.sortOrder) + "&";
+
     url_ = url_.replace(/[?&]$/, "");
 
     return this.http.get<QueryResponse<ReplicationLog>>(url_);

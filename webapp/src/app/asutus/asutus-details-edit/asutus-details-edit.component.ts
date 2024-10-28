@@ -7,6 +7,7 @@ import {TranslationItemFormGroup} from './translation-item/translation-item.mode
 import {ActivatedRoute, Router} from '@angular/router';
 import {AsutusDto, TranslationDto} from '../../shared/model/asutus.model';
 import {AsutusClient} from '../../../services/api/asutus.client';
+import {AsutusFormStore} from '../asutus-form/asutus-form.store';
 
 @Component({
   selector: 'app-asutud-details-edit',
@@ -22,6 +23,7 @@ export class AsutusDetailsEditComponent implements OnInit{
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
+    private asutusStore: AsutusFormStore,
     private classifierStore: ClassifierStore,
     private asutusClient: AsutusClient
   ) {
@@ -45,7 +47,10 @@ export class AsutusDetailsEditComponent implements OnInit{
 
     const code = this.route.snapshot.paramMap.get('code');
     if(code)
+    {
       this.fetchAsutusDetails(code);
+      this.asutusStore.activeAsutusCode.next(code);
+    }
   }
 
   private fetchAsutusDetails(code: string): void {

@@ -2,6 +2,7 @@
 import {AsutusDto} from '../../shared/model/asutus.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AsutusClient} from '../../../services/api/asutus.client';
+import {AsutusFormStore} from '../asutus-form/asutus-form.store';
 
 @Component({
   selector: 'app-austus-details',
@@ -16,6 +17,7 @@ export class AsutusDetailsShowComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private asutusFormStore: AsutusFormStore,
     private asutusClient: AsutusClient
   ) {}
 
@@ -23,6 +25,7 @@ export class AsutusDetailsShowComponent implements OnInit {
     const code = this.route.snapshot.paramMap.get('code');
     if (code) {
       this.fetchAsutusDetails(code);
+      this.asutusFormStore.activeAsutusCode.next(code);
     } else {
       this.error = 'No code provided in route';
       this.isLoading = false;

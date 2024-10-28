@@ -14,21 +14,29 @@ public class DbMessageLogRepository : IMessageLogRepository
         _asutusContext = asutusContext;
     }
     
-    public async Task AddMessageAsync(MessageLog messageLog, CancellationToken cancellationToken = default)
+    public async Task AddMessageAsync(ReplicationLogDto replicationLogDto, CancellationToken cancellationToken = default)
     {
-        _asutusContext.MessageLogs.Add(messageLog);
+        _asutusContext.MessageLogs.Add(replicationLogDto.Map());
         await _asutusContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<MessageLog?> GetMessageAsync(Guid referenceId, CancellationToken cancellationToken = default)
+    public async Task<ReplicationLogDto?> GetMessageAsync(Guid referenceId, CancellationToken cancellationToken = default)
     {
-        return await _asutusContext.MessageLogs
-            .FirstOrDefaultAsync(m => m.ReferenceId.Equals(referenceId), cancellationToken);
+        var messageLog = await _asutusContext.MessageLogs
+            .FirstOrDefaultAsync(x => x.ReferenceId == referenceId, cancellationToken);
+        return messageLog?.Map();
     }
 
-    public async Task UpdateAsync(MessageLog messageLog, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(ReplicationLogDto replicationLog, CancellationToken cancellationToken = default)
     {
-        _asutusContext.Entry(messageLog).State = EntityState.Modified;
+        var messageLog = await _asutusContext.MessageLogs
+            .FirstOrDefaultAsync(x => x.ReferenceId == replicationLog.ReferenceId, cancellationToken);
+        if(messageLog == null)
+            return;
+        messageLog.Content = replicationLog.Content;
+        messageLog.SentDate = replicationLog.SentDate;
+        _asutusContext.MessageLogs.Update(messageLog);
+        
         await _asutusContext.SaveChangesAsync(cancellationToken);
     }
 

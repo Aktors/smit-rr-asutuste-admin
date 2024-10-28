@@ -4,6 +4,11 @@ import { ReplicationDetailsFormGroup } from './replication-details.model';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { InformationSystemsStore } from '../../../../services/information-systems.store';
 import { ReplicationSystemItemFormGroup, EnvironmentFormGroup } from './replication-system-item/replication-system.model';
+import {ReplicationClient} from '../../../../services/api/replication.client';
+import {ActivatedRoute, Router} from '@angular/router';
+import {environment} from '../../../../environments/environment';
+import {ReplicationSystemDto} from '../../../shared/model/replication.model';
+import {AsutusFormStore} from '../../asutus-form/asutus-form.store';
 
 @Component({
   selector: 'app-replication-details',
@@ -17,7 +22,9 @@ export class ReplicationDetailsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private informationSystemsStore: InformationSystemsStore
+    private asutusFormStore: AsutusFormStore,
+    private informationSystemsStore: InformationSystemsStore,
+    private replicationClient: ReplicationClient
   ) {
     this.form = this.fb.group<ReplicationDetailsFormGroup>({
       selectedSystem: new FormControl<string | null>(null),
@@ -29,6 +36,7 @@ export class ReplicationDetailsComponent implements OnInit {
     this.informationSystemsStore.informationSystems$.subscribe((systems) => {
       this.knownSystems = systems;
     });
+    console.log(this.asutusFormStore.activeAsutusCode);
   }
 
   addReplicationSystem(): void {
@@ -70,6 +78,21 @@ export class ReplicationDetailsComponent implements OnInit {
   }
 
   replicate(): void {
-    console.log(this.form.getRawValue());
+    if(this.asutusFormStore.activeAsutusCode.value){
+      const data: ReplicationSystemDto[] = this.form.controls.replicationSystems.controls.map(rs => {
+        return {
+          code: rs.controls.code.value!,
+          environments: rs.controls.environments.controls
+            .filter(env => env.value.isChecked?.valueOf())
+            .map(env => env.controls.code.value!)
+        }
+      });
+      this.replicationClient
+        .publish(this.asutusFormStore.activeAsutusCode.value,data)
+        .subscribe(() => {
+          console.log("saved");
+          console.log(data);
+        });
+    }
   }
 }

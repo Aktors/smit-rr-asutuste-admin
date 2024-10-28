@@ -1,13 +1,4 @@
-﻿import {PagedQuery} from './query.model';
-
-export interface AsutusteQuery extends PagedQuery {
-  code?: string | null,
-  name?: string | null,
-  startDate?: Date,
-  endDate?: Date,
-}
-
-export interface QueryResponse<T> {
+﻿export interface QueryResponse<T> {
   result: T[],
   page: number,
   totalPages: number,

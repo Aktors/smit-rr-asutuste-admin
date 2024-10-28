@@ -1,6 +1,5 @@
-﻿using asutus.domain.Data.Repositories;
-using asutus.domain.Entities;
-
+﻿using asutus.common.Model;
+using asutus.domain.Data.Repositories;
 namespace asutus.api.services;
 
 public class DbMessageLogService : IMessageLogService
@@ -15,7 +14,7 @@ public class DbMessageLogService : IMessageLogService
     public async Task<Guid> InitMessageAsync(String caption, CancellationToken cancellationToken = default)
     {
         var referenceId = Guid.NewGuid();
-        await _repository.AddMessageAsync(new MessageLog {
+        await _repository.AddMessageAsync(new ReplicationLogDto {
             Caption = caption,
             ReferenceId = referenceId
         }, cancellationToken);

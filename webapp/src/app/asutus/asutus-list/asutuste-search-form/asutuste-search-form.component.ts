@@ -1,6 +1,6 @@
 ﻿import {Component, EventEmitter, Output} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {SearchCriteria} from './asutuste-search-form.model';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {AsutusSearchCriteria, AsutusSearchFormGroup} from './asutuste-search-form.model';
 
 @Component({
   selector: 'app-asutuste-search-form',
@@ -8,21 +8,20 @@ import {SearchCriteria} from './asutuste-search-form.model';
   styleUrls: ['./asutuste-search-form.component.scss']
 })
 export class AsutusteSearchFormComponent{
-  form: FormGroup;
+  form: FormGroup<AsutusSearchFormGroup>;
 
-  @Output() search = new EventEmitter<SearchCriteria>();
+  @Output() search = new EventEmitter<AsutusSearchCriteria>();
 
   constructor(private fb: FormBuilder) {
-    this.form = this.fb.group<SearchCriteria>({
-      codePart: '',
-      namePart: ''
+    this.form = this.fb.group<AsutusSearchFormGroup>({
+      codePart: new FormControl(''),
+      namePart: new FormControl('')
     });
   }
 
   performSearch(): void {
     if (this.form.valid) {
-      this.search.emit(this.form.value);
-      console.log(this.form.value);
+      this.search.emit(this.form.getRawValue());
     }
   }
 }

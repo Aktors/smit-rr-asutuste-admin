@@ -15,4 +15,15 @@ public static class ReplicationLogMapper
             Content = entity.Caption
         };
     }
+    
+    public static MessageLog Map(this ReplicationLogDto entity)
+    {   
+        return new MessageLog
+        {
+            ReferenceId = entity.ReferenceId,
+            Caption = entity.Caption,
+            SentDate = entity.SentDate,
+            Content = entity.Content
+        };
+    }
 }
