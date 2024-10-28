@@ -2,6 +2,16 @@
 
 public class AsutusDto : AsutusShortDto
 {
+    public AsutusDto()
+    {
+        Translations = [];
+    }
+    
+    public AsutusDto(List<TranslationDto> translations)
+    {
+        Translations = translations;
+    }
+
     public List<TranslationDto> Translations { get; set; }
 }
 
