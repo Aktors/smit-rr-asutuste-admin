@@ -1,0 +1,107 @@
+@use '../constants';
+@use '../mixins/text-styles';
+@use '../mixins/form-styles';
+@use '../mixins/button-styles';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-form-control {
+  @include text-styles.body-medium;
+
+  text-align: initial;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  outline: none;
+  color: var(--#{$prefix}-inputs-text-filled);
+  border: 1px solid var(--#{$prefix}-inputs-border-default);
+  background: var(--#{$prefix}-inputs-background-default);
+
+  &::placeholder,
+  &__placeholder {
+    color: var(--#{$prefix}-inputs-text-placeholder);
+  }
+
+  &:focus,
+  &--focus {
+    border-color: var(--#{$prefix}-inputs-border-focus);
+    background: var(--#{$prefix}-inputs-background-focus);
+    box-shadow: var(--#{constants.$veera-prefix}-box-shadow-focus-ring-outset);
+  }
+
+  &:hover {
+    border-color: var(--#{$prefix}-inputs-border-hover);
+    background: var(--#{$prefix}-inputs-background-hover);
+  }
+
+  &:active,
+  &--active {
+    border-color: var(--#{$prefix}-inputs-border-active);
+    background: var(--#{$prefix}-inputs-background-active);
+  }
+
+  &:disabled,
+  &--disabled {
+    @include form-styles.form-input-disabled;
+  }
+
+  &--error {
+    border-color: var(--#{$prefix}-inputs-border-error);
+    background: var(--#{$prefix}-inputs-background-error);
+  }
+
+  &--success {
+    border-color: var(--#{$prefix}-inputs-border-success);
+    background: var(--#{$prefix}-inputs-background-success);
+  }
+
+  &--sm {
+    @include form-styles.form-input-small;
+  }
+
+  &--md {
+    @include form-styles.form-input-medium;
+  }
+
+  &--lg {
+    @include form-styles.form-input-large;
+  }
+}
+
+.#{$prefix}-icon-input {
+  $self: &;
+
+  position: relative;
+
+  .#{$prefix}-form-control-icon,
+  .#{$prefix}-form-control-icon-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .#{$prefix}-form-control-icon {
+    font-size: var(--#{constants.$veera-prefix}-inputs-icon-width-height);
+    color: var(--#{constants.$veera-prefix}-inputs-icon-fill);
+  }
+
+  .#{$prefix}-form-control-icon-btn {
+    @include button-styles.base;
+    @include button-styles.neutral;
+    @include button-styles.small-icon-only;
+
+    border-radius: var(--#{$prefix}-buttons-sizing-sm-corner-radius);
+  }
+
+  &--sm {
+    @include form-styles.icon-input-small($self);
+  }
+
+  &--md {
+    @include form-styles.icon-input-medium($self);
+  }
+
+  &--lg {
+    @include form-styles.icon-input-large($self);
+  }
+}

@@ -1,0 +1,85 @@
+Info that later should be moved to readme:
+
+* The information systems data and publishing channels are presented in the current solution as is, there is no functionality to manage these objects. Out of the scope. There are pre registered ones:
+	*e-rahvastiku registered (RR)
+	* menetlus tarkvara (MT)
+	* iseteenindus portaal (RRKP)
+* the database is using database surrogate keys together with  natural keys for future soft delete feature.
+* UI should generate next data for replication
+{
+	"data": { 
+		"code": "TTIPA",
+		"name": "Tallinna Perekonnaseisuamet",
+		"translations": [
+			{
+				"code": "ee",
+				"name": "Tallinna Perekonnaseisuamet"
+			},
+			{
+				"code": "en",
+				"name": "Tallinn Vital Statistics Department"
+			},
+			{
+				"code": "en",
+				"name": "Tallinn Vital Statistics Department"
+			},
+			{
+				"code": "ru",
+				"name": "Tallinn Vital Statistics Department"			
+			}
+		]
+	},
+	replications: [
+		{ 
+			"code": "RRKP",
+			"env": ["DEV","TEST"]
+		},
+		{
+			"code": "RRMT",
+			"env": ["DEV"]
+		}
+	]
+}
+* Proto template
+https://www.figma.com/design/nzp5HtFAZfdBiXaFSwWPpi/Proovit%C3%B6%C3%B6?node-id=0-1&node-type=canvas
+* Asutus code cannot be changed
+* Facade should encapsulate whole logic interaction with services and only api related topic should stay on controller level (f.e return action)
+
+//Add migration library
+cd asutus.api
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+//Add Postgres driver
+cd asutus.domain 
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+
+//Install ef-tool for creating migrations
+dotnet tool install --global dotnet-ef --version 8.*
+
+//Add initial migration
+dotnet ef migrations add InitialCreate --project asutus.domain --startup-project asutus.api
+
+//Add new migration
+dotnet ef migrations add AddMessageLog --project asutus.domain --startup-project asutus.api
+//Update database
+dotnet ef database update --project asutus.domain --startup-project asutus.api
+
+
+//Ammend last migration
+//1.Revert last migration
+dotnet ef database update <PreviousMigrationName> --project asutus.domain --startup-project asutus.api
+//2. Remove last migration
+dotnet ef migrations remove --project asutus.domain --startup-project asutus.api
+//3. Add again migration
+dotnet ef migrations add <MigrationName> --project asutus.domain --startup-project asutus.api
+
+TODO:
+add unique constraint to system instance table
+resolve problem with vhost on rabbitMq: if it is specified there should be a way to create it on rabbitMq container before testing application.
+apply some lint validation tool for back and front (low priority)
+add note to final documentation about test coverage. That only one class is covered from each layer. For demo purposes.
+
+*Helper projects:
+	* Veera Design:
+		cd e-service-design-system
+		npm run storybook

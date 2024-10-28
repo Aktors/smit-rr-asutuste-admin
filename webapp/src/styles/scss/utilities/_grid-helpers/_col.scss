@@ -1,0 +1,41 @@
+@use '../../breakpoints';
+@use '../../constants';
+@use '../../scss-utils/helper-functions' as helpers;
+@use '../../mixins/media';
+@use 'sass:map';
+@use 'sass:math';
+
+$col-count: 12;
+
+@mixin create-col($size: false) {
+  @if $size {
+    flex: 0 0 auto;
+    width: math.percentage(math.div($size, $col-count));
+  } @else {
+    flex: 1 1 0;
+    max-width: 100%;
+  }
+}
+
+@mixin create-cols() {
+  @each $breakpoint-key, $breakpoint-val in breakpoints.$breakpoints {
+    $bp-infix: if(helpers.is-zero($breakpoint-val), '', '-#{$breakpoint-key}');
+
+    @include media.breakpoint-up($breakpoint-key) {
+      .#{constants.$veera-prefix}-col#{$bp-infix} {
+        flex: 1 0 0%;
+      }
+
+      .#{constants.$veera-prefix}-col#{$bp-infix}-auto {
+        flex: 0 0 auto;
+        width: auto;
+      }
+
+      @for $size from 1 through $col-count {
+        .#{constants.$veera-prefix}-col#{$bp-infix}-#{$size} {
+          @include create-col($size);
+        }
+      }
+    }
+  }
+}

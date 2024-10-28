@@ -1,0 +1,13 @@
+﻿<div class="table-header">
+  <h2>Replitseerimise logid</h2>
+  <button class="v-button v-button--neutral v-button--md" (click)="refreshTable()"><span aria-hidden="true" class="material-icons">refresh</span>Värskenda</button>
+</div>
+<app-table-with-details [dataProvider]="logDataProvider" [expandedTemplate]="recordDetails">
+  <app-table-text-column field="caption" header="Destination" />
+  <app-table-date-column field="sentDate" header="Confirmed at:" />
+  <app-table-text-column field="referenceId" header="Id:" />
+
+  <ng-template #recordDetails let-element>
+    <app-replication-log-details *ngIf="element['content']" [json]="element['content']"></app-replication-log-details>
+  </ng-template>
+</app-table-with-details>

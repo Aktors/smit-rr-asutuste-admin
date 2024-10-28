@@ -1,0 +1,17 @@
+@use '../constants';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-overlay {
+  inset: 0;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  &--modal {
+    overflow: auto;
+
+    .#{$prefix}-modal {
+      margin: 40px auto;
+    }
+  }
+}

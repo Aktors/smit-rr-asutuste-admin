@@ -1,0 +1,69 @@
+services:
+  api:
+    container_name: api
+    build:
+      context: ./core
+      dockerfile: Dockerfile.api
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Container
+      - ASPNETCORE_URLS=http://+:8080
+      - APP_USE_TEST_DATA=true
+    depends_on:
+      - db
+      - mq
+
+  web-ui:
+    container_name: web-ui
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    depends_on:
+      - api
+
+  worker:
+    container_name: worker
+    build:
+      context: ./core
+      dockerfile: Dockerfile.worker
+    environment:
+      - DOTNET_ENVIRONMENT=Container
+    depends_on:
+      - db
+      - mq
+
+  mq:
+    image: rabbitmq:4.0-management
+    container_name: mq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    expose:
+      - "5672"
+      - "15672"
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  db:
+    image: postgres:15
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: asutused
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 3

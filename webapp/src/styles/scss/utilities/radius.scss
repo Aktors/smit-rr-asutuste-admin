@@ -1,0 +1,51 @@
+@use '../constants';
+@use '../scss-utils/helper-functions' as helpers;
+@use '../mixins/borders';
+
+$prefix: constants.$veera-prefix;
+
+@for $spacing from 0 through constants.$max-radius {
+  .#{$prefix}-radius-#{$spacing} {
+    border-radius: var(--#{$prefix}-radius-#{helpers.pad-number($spacing)});
+  }
+
+  .#{$prefix}-t-radius-#{$spacing} {
+    @include borders.set-border-top-radius(
+      var(--#{$prefix}-radius-#{helpers.pad-number($spacing)})
+    );
+  }
+
+  .#{$prefix}-b-radius-#{$spacing} {
+    @include borders.set-border-bottom-radius(
+      var(--#{$prefix}-radius-#{helpers.pad-number($spacing)})
+    );
+  }
+
+  .#{$prefix}-l-radius-#{$spacing} {
+    @include borders.set-border-left-radius(
+      var(--#{$prefix}-radius-#{helpers.pad-number($spacing)})
+    );
+  }
+
+  .#{$prefix}-r-radius-#{$spacing} {
+    @include borders.set-border-right-radius(
+      var(--#{$prefix}-radius-#{helpers.pad-number($spacing)})
+    );
+  }
+
+  .#{$prefix}-tl-radius-#{$spacing} {
+    border-top-left-radius: var(--#{$prefix}-radius-#{helpers.pad-number($spacing)});
+  }
+
+  .#{$prefix}-tr-radius-#{$spacing} {
+    border-top-right-radius: var(--#{$prefix}-radius-#{helpers.pad-number($spacing)});
+  }
+
+  .#{$prefix}-bl-radius-#{$spacing} {
+    border-bottom-left-radius: var(--#{$prefix}-radius-#{helpers.pad-number($spacing)});
+  }
+
+  .#{$prefix}-br-radius-#{$spacing} {
+    border-bottom-right-radius: var(--#{$prefix}-radius-#{helpers.pad-number($spacing)});
+  }
+}

@@ -1,0 +1,78 @@
+@use '../constants';
+
+$prefix: constants.$veera-prefix;
+
+@mixin icon-input-spacings($self, $spacing) {
+  &#{ $self }--left-icon {
+    .#{$prefix}-form-control {
+      padding-left: $spacing;
+    }
+  }
+
+  &#{ $self }--right-icon {
+    .#{$prefix}-form-control {
+      padding-right: $spacing;
+    }
+  }
+}
+
+@mixin icon-input-styles($self, $size) {
+  $icon-spacing: calc(
+    var(--#{$prefix}-inputs-sizing-#{$size}-padding-x) + var(--#{$prefix}-inputs-icon-width-height) +
+      var(--#{$prefix}-inputs-sizing-#{$size}-inner-spacing)
+  );
+  .#{$prefix}-form-control {
+    padding: var(--#{$prefix}-inputs-sizing-#{$size}-padding-y)
+      var(--#{$prefix}-inputs-sizing-#{$size}-padding-x);
+    border-radius: var(--#{$prefix}-inputs-sizing-#{$size}-corner-radius);
+  }
+
+  .#{$prefix}-form-control-icon,
+  .#{$prefix}-form-control-icon-btn {
+    &--left {
+      left: var(--#{$prefix}-inputs-sizing-#{$size}-padding-x);
+    }
+
+    &--right {
+      right: var(--#{$prefix}-inputs-sizing-#{$size}-padding-x);
+    }
+  }
+
+  @include icon-input-spacings($self, $icon-spacing);
+}
+
+@mixin form-input-small {
+  padding: var(--#{$prefix}-inputs-sizing-sm-padding-y) var(--#{$prefix}-inputs-sizing-sm-padding-x);
+  border-radius: var(--#{$prefix}-inputs-sizing-sm-corner-radius);
+  gap: var(--#{$prefix}-inputs-sizing-sm-inner-spacing);
+}
+
+@mixin form-input-medium {
+  padding: var(--#{$prefix}-inputs-sizing-md-padding-y) var(--#{$prefix}-inputs-sizing-md-padding-x);
+  border-radius: var(--#{$prefix}-inputs-sizing-md-corner-radius);
+  gap: var(--#{$prefix}-inputs-sizing-md-inner-spacing);
+}
+
+@mixin form-input-large {
+  padding: var(--#{$prefix}-inputs-sizing-lg-padding-y) var(--#{$prefix}-inputs-sizing-lg-padding-x);
+  border-radius: var(--#{$prefix}-inputs-sizing-lg-corner-radius);
+  gap: var(--#{$prefix}-inputs-sizing-lg-inner-spacing);
+}
+
+@mixin form-input-disabled {
+  border-color: var(--#{$prefix}-inputs-border-disabled);
+  background: var(--#{$prefix}-inputs-background-disabled);
+  color: var(--#{$prefix}-inputs-text-disabled);
+}
+
+@mixin icon-input-small($self: '.#{$prefix}-icon-input') {
+  @include icon-input-styles($self, 'sm');
+}
+
+@mixin icon-input-medium($self: '.#{$prefix}-icon-input') {
+  @include icon-input-styles($self, 'md');
+}
+
+@mixin icon-input-large($self: '.#{$prefix}-icon-input') {
+  @include icon-input-styles($self, 'lg');
+}

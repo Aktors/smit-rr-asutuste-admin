@@ -1,0 +1,132 @@
+@use '../../constants';
+@use '../../mixins/text-styles';
+@use '../../mixins/focus';
+@use '../../mixins/media';
+
+$prefix: constants.$veera-prefix;
+
+@mixin item-colors($state) {
+  background: var(--#{$prefix}-navigation-horizontal-background-#{$state});
+  color: var(--#{$prefix}-navigation-horizontal-text-#{$state});
+}
+
+@mixin submenu-item-colors($state) {
+  border-color: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-border-#{$state});
+  background: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-background-#{$state});
+  color: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-text-#{$state});
+}
+
+.#{$prefix}-horizontal-menu {
+  $self: &;
+
+  grid-area: menu;
+  position: relative;
+  background: var(--#{$prefix}-navigation-horizontal-background-bar);
+  display: flex;
+  justify-content: center;
+
+  &__menu-bar {
+    display: flex;
+    padding: 0 24px;
+    width: 100%;
+    max-width: var(--#{$prefix}-content-max-width);
+  }
+
+  &__item {
+    cursor: pointer;
+    display: inline-flex;
+    outline: none;
+    border: none;
+    padding: var(--#{$prefix}-navigation-horizontal-sizing-padding-y)
+      var(--#{$prefix}-navigation-horizontal-sizing-padding-x);
+    align-items: center;
+    gap: var(--#{$prefix}-navigation-horizontal-sizing-inner-spacing);
+
+    @include item-colors('default');
+    @include focus.focus-ring-inset;
+
+    &:focus {
+      @include item-colors('focus');
+    }
+
+    &:hover {
+      @include item-colors('hover');
+    }
+
+    &:active {
+      @include item-colors('active');
+    }
+
+    &--selected {
+      @include item-colors('selected');
+    }
+  }
+
+  &__panel {
+    position: absolute;
+    box-sizing: border-box;
+    top: 100%;
+    max-height: 75dvh;
+    overflow: auto;
+    width: 100%;
+    max-width: var(--#{$prefix}-content-max-width);
+    padding: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-sizing-padding-y-panel)
+      var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-sizing-padding-x-panel);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 240px);
+    gap: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-sizing-inner-spacing-panel);
+    background: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-background-panel-level2);
+  }
+
+  &__submenu-block {
+    display: flex;
+    flex-direction: column;
+
+    &-header {
+      @include text-styles.body-small-bold;
+
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+      color: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-background-sub-menu-title);
+    }
+  }
+
+  &__submenu-item {
+    @include text-styles.links-small;
+
+    display: flex;
+    align-items: center;
+    padding: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-sizing-padding-y)
+      var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-sizing-padding-x);
+    gap: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-sizing-inner-spacing);
+    border-radius: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-sizing-corner-radius);
+    border-left: 1px solid
+      var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-border-default);
+    background: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-background-default);
+    color: var(--#{$prefix}-navigation-horizontal-horizontal-sub-menu-text-default);
+
+    @include focus.focus-ring;
+
+    &:focus {
+      @include submenu-item-colors('focus');
+    }
+
+    &:hover {
+      @include submenu-item-colors('hover');
+
+      text-decoration: none;
+    }
+
+    &:active {
+      @include submenu-item-colors('active');
+
+      text-decoration: none;
+    }
+
+    &--selected {
+      @include submenu-item-colors('selected');
+    }
+  }
+}

@@ -1,0 +1,25 @@
+# Stage 1: Base runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+
+# Stage 2: Build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Development
+WORKDIR /src
+COPY ["rr.asutus-admin.sln", "./"]
+COPY ["src/", "./src/"]
+COPY ["tests/", "./tests/"]
+
+RUN dotnet restore "rr.asutus-admin.sln"
+RUN dotnet build "src/asutus.worker/asutus.worker.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+# Stage 3: Publish
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Development
+RUN dotnet publish "src/asutus.worker/asutus.worker.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+# Stage 4: Final image
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "asutus.worker.dll"]

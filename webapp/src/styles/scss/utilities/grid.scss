@@ -1,0 +1,55 @@
+@use '../constants';
+@use '../mixins/media';
+@use './_grid-helpers/gutter';
+@use './_grid-helpers/col';
+@use 'sass:map';
+
+.#{constants.$veera-prefix}-container {
+  --#{constants.$veera-prefix}-container-mw: var(
+    --#{constants.$veera-prefix}-content-max-width,
+    1416px
+  );
+  --#{constants.$veera-prefix}-container-g: 16px;
+  --#{constants.$veera-prefix}-container-px: 8px;
+
+  @include media.breakpoint-up('md') {
+    --#{constants.$veera-prefix}-container-px: 24px;
+  }
+
+  @include media.breakpoint-up('lg') {
+    --#{constants.$veera-prefix}-container-g: 24px;
+    --#{constants.$veera-prefix}-container-px: 32px;
+  }
+
+  margin: 0 auto;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--#{constants.$veera-prefix}-container-mw);
+  padding-left: var(--#{constants.$veera-prefix}-container-px);
+  padding-right: var(--#{constants.$veera-prefix}-container-px);
+}
+
+.#{constants.$veera-prefix}-row {
+  --#{constants.$veera-prefix}-gx: var(--#{constants.$veera-prefix}-container-g);
+  --#{constants.$veera-prefix}-gy: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--#{constants.$veera-prefix}-gy));
+  margin-right: calc(-0.5 * var(--#{constants.$veera-prefix}-gx));
+  margin-left: calc(-0.5 * var(--#{constants.$veera-prefix}-gx));
+
+  & > * {
+    box-sizing: border-box;
+    flex: 1 0 0%;
+    width: 100%;
+    max-width: 100%;
+    padding-right: calc(var(--#{constants.$veera-prefix}-gx) * 0.5);
+    padding-left: calc(var(--#{constants.$veera-prefix}-gx) * 0.5);
+    margin-top: var(--#{constants.$veera-prefix}-gy);
+  }
+
+  @include gutter.create-gutters;
+}
+
+@include col.create-cols;

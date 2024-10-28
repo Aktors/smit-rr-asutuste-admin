@@ -1,0 +1,55 @@
+@use '../mixins/text-styles';
+@use '../constants';
+
+$prefix: constants.$veera-prefix;
+
+@mixin variant-colors($variant) {
+  background-color: var(--#{$prefix}-badges-background-#{$variant});
+  border-color: var(--#{$prefix}-badges-border-#{$variant});
+  color: var(--#{$prefix}-badges-text-#{$variant});
+}
+
+.#{$prefix}-badge {
+  @include text-styles.body-small;
+
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--#{$prefix}-badges-border-neutral);
+  border-radius: var(--#{$prefix}-badges-sizing-corner-radius);
+  padding: var(--#{$prefix}-badges-sizing-padding-y) var(--#{$prefix}-badges-sizing-padding-x);
+  color: var(--#{$prefix}-badges-text-neutral);
+  background-color: var(--#{$prefix}-badges-background-neutral);
+  gap: var(--#{$prefix}-badges-sizing-inner-spacing);
+  white-space: nowrap;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    flex-shrink: 0;
+
+    &.material-icons,
+    &.material-icons-outlined {
+      font-size: 16px;
+    }
+  }
+
+  &--warning {
+    @include variant-colors('warning');
+  }
+
+  &--error {
+    @include variant-colors('error');
+  }
+
+  &--info {
+    @include variant-colors('info');
+  }
+
+  &--success {
+    @include variant-colors('success');
+  }
+}

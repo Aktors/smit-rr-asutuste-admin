@@ -1,0 +1,81 @@
+/* stylelint-disable custom-property-pattern */
+@use '../constants';
+@use '../scss-utils/helper-functions' as helpers;
+@use '../breakpoints';
+@use '../mixins/media';
+
+$class-properties: (
+  'm': 'margin',
+  'my': (
+    'margin-top',
+    'margin-bottom',
+  ),
+  'mx': (
+    'margin-left',
+    'margin-right',
+  ),
+  'ml': 'margin-left',
+  'mr': 'margin-right',
+  'mt': 'margin-top',
+  'mb': 'margin-bottom',
+  'p': 'padding',
+  'py': (
+    'padding-top',
+    'padding-bottom',
+  ),
+  'px': (
+    'padding-left',
+    'padding-right',
+  ),
+  'pl': 'padding-left',
+  'pr': 'padding-right',
+  'pt': 'padding-top',
+  'pb': 'padding-bottom',
+  'gap': 'gap',
+  'row-gap': 'row-gap',
+  'column-gap': 'column-gap',
+);
+$margin-classes: 'm', 'my', 'mx', 'ml', 'mr', 'mt', 'mb';
+
+@mixin get-auto-margin-classes($class-prefix, $properties, $bp-infix) {
+  @if index($margin-classes, $class-prefix) {
+    .#{constants.$veera-prefix}-#{$class-prefix}#{$bp-infix}-auto {
+      @if type-of($properties) == 'list' {
+        @each $property in $properties {
+          #{$property}: auto;
+        }
+      } @else {
+        #{$properties}: auto;
+      }
+    }
+  }
+}
+
+@mixin get-spacing-classes($class-prefix, $properties, $bp-infix) {
+  @for $spacing from 0 through constants.$max-spacing {
+    .#{constants.$veera-prefix}-#{$class-prefix}#{$bp-infix}-#{$spacing} {
+      @if type-of($properties) == 'list' {
+        @each $property in $properties {
+          #{$property}: var(
+            --#{constants.$veera-prefix}-spacing-baseline-#{helpers.pad-number($spacing)}
+          );
+        }
+      } @else {
+        #{$properties}: var(
+          --#{constants.$veera-prefix}-spacing-baseline-#{helpers.pad-number($spacing)}
+        );
+      }
+    }
+  }
+}
+
+@each $breakpoint-key, $breakpoint-val in breakpoints.$breakpoints {
+  $bp-infix: if(helpers.is-zero($breakpoint-val), '', '-#{$breakpoint-key}');
+
+  @each $class-prefix, $properties in $class-properties {
+    @include media.breakpoint-up($breakpoint-key) {
+      @include get-spacing-classes($class-prefix, $properties, $bp-infix);
+      @include get-auto-margin-classes($class-prefix, $properties, $bp-infix);
+    }
+  }
+}

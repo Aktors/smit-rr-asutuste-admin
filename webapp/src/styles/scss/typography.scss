@@ -1,0 +1,103 @@
+@use './constants';
+@use './mixins/text-styles';
+@use './mixins/media';
+@use './mixins/focus';
+
+$prefix: constants.$veera-prefix;
+
+h1,
+.#{$prefix}-text-h1 {
+  @include text-styles.headings-small-h1;
+
+  margin: 0;
+
+  @include media.desktop-and-up {
+    @include text-styles.headings-large-h1;
+  }
+}
+
+h2,
+.#{$prefix}-text-h2 {
+  @include text-styles.headings-small-h2;
+
+  margin: 0;
+
+  @include media.desktop-and-up {
+    @include text-styles.headings-large-h2;
+  }
+}
+
+h3,
+.#{$prefix}-text-h3 {
+  @include text-styles.headings-small-h3;
+
+  margin: 0;
+
+  @include media.desktop-and-up {
+    @include text-styles.headings-large-h3;
+  }
+}
+
+h4,
+.#{$prefix}-text-h4 {
+  @include text-styles.headings-small-h4;
+
+  margin: 0;
+
+  @include media.desktop-and-up {
+    @include text-styles.headings-large-h4;
+  }
+}
+
+h5,
+.#{$prefix}-text-h5 {
+  @include text-styles.headings-small-h5;
+
+  margin: 0;
+
+  @include media.desktop-and-up {
+    @include text-styles.headings-large-h5;
+  }
+}
+
+h6,
+.#{$prefix}-text-h6 {
+  @include text-styles.headings-small-h6;
+
+  margin: 0;
+
+  @include media.desktop-and-up {
+    @include text-styles.headings-large-h6;
+  }
+}
+
+.#{$prefix}-text-display {
+  @include text-styles.headings-small-display;
+
+  @include media.desktop-and-up {
+    @include text-styles.headings-large-display;
+  }
+}
+
+p,
+.#{$prefix}-text-body {
+  @include text-styles.body-medium;
+
+  margin: 0;
+}
+
+.#{$prefix}-text-body-bold {
+  @include text-styles.body-medium-bold;
+}
+
+.#{$prefix}-text-body-sm {
+  @include text-styles.body-small;
+}
+
+.#{$prefix}-text-body-sm-bold {
+  @include text-styles.body-small-bold;
+}
+
+.#{$prefix}-text-body-xs {
+  @include text-styles.body-extra-small;
+}

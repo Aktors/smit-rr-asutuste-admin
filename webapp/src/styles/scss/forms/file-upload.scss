@@ -1,0 +1,121 @@
+@use '../constants';
+@use '../mixins/text-styles';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-file-upload {
+  &__drop-area {
+    $drop-area: &;
+
+    @include text-styles.body-medium;
+
+    outline: none;
+    width: 100%;
+    cursor: pointer;
+    padding: var(--#{$prefix}-file-input-sizing-padding-y)
+      var(--#{$prefix}-file-input-sizing-padding-x);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--#{$prefix}-file-input-text-default);
+    background: var(--#{$prefix}-file-input-background-default);
+    border-radius: var(--#{$prefix}-file-input-sizing-corner-radius);
+    border: 2px dashed var(--#{$prefix}-file-input-border-default);
+
+    &:focus {
+      box-shadow: var(--#{$prefix}-box-shadow-focus-ring-outset);
+      background: var(--#{$prefix}-file-input-background-focus);
+      border-color: var(--#{$prefix}-file-input-border-focus);
+      color: var(--#{$prefix}-file-input-text-focus);
+    }
+
+    &:hover {
+      background: var(--#{$prefix}-file-input-background-hover);
+      border-color: var(--#{$prefix}-file-input-border-hover);
+      color: var(--#{$prefix}-file-input-text-hover);
+    }
+
+    &:active {
+      background: var(--#{$prefix}-file-input-background-active);
+      border-color: var(--#{$prefix}-file-input-border-active);
+      color: var(--#{$prefix}-file-input-text-active);
+    }
+
+    &:disabled {
+      pointer-events: none;
+      background: var(--#{$prefix}-file-input-background-disabled);
+      border-color: var(--#{$prefix}-file-input-border-disabled);
+      color: var(--#{$prefix}-file-input-text-disabled);
+
+      #{ $drop-area }__attach-icon {
+        color: var(--#{$prefix}-file-input-text-disabled);
+      }
+    }
+
+    &--drag-over {
+      background: var(--#{$prefix}-file-input-background-drop-over);
+      border-color: var(--#{$prefix}-file-input-border-drop-over);
+      color: var(--#{$prefix}-file-input-text--drop-over);
+    }
+
+    &--error {
+      background: var(--#{$prefix}-file-input-background-error);
+      border-color: var(--#{$prefix}-file-input-border-error);
+      color: var(--#{$prefix}-file-input-text-error);
+    }
+
+    input[type='file'] {
+      display: none;
+      position: absolute;
+    }
+
+    &__attach-icon {
+      font-size: 24px;
+      color: var(--#{$prefix}-colors-text-tertiary);
+    }
+  }
+
+  &__attachments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+
+    > .#{$prefix}-form-feedback {
+      margin-top: -4px;
+    }
+  }
+
+  &__attachment {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+    border-radius: 4px;
+    background: var(--#{$prefix}-colors-surface-tertiary);
+
+    &--error {
+      border: 1px solid var(--#{$prefix}-inputs-border-error);
+    }
+
+    &__name {
+      @include text-styles.body-medium;
+
+      flex-grow: 1;
+    }
+
+    &__error-icon {
+      font-size: 24px;
+      color: var(--#{$prefix}-inputs-feedback-error);
+    }
+
+    &__remove-btn {
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: 24px;
+      color: var(--#{$prefix}-colors-text-primary);
+    }
+  }
+}

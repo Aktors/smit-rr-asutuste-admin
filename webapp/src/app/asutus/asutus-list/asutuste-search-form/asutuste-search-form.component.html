@@ -1,0 +1,27 @@
+﻿<div class="search-form-row" [formGroup]="form">
+  <div class="form-field">
+    <mat-form-field appearance="fill">
+      <mat-label>Kood</mat-label>
+      <input matInput formControlName="codePart" placeholder="Kood või kodiosa">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field form-field--large">
+    <mat-form-field appearance="fill">
+      <mat-label>Nimi</mat-label>
+      <input matInput formControlName="namePart" placeholder="Asutuse täis nimi või selle osa">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field form-field--button">
+    <button type="button" class="v-button v-button--neutral v-button--lg" (click)="performSearch()">
+      <span aria-hidden="true" class="material-icons">search</span>Otsi
+    </button>
+  </div>
+
+  <div class="form-field form-field--button">
+    <button type="button" class="v-button v-button--neutral v-button--lg" (click)="navigateToNew()">
+      <span aria-hidden="true" class="material-icons">add</span>Lisa Uus
+    </button>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+back
+	.NET 8
+	
+
+front:
+	node.js 18.20.4
+	npm install -g @angular/cli
+	
+	
+Starting container with fresh build
+	docker-compose up --build

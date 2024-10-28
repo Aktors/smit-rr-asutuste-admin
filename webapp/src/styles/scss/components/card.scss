@@ -1,0 +1,40 @@
+@use '../constants';
+
+$prefix: constants.$veera-prefix;
+
+@mixin base-sizing {
+  padding: var(--#{$prefix}-cards-sizing-padding-medium);
+  border-radius: var(--#{$prefix}-cards-sizing-radius-medium);
+}
+
+.#{$prefix}-card {
+  @include base-sizing;
+
+  background: var(--#{$prefix}-cards-background-primary);
+  box-shadow: var(--#{$prefix}-box-shadow-elevation-2px);
+
+  &--primary {
+    background: var(--#{$prefix}-cards-background-primary);
+  }
+
+  &--secondary {
+    background: var(--#{$prefix}-cards-background-secondary);
+  }
+
+  &--tertiary {
+    background: var(--#{$prefix}-cards-background-tertiary);
+  }
+
+  &--sm {
+    padding: var(--#{$prefix}-cards-sizing-padding-small);
+    border-radius: var(--#{$prefix}-cards-sizing-radius-small);
+  }
+
+  &--md {
+    @include base-sizing;
+  }
+
+  &--flat {
+    box-shadow: none;
+  }
+}

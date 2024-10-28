@@ -1,0 +1,15 @@
+﻿.system-select-field {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.system-select {
+  flex: 1;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}

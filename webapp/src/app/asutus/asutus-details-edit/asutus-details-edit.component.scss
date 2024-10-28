@@ -1,0 +1,35 @@
+﻿/* Container styles */
+.form-row {
+  display: flex;
+}
+
+/* Field width adjustments */
+.half-width {
+  flex: 1;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.date-range-row {
+  display: flex;
+  gap: 16px;
+}
+
+.language-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.language-select {
+  flex: 1;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}

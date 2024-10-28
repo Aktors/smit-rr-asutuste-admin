@@ -1,0 +1,193 @@
+// NB! This file is auto generated
+
+@mixin headings-large-h1 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.75rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 114%;
+}
+
+@mixin headings-large-h2 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.5625rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 128%;
+}
+
+@mixin headings-large-h3 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.375rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 145%;
+}
+
+@mixin headings-large-h4 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 120%;
+}
+
+@mixin headings-large-h5 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.125rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 133%;
+}
+
+@mixin headings-large-h6 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  line-height: 150%;
+}
+
+@mixin headings-large-display {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 2.25rem;
+  font-weight: 300;
+  text-decoration: none;
+  line-height: 133%;
+}
+
+@mixin headings-small-h1 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.6875rem;
+  font-weight: 300;
+  text-decoration: none;
+  line-height: 118%;
+}
+
+@mixin headings-small-h2 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 133%;
+}
+
+@mixin headings-small-h3 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.375rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 145%;
+}
+
+@mixin headings-small-h4 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.1875rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 126%;
+}
+
+@mixin headings-small-h5 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.0625rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 141%;
+}
+
+@mixin headings-small-h6 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  line-height: 150%;
+}
+
+@mixin headings-small-display {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.875rem;
+  font-weight: 300;
+  text-decoration: none;
+  line-height: 132%;
+}
+
+@mixin links-medium {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: 400;
+  text-decoration: underline;
+  line-height: 150%;
+}
+
+@mixin links-small {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 0.875rem;
+  font-weight: 400;
+  text-decoration: underline;
+  line-height: 171%;
+}
+
+@mixin links-extra-small {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-decoration: underline;
+  line-height: 133%;
+}
+
+@mixin body-large {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.125rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 133%;
+}
+
+@mixin body-large-bold {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+  line-height: 133%;
+}
+
+@mixin body-medium {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 150%;
+}
+
+@mixin body-medium-bold {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  line-height: 150%;
+}
+
+@mixin body-small {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 0.875rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 171%;
+}
+
+@mixin body-small-bold {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  line-height: 171%;
+}
+
+@mixin body-extra-small {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 133%;
+}

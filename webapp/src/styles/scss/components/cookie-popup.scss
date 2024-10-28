@@ -1,0 +1,25 @@
+@use '../constants';
+@use '../mixins/text-styles';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-cookie-popup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}-cookies-sizing-inner-spacing);
+  padding: var(--#{$prefix}-cookies-sizing-padding-y) var(--#{$prefix}-cookies-sizing-padding-x);
+  border-radius: var(--#{$prefix}-cookies-sizing-corner-radius);
+  border: 1px solid var(--#{$prefix}-cookies-border-border);
+  background: var(--#{$prefix}-cookies-background-background);
+  box-shadow: var(--#{$prefix}-box-shadow-elevation-2px);
+
+  &__title {
+    @include text-styles.headings-large-h4;
+
+    margin: 0;
+  }
+
+  &__body {
+    @include text-styles.body-small;
+  }
+}

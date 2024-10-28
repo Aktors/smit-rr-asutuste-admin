@@ -1,0 +1,98 @@
+@use '../constants';
+@use '../mixins/text-styles';
+@use '../mixins/borders';
+@use '../mixins/focus';
+
+$prefix: constants.$veera-prefix;
+
+@mixin state-colors($state) {
+  background: var(--#{$prefix}-tabs-background-#{$state});
+  color: var(--#{$prefix}-tabs-text-#{$state});
+  border-color: var(--#{$prefix}-tabs-border-#{$state});
+}
+
+.#{$prefix}-tabs {
+  &__tab-list {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: 3px;
+    margin: -3px;
+  }
+
+  &__tab {
+    @include text-styles.body-medium;
+    @include borders.set-border-top-radius(var(--#{$prefix}-tabs-sizing-corner-radius));
+
+    display: inline-flex;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid var(--#{$prefix}-tabs-border-default);
+    outline: none;
+    padding: var(--#{$prefix}-tabs-sizing-padding-y) var(--#{$prefix}-tabs-sizing-padding-x)
+      var(--#{$prefix}-tabs-sizing-padding-y-bottom) var(--#{$prefix}-tabs-sizing-padding-x);
+    justify-content: center;
+    align-items: center;
+    gap: var(--#{$prefix}-tabs-sizing-inner-spacing);
+    background: var(--#{$prefix}-tabs-background-default);
+    color: var(--#{$prefix}-tabs-text-default);
+    white-space: nowrap;
+
+    @include focus.focus-ring;
+
+    &:focus {
+      @include state-colors('focus');
+
+      z-index: 1;
+    }
+
+    &:hover {
+      @include state-colors('hover');
+    }
+
+    &:active {
+      @include state-colors('active');
+    }
+
+    &--selected {
+      @include state-colors('selected');
+
+      font-weight: 700;
+      border-bottom: none;
+
+      &:hover {
+        background: var(--#{$prefix}-tabs-background-selected);
+        border-color: var(--#{$prefix}-tabs-border-selected);
+      }
+
+      &::after {
+        display: block;
+        content: '';
+        position: absolute;
+        top: 100%;
+        height: 1.25px;
+        left: 0;
+        right: 0;
+        background: var(--#{$prefix}-tabs-background-selected);
+      }
+    }
+
+    &:disabled {
+      @include state-colors('disabled');
+
+      pointer-events: none;
+    }
+  }
+
+  &__content {
+    padding: var(--#{$prefix}-tabs-content-padding-y) var(--#{$prefix}-tabs-content-padding-x);
+    border-radius: var(--#{$prefix}-radius-01);
+    border: 1px solid var(--#{$prefix}-tabs-border-selected);
+    background: var(--#{$prefix}-tabs-content-background);
+  }
+
+  // Removes content top left border radius if first tab is selected. For Firefox use --first-selected modifier on tabs.
+  &:is(:has(#{ & }__tab--selected:first-child), &--first-selected) #{ & }__content {
+    border-top-left-radius: 0;
+  }
+}

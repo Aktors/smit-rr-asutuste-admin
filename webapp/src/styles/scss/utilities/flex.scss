@@ -1,0 +1,93 @@
+@use '../constants' as constants;
+
+$class-properties: (
+  'flex': (
+    'display': 'flex',
+  ),
+  'inline-flex': (
+    'display': 'inline-flex',
+  ),
+  'flex-column': (
+    'flex-direction': 'column',
+  ),
+  'flex-column-reverse': (
+    'flex-direction': 'column-reverse',
+  ),
+  'flex-row': (
+    'flex-direction': 'row',
+  ),
+  'flex-row-reverse': (
+    'flex-direction': 'row-reverse',
+  ),
+  'justify-content-start': (
+    'justify-content': 'start',
+  ),
+  'justify-content-end': (
+    'justify-content': 'end',
+  ),
+  'justify-content-center': (
+    'justify-content': 'center',
+  ),
+  'justify-content-between': (
+    'justify-content': 'space-between',
+  ),
+  'justify-content-around': (
+    'justify-content': 'space-around',
+  ),
+  'justify-content-evenly': (
+    'justify-content': 'space-evenly',
+  ),
+  'justify-content-stretch': (
+    'justify-content': 'stretch',
+  ),
+  'align-items-start': (
+    'align-items': 'start',
+  ),
+  'align-items-end': (
+    'align-items': 'end',
+  ),
+  'align-items-center': (
+    'align-items': 'center',
+  ),
+  'align-items-between': (
+    'align-items': 'space-between',
+  ),
+  'align-items-around': (
+    'align-items': 'space-around',
+  ),
+  'align-items-evenly': (
+    'align-items': 'space-evenly',
+  ),
+  'align-items-stretch': (
+    'align-items': 'stretch',
+  ),
+  'flex-wrap': (
+    'flex-wrap': 'wrap',
+  ),
+  'flex-nowrap': (
+    'flex-wrap': 'nowrap',
+  ),
+  'flex-wrap-reverse': (
+    'flex-wrap': 'wrap',
+  ),
+  'flex-grow-0': (
+    'flex-grow': 0,
+  ),
+  'flex-grow-1': (
+    'flex-grow': 1,
+  ),
+  'flex-shrink-0': (
+    'flex-shrink': 0,
+  ),
+  'flex-shrink-1': (
+    'flex-shrink': 1,
+  ),
+);
+
+@each $class-suffix, $properites in $class-properties {
+  .#{constants.$veera-prefix}-#{$class-suffix} {
+    @each $property, $value in $properites {
+      #{$property}: #{$value};
+    }
+  }
+}

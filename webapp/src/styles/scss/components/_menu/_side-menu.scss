@@ -1,0 +1,156 @@
+@use '../../constants';
+@use '../../mixins/text-styles';
+@use '../../mixins/focus';
+@use '../../mixins/media';
+
+$prefix: constants.$veera-prefix;
+
+@mixin state-colors($state, $level) {
+  background: var(--#{$prefix}-navigation-vertical-background-level-#{$level}-#{$state});
+  color: var(--#{$prefix}-navigation-vertical-text-#{$state});
+  border-color: var(--#{$prefix}-navigation-vertical-border-level-#{$level}-#{$state});
+
+  &:visited {
+    color: var(--#{$prefix}-navigation-vertical-text-#{$state});
+  }
+}
+
+@mixin item-colors($level) {
+  @include state-colors('default', $level);
+
+  &:focus {
+    @include state-colors('focus', $level);
+  }
+
+  &:hover {
+    @include state-colors('hover', $level);
+  }
+
+  &:active,
+  &.active {
+    @include state-colors('active', $level);
+  }
+}
+
+.#{$prefix}-side-menu {
+  $self: &;
+
+  grid-area: menu;
+  z-index: 999;
+  width: 100%;
+  max-width: 360px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: none;
+
+  &--visible {
+    display: block;
+  }
+
+  .#{$prefix}-overlay {
+    z-index: -1;
+  }
+
+  &__content {
+    height: 100%;
+    background: var(--#{$prefix}-navigation-vertical-background-level-1-bar);
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__item {
+    @include text-styles.body-small;
+
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: initial;
+    display: flex;
+    gap: var(--#{$prefix}-navigation-vertical-sizing-mobile-inner-spacing);
+    align-items: center;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    height: var(--#{$prefix}-navigation-vertical-sizing-mobile-height);
+    padding: var(--#{$prefix}-navigation-vertical-sizing-mobile-padding-y)
+      var(--#{$prefix}-navigation-vertical-sizing-mobile-padding-x);
+
+    @include item-colors('1');
+    @include focus.focus-ring-inset;
+
+    &--secondary {
+      @include item-colors('2');
+
+      padding: var(--#{$prefix}-navigation-vertical-sizing-mobile-padding-y-level-2);
+      padding-left: var(--#{$prefix}-navigation-vertical-sizing-mobile-padding-x-left-level-2);
+      padding-right: var(--#{$prefix}-navigation-vertical-sizing-mobile-padding-x-right-level-2);
+    }
+
+    &--tertiary {
+      @include item-colors('3');
+
+      padding: var(--#{$prefix}-navigation-vertical-sizing-mobile-padding-y-level-3);
+      padding-left: var(--#{$prefix}-navigation-vertical-sizing-mobile-padding-x-left-level-3);
+      padding-right: var(--#{$prefix}-navigation-vertical-sizing-mobile-padding-x-right-level-3);
+    }
+  }
+
+  &__expand-icon {
+    margin-left: auto;
+    transition: transform 0.3s;
+  }
+
+  &__sub-menu {
+    display: grid;
+    grid-template-rows: max-content 0fr;
+    transition: grid-template-rows 0.3s;
+
+    & > ul {
+      overflow: hidden;
+    }
+
+    &--expanded {
+      grid-template-rows: max-content 1fr;
+
+      & > #{$self}__item #{$self}__expand-icon {
+        transform: rotateX(180deg);
+      }
+    }
+  }
+
+  @include media.desktop-and-up {
+    display: block;
+    position: static;
+    width: var(--#{$prefix}-navigation-vertical-sizing-desktop-width);
+    max-width: none;
+
+    .#{$prefix}-overlay {
+      display: none;
+    }
+
+    &__item {
+      gap: var(--#{$prefix}-navigation-vertical-sizing-desktop-inner-spacing);
+      height: var(--#{$prefix}-navigation-vertical-sizing-desktop-height);
+      padding: var(--#{$prefix}-navigation-vertical-sizing-desktop-padding-y-level-1)
+        var(--#{$prefix}-navigation-vertical-sizing-desktop-padding-x-level-1);
+
+      &--secondary {
+        padding: var(--#{$prefix}-navigation-vertical-sizing-desktop-padding-y-level-2);
+        padding-left: var(--#{$prefix}-navigation-vertical-sizing-desktop-padding-x-left-level-2);
+        padding-right: var(--#{$prefix}-navigation-vertical-sizing-desktop-padding-x-right-level-2);
+      }
+
+      &--tertiary {
+        padding: var(--#{$prefix}-navigation-vertical-sizing-desktop-padding-y-level-3);
+        padding-left: var(--#{$prefix}-navigation-vertical-sizing-desktop-padding-x-left-level-3);
+        padding-right: var(--#{$prefix}-navigation-vertical-sizing-desktop-padding-x-right-level-3);
+      }
+    }
+  }
+}

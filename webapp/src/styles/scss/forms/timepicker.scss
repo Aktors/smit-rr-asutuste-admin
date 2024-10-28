@@ -1,0 +1,52 @@
+@use '../constants';
+@use '../mixins/text-styles';
+@use '../mixins/borders';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-timepicker {
+  position: relative;
+
+  .#{$prefix}-dropdown {
+    --#{$prefix}-dropdown-menu-max-width: 176px;
+    --#{$prefix}-dropdown-menu-max-height: 252px;
+
+    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    column-gap: 1px;
+    background: var(--#{$prefix}-dropdown-menu-menu-border);
+  }
+
+  &__options-row {
+    overflow: auto;
+
+    &:not(:first-child) {
+      .#{$prefix}-dropdown__option {
+        @include borders.set-border-left-radius(0);
+      }
+    }
+
+    &:not(:last-child) {
+      .#{$prefix}-dropdown__option {
+        @include borders.set-border-right-radius(0);
+      }
+    }
+  }
+
+  &__time-input {
+    outline: none;
+    background: transparent;
+    border: none;
+    box-sizing: content-box;
+    width: 1.75em;
+    text-align: center;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    &:first-of-type {
+      padding-left: 0;
+    }
+  }
+}

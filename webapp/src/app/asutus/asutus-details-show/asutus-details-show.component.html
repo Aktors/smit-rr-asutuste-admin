@@ -1,0 +1,40 @@
+﻿
+
+  <div *ngIf="isLoading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="error">
+    <p class="error">{{ error }}</p>
+  </div>
+
+  <div *ngIf="asutusDetails && !isLoading && !error">
+    <div class="v-flex v-justify-content-between">
+      <p>Kood:</p><p class="v-text-body-bold">{{ asutusDetails.code }}</p>
+    </div>
+    <div class="v-flex v-justify-content-between">
+      <p>Nimi:</p><p class="v-text-body-bold">{{ asutusDetails.name }}</p>
+    </div>
+    <div class="v-flex v-justify-content-between">
+      <p>Kehtiv alates:</p>
+      <p class="v-text-body-bold">{{ asutusDetails.startDate | date : "short" }}</p>
+    </div>
+    <div *ngIf="asutusDetails.endDate" class="v-flex v-justify-content-between">
+      <p>Kehtiv kuni:</p>
+      <p class="v-text-body-bold">{{ asutusDetails.endDate | date : "short" }}</p>
+    </div>
+    <div class="v-flex v-justify-content-between" *ngIf="asutusDetails.translations.length > 0">
+      <p>Tõlked:</p>
+      <p class="v-text-body-bold"></p>
+    </div>
+    <div class="v-flex v-justify-content-between"  *ngFor="let translation of asutusDetails.translations">
+        <p>{{ translation.code }}: </p>
+        <p class="v-text-body-bold align-end">{{ translation.text }}</p>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button mat-stroked-button color="accent" (click)="goBack()">Tagasi nimekirja</button>
+    <button mat-raised-button color="primary" (click)="editAsutus()">Muuda</button>
+  </div>
+

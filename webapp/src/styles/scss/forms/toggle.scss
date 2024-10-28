@@ -1,0 +1,324 @@
+@use '../constants';
+@use '../mixins/text-styles';
+
+$prefix: constants.$veera-prefix;
+
+@function get-thumb-track-length($size) {
+  $padding: if(
+    $size == 'small',
+    var(--#{$prefix}-toggle-sizing-toggle-padding-small),
+    var(--#{$prefix}-toggle-sizing-toggle-padding)
+  );
+
+  @return calc(
+    var(--#{$prefix}-toggle-sizing-width-#{$size}) - 2 * $padding - var(
+        --#{$prefix}-toggle-sizing-toggle-#{$size}
+      ) - 4px
+  );
+}
+
+@function get-checkmark() {
+  @return url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5.86339 10.5831L3.08339 7.80312L2.13672 8.74312L5.86339 12.4698L13.8634 4.46979L12.9234 3.52979L5.86339 10.5831Z" fill="white"/></svg>');
+}
+
+@mixin toggle-knob {
+  content: '';
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: var(--#{$prefix}-toggle-sizing-toggle-padding);
+  top: var(--#{$prefix}-toggle-sizing-toggle-padding);
+  background: var(--#{$prefix}-toggle-thumb-off-state-background-default);
+  height: var(--#{$prefix}-toggle-sizing-toggle-medium);
+  width: var(--#{$prefix}-toggle-sizing-toggle-medium);
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+@mixin input-styles {
+  outline: none;
+  margin: 0;
+  cursor: pointer;
+  appearance: none;
+  position: relative;
+  height: var(--#{$prefix}-toggle-sizing-height-medium);
+  width: var(--#{$prefix}-toggle-sizing-width-medium);
+  border-radius: var(--#{$prefix}-toggle-sizing-corner-radius);
+  background: var(--#{$prefix}-toggle-track-off-state-background-default);
+  border: 2px solid var(--#{$prefix}-toggle-track-off-state-border-default);
+  flex-shrink: 0;
+
+  &::before {
+    @include toggle-knob;
+  }
+
+  &:focus {
+    box-shadow: var(--#{$prefix}-box-shadow-focus-ring-outset);
+    background: var(--#{$prefix}-toggle-track-off-state-background-focus);
+    border-color: var(--#{$prefix}-toggle-track-off-state-border-focus);
+
+    &::before {
+      background: var(--#{$prefix}-toggle-thumb-off-state-background-focus);
+    }
+  }
+
+  &:hover {
+    background: var(--#{$prefix}-toggle-track-off-state-background-hover);
+    border-color: var(--#{$prefix}-toggle-track-off-state-border-hover);
+
+    &::before {
+      background: var(--#{$prefix}-toggle-thumb-off-state-background-hover);
+    }
+  }
+
+  &:active {
+    background: var(--#{$prefix}-toggle-track-off-state-background-active);
+    border-color: var(--#{$prefix}-toggle-track-off-state-border-active);
+
+    &::before {
+      background: var(--#{$prefix}-toggle-thumb-off-state-background-active);
+    }
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background: var(--#{$prefix}-toggle-track-off-state-background-disabled);
+    border-color: var(--#{$prefix}-toggle-track-off-state-border-disabled);
+
+    &::before {
+      background: var(--#{$prefix}-toggle-thumb-off-state-background-disabled);
+    }
+  }
+
+  &:checked {
+    background: var(--#{$prefix}-toggle-track-on-state-background-default);
+    border-color: var(--#{$prefix}-toggle-track-on-state-border-default);
+
+    &::before {
+      transform: translateX(get-thumb-track-length('medium'));
+      background: var(--#{$prefix}-toggle-thumb-on-state-background-default);
+    }
+
+    &:focus {
+      background: var(--#{$prefix}-toggle-track-on-state-background-focus);
+      border-color: var(--#{$prefix}-toggle-track-on-state-border-focus);
+
+      &::before {
+        background: var(--#{$prefix}-toggle-thumb-on-state-background-focus);
+      }
+    }
+
+    &:hover {
+      background: var(--#{$prefix}-toggle-track-on-state-background-hover);
+      border-color: var(--#{$prefix}-toggle-track-on-state-border-hover);
+
+      &::before {
+        background: var(--#{$prefix}-toggle-thumb-on-state-background-hover);
+      }
+    }
+
+    &:active {
+      background: var(--#{$prefix}-toggle-track-on-state-background-active);
+      border-color: var(--#{$prefix}-toggle-track-on-state-border-active);
+
+      &::before {
+        background: var(--#{$prefix}-toggle-thumb-on-state-background-active);
+      }
+    }
+
+    &:disabled {
+      pointer-events: none;
+      background: var(--#{$prefix}-toggle-track-on-state-background-disabled);
+      border-color: var(--#{$prefix}-toggle-track-on-state-border-disabled);
+
+      &::before {
+        background: var(--#{$prefix}-toggle-thumb-on-state-background-disabled);
+      }
+    }
+  }
+}
+
+@mixin small-input-overrides {
+  @include icon-position('small');
+
+  height: var(--#{$prefix}-toggle-sizing-height-small);
+  width: var(--#{$prefix}-toggle-sizing-width-small);
+
+  &::before {
+    height: var(--#{$prefix}-toggle-sizing-toggle-small);
+    width: var(--#{$prefix}-toggle-sizing-toggle-small);
+    left: var(--#{$prefix}-toggle-sizing-toggle-padding-small);
+    top: var(--#{$prefix}-toggle-sizing-toggle-padding-small);
+  }
+
+  &:checked::before {
+    transform: translateX(get-thumb-track-length('small'));
+  }
+}
+
+@mixin large-input-overrides {
+  @include icon-position('large');
+
+  height: var(--#{$prefix}-toggle-sizing-height-large);
+  width: var(--#{$prefix}-toggle-sizing-width-large);
+
+  &::before {
+    height: var(--#{$prefix}-toggle-sizing-toggle-large);
+    width: var(--#{$prefix}-toggle-sizing-toggle-large);
+  }
+
+  &:checked::before {
+    transform: translateX(get-thumb-track-length('large'));
+  }
+}
+
+@mixin icon-position($size) {
+  $padding: if(
+    $size == 'small',
+    var(--#{$prefix}-toggle-sizing-toggle-padding-small),
+    var(--#{$prefix}-toggle-sizing-toggle-padding)
+  );
+  $initial-left-pos: calc($padding + var(--#{$prefix}-toggle-sizing-toggle-#{$size}) / 2);
+
+  &::after {
+    left: $initial-left-pos;
+    transform: translate(-50%, -50%);
+
+    @if $size == 'small' {
+      transform: translate(-50%, -50%) scale(0.6);
+    }
+
+    @if $size == 'large' {
+      transform: translate(-50%, -50%) scale(1.4);
+    }
+  }
+
+  &:checked {
+    &::after {
+      left: calc($initial-left-pos + get-thumb-track-length($size));
+    }
+  }
+}
+
+@mixin with-check-input-styles {
+  @include icon-position('medium');
+
+  &::after {
+    position: absolute;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    content: '';
+    mask-image: get-checkmark();
+    -webkit-mask-image: get-checkmark();
+    background: var(--#{$prefix}-toggle-icon-on-state-fill-default);
+    opacity: 0;
+    transition:
+      left 0.3s,
+      opacity 0.3s;
+  }
+
+  &:checked {
+    &::after {
+      opacity: 1;
+    }
+
+    &:focus::after {
+      background: var(--#{$prefix}-toggle-icon-on-state-fill-focus);
+    }
+
+    &:hover::after {
+      background: var(--#{$prefix}-toggle-icon-on-state-fill-hover);
+    }
+
+    &:active::after {
+      background: var(--#{$prefix}-toggle-icon-on-state-fill-active);
+    }
+
+    &:disabled::after {
+      background: var(--#{$prefix}-toggle-icon-on-state-fill-disabled);
+    }
+  }
+}
+
+:not(input[type='checkbox']).#{$prefix}-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--#{$prefix}-toggle-sizing-inner-spacing);
+
+  input {
+    @include input-styles;
+
+    & + label {
+      @include text-styles.body-medium;
+
+      color: var(--#{$prefix}-toggle-text-default);
+    }
+
+    &:hover {
+      & + label {
+        color: var(--#{$prefix}-toggle-text-hover);
+      }
+    }
+
+    &:active {
+      & + label {
+        color: var(--#{$prefix}-toggle-text-active);
+      }
+    }
+
+    &:focus {
+      & + label {
+        color: var(--#{$prefix}-toggle-text-focus);
+      }
+    }
+
+    &:disabled {
+      & + label {
+        pointer-events: none;
+        color: var(--#{$prefix}-toggle-text-disabled);
+      }
+    }
+  }
+
+  &--check-icon input {
+    @include with-check-input-styles;
+  }
+
+  &--sm {
+    input {
+      @include small-input-overrides;
+
+      & + label {
+        @include text-styles.body-small;
+      }
+    }
+  }
+
+  &--lg {
+    input {
+      @include large-input-overrides;
+
+      & + label {
+        @include text-styles.body-large;
+      }
+    }
+  }
+}
+
+input[type='checkbox'].#{$prefix}-toggle {
+  @include input-styles;
+
+  &--check-icon {
+    @include with-check-input-styles;
+  }
+
+  &--sm {
+    @include small-input-overrides;
+  }
+
+  &--lg {
+    @include large-input-overrides;
+  }
+}

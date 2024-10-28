@@ -1,0 +1,16 @@
+﻿<div class="v-side-menu v-side-menu--visible">
+  <div class="v-overlay"></div>
+  <div class="v-side-menu__content">
+    <nav>
+      <ul>
+        <li>
+          <a class="v-side-menu__item" href="#">
+            <span class="material-icons" aria-hidden="true">dashboard</span>Avaleht</a>
+        </li>
+        <li *ngFor="let item of items">
+          <a class="v-side-menu__item" href="{{item.location}}"><span class="material-icons" aria-hidden="true">{{ item.icon }}</span>{{item.label}}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

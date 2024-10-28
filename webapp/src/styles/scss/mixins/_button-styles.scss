@@ -1,0 +1,127 @@
+@use '../constants';
+@use './text-styles';
+@use './focus';
+
+$prefix: constants.$veera-prefix;
+
+@mixin base {
+  outline: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-width: 2px;
+  border-style: solid;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:disabled {
+    pointer-events: none;
+  }
+
+  @include focus.focus-ring;
+}
+
+@mixin variant-colors($variant) {
+  background: var(--#{$prefix}-buttons-theme-#{$variant}-background-default);
+  border-color: var(--#{$prefix}-buttons-theme-#{$variant}-border-default);
+  color: var(--#{$prefix}-buttons-theme-#{$variant}-text-default);
+
+  &:focus {
+    background: var(--#{$prefix}-buttons-theme-#{$variant}-background-focus);
+    border-color: var(--#{$prefix}-buttons-theme-#{$variant}-border-focus);
+    color: var(--#{$prefix}-buttons-theme-#{$variant}-text-focus);
+  }
+
+  &:hover {
+    background: var(--#{$prefix}-buttons-theme-#{$variant}-background-hover);
+    border-color: var(--#{$prefix}-buttons-theme-#{$variant}-border-hover);
+    color: var(--#{$prefix}-buttons-theme-#{$variant}-text-hover);
+  }
+
+  &:active {
+    background: var(--#{$prefix}-buttons-theme-#{$variant}-background-active);
+    border-color: var(--#{$prefix}-buttons-theme-#{$variant}-border-active);
+    color: var(--#{$prefix}-buttons-theme-#{$variant}-text-active);
+  }
+
+  &:disabled {
+    background: var(--#{$prefix}-buttons-theme-#{$variant}-background-disabled);
+    border-color: var(--#{$prefix}-buttons-theme-#{$variant}-border-disabled);
+    color: var(--#{$prefix}-buttons-theme-#{$variant}-text-disabled);
+  }
+}
+
+@mixin primary {
+  @include variant-colors('primary');
+}
+
+@mixin secondary {
+  @include variant-colors('secondary');
+}
+
+@mixin neutral {
+  @include variant-colors('neutral');
+}
+
+@mixin success {
+  @include variant-colors('success');
+}
+
+@mixin danger {
+  @include variant-colors('danger');
+}
+
+@mixin icon-only-size-props($size) {
+  height: var(--#{$prefix}-buttons-sizing-#{$size}-icon-button-width-height);
+  width: var(--#{$prefix}-buttons-sizing-#{$size}-icon-button-width-height);
+  padding: var(--#{$prefix}-buttons-sizing-#{$size}-padding-icon-only);
+}
+
+@mixin small-icon-only {
+  @include icon-only-size-props('sm');
+}
+
+@mixin medium-icon-only {
+  @include icon-only-size-props('md');
+}
+
+@mixin large-icon-only {
+  @include icon-only-size-props('lg');
+}
+
+@mixin size-props($size) {
+  padding: var(--#{$prefix}-buttons-sizing-#{$size}-padding-y)
+    var(--#{$prefix}-buttons-sizing-#{$size}-padding-x);
+  border-radius: var(--#{$prefix}-buttons-sizing-#{$size}-corner-radius);
+}
+
+@mixin small {
+  @include size-props('sm');
+}
+
+@mixin medium {
+  @include size-props('md');
+}
+
+@mixin large {
+  @include size-props('lg');
+}
+
+@mixin neutral-size-props($size) {
+  padding: var(--#{$prefix}-buttons-sizing-#{$size}-neutral-button-padding-y)
+    var(--#{$prefix}-buttons-sizing-#{$size}-neutral-button-padding-x);
+  border-radius: var(--#{$prefix}-buttons-sizing-#{$size}-neutral-button-corner-radius);
+}
+
+@mixin small-neutral {
+  @include neutral-size-props('sm');
+}
+
+@mixin medium-neutral {
+  @include neutral-size-props('md');
+}
+
+@mixin large-neutral {
+  @include neutral-size-props('lg');
+}

@@ -1,0 +1,18 @@
+﻿<div class="translation-item" [formGroup]="itemForm">
+  <!-- Language Code Field with Minimal Width -->
+  <mat-form-field class="language-code">
+    <mat-label>Language</mat-label>
+    <input matInput formControlName="code" />
+  </mat-form-field>
+
+  <!-- Translation Text Field Taking Up Remaining Space -->
+  <mat-form-field class="translation-text">
+    <mat-label>Translation</mat-label>
+    <input matInput formControlName="text" placeholder="Enter translation" />
+  </mat-form-field>
+
+  <!-- Delete Button Positioned to the Right -->
+  <button mat-icon-button color="warn" class="remove-button" (click)="removeItem()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>

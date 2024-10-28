@@ -1,0 +1,22 @@
+@use '../constants';
+
+$prefix: constants.$veera-prefix;
+
+.#{$prefix}-select {
+  position: relative;
+
+  &__trigger {
+    position: relative;
+    display: flex;
+  }
+
+  &__trigger-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__trigger-icon {
+    margin-left: auto;
+  }
+}

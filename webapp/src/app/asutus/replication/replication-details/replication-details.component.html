@@ -1,0 +1,32 @@
+﻿<form [formGroup]="form">
+  <!-- Select box for choosing information system -->
+  <div class="system-select-field">
+    <mat-form-field class="system-select">
+      <mat-label>Information System</mat-label>
+      <mat-select formControlName="selectedSystem">
+        <mat-option *ngFor="let system of knownSystems" [value]="system.code" [disabled]="usedSystems.has(system.code)">
+          {{ system.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-icon-button color="primary" class="add-button" (click)="addReplicationSystem()" type="button">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <!-- List of added replication system items -->
+  <div formArrayName="replicationSystems">
+    <div *ngFor="let systemForm of this.form.controls.replicationSystems.controls; let i = index" [formGroupName]="i">
+      <!-- Each replication item is rendered as a child component -->
+      <app-replication-system-item
+        [formGroup]="systemForm"
+        [informationSystem]="getInformationSystemByCode(systemForm.get('code')?.value)"
+        (remove)="removeReplicationSystem(i)">
+      </app-replication-system-item>
+    </div>
+  </div>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="replicate()" [disabled]="this.form.controls.replicationSystems.controls.length == 0">Publitseeri</button>
+  </div>
+</form>

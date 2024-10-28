@@ -1,0 +1,171 @@
+@use '../constants';
+@use '../mixins/text-styles';
+@use '../mixins/focus';
+
+$prefix: constants.$veera-prefix;
+
+@mixin last-row-separator {
+  tr {
+    &:last-child {
+      position: relative;
+
+      &::after {
+        content: '';
+        z-index: 1;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        border-bottom: 1px solid var(--#{$prefix}-table-cells-header-border-border);
+      }
+    }
+  }
+}
+
+.#{$prefix}-table {
+  $self: &;
+
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+  width: 100%;
+
+  th,
+  td {
+    @include text-styles.body-medium;
+
+    text-align: left;
+  }
+
+  th {
+    background: var(--#{$prefix}-table-cells-header-background-default);
+    color: var(--#{$prefix}-table-cells-header-text-default);
+    padding: var(--#{$prefix}-table-cells-header-sizing-padding-y-top)
+      var(--#{$prefix}-table-cells-header-sizing-padding-x)
+      var(--#{$prefix}-table-cells-header-sizing-padding-y-bottom)
+      var(--#{$prefix}-table-cells-header-sizing-padding-x);
+
+    &.active {
+      color: var(--#{$prefix}-table-cells-header-text-active);
+      background: var(--#{$prefix}-table-cells-header-background-active);
+    }
+  }
+
+  td {
+    border-bottom: 1px solid var(--#{$prefix}-table-cells-data-cell-border-default);
+    background: var(--#{$prefix}-table-cells-data-cell-background-default);
+    color: var(--#{$prefix}-table-cells-data-cell-text-default);
+    padding: var(--#{$prefix}-table-cells-data-cell-sizing-padding-y-top)
+      var(--#{$prefix}-table-cells-data-cell-sizing-padding-x)
+      var(--#{$prefix}-table-cells-data-cell-sizing-padding-y-bottom)
+      var(--#{$prefix}-table-cells-data-cell-sizing-padding-x);
+  }
+
+  thead {
+    @include last-row-separator;
+  }
+
+  tbody {
+    .#{$prefix}-table-row {
+      &--secondary > td {
+        background: var(--#{$prefix}-table-cells-data-cell-background-first-child);
+
+        &:first-child {
+          padding-left: var(--#{$prefix}-table-cells-data-cell-sizing-padding-indent-lvl2);
+        }
+      }
+
+      &--tertiary > td {
+        background: var(--#{$prefix}-table-cells-data-cell-background-second-child);
+
+        &:first-child {
+          padding-left: var(--#{$prefix}-table-cells-data-cell-sizing-padding-indent-lvl3);
+        }
+      }
+    }
+
+    @include last-row-separator;
+  }
+
+  &--bordered {
+    :is(td, th) {
+      border-right: 1px solid var(--#{$prefix}-table-cells-data-cell-border-default);
+    }
+
+    th {
+      border-bottom: 1px solid var(--#{$prefix}-table-cells-data-cell-border-default);
+    }
+  }
+
+  &--fixed {
+    table-layout: fixed;
+
+    :is(td, th) {
+      width: 100%;
+    }
+  }
+
+  &-cell {
+    &--sticky {
+      position: sticky;
+      z-index: 1;
+    }
+
+    &--left-shadow {
+      box-shadow: var(--#{$prefix}-box-shadow-sticky-left);
+    }
+
+    &--right-shadow {
+      box-shadow: var(--#{$prefix}-box-shadow-sticky-right);
+    }
+  }
+
+  &-interactive {
+    @include focus.focus-ring;
+
+    outline: none;
+    cursor: pointer;
+
+    &:is(tr) {
+      &:focus {
+        position: relative;
+        z-index: 2;
+      }
+
+      &:hover {
+        th,
+        td {
+          background: var(--#{$prefix}-table-cells-data-cell-background-hover);
+        }
+      }
+    }
+
+    &:is(th, td):hover {
+      background: var(--#{$prefix}-table-cells-data-cell-background-hover);
+    }
+  }
+
+  &-scroll {
+    overflow-x: auto;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  &-wrapper {
+    position: relative;
+
+    &::after {
+      pointer-events: none;
+      content: '';
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      border-radius: 4px;
+      border: 1px solid var(--#{$prefix}-table-cells-header-border-border);
+    }
+
+    .#{$prefix}-pagination {
+      border-top: none;
+    }
+  }
+}
