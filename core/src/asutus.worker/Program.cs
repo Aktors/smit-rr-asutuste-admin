@@ -26,10 +26,10 @@ builder.Services.AddRabbitMqFactory(rabbitMqOptions, factory =>
 {
     factory.AutomaticRecoveryEnabled = true; 
 });
-builder.Services.AddSingleton<IMessageLogService, DbMessageLogService>();
+builder.Services.AddScoped<IMessageLogService, DbMessageLogService>();
 builder.Services.AddSingleton<IMessageListener, RabbitMqListener>();
-builder.Services.AddSingleton<IMessageLogRepository, MessageLogRepository>();
-builder.Services.AddSingleton<IInformationSystemRepository, InformationSystemRepository>();
+builder.Services.AddScoped<IMessageLogRepository, MessageLogRepository>();
+builder.Services.AddScoped<IInformationSystemRepository, InformationSystemRepository>();
 
 builder.Services.AddMediatR(cfg=> cfg.RegisterServicesFromAssemblies(    Assembly.GetExecutingAssembly()));
 builder.Services.AddScoped<IRequestHandler<ConfirmReplicationLogRequest, Unit>, ConfirmReplicationLogHandler>();

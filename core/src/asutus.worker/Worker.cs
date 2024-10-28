@@ -8,26 +8,25 @@ namespace asutus.worker;
 
 public class Worker : BackgroundService
 {
-    private readonly IMessageListener _listener;
-    private readonly IMessageLogService _messageLog;
-    private readonly IMediator _mediator;
-
+    private readonly IServiceProvider _services;
+    private readonly IMessageListener  _listener;
+    
     public Worker(
-        IMessageLogService messageLog,
-        IMessageListener listener,
-        IMediator mediator)
+        IServiceProvider services,
+        IMessageListener listener)
     {
-        _messageLog = messageLog;
+        _services = services;
         _listener = listener;
-        _mediator = mediator;
 
         _listener.MessageArrived += async (sender, e) 
             => await OnMessageArrived(sender, e);
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        var queues = await _messageLog.GetQueueNamesAsync(stoppingToken);
+        using var scope = _services.CreateScope();
+        var messageLog = scope.ServiceProvider.GetRequiredService<IMessageLogService>();
+        var queues = await messageLog.GetQueueNamesAsync(cancellationToken);
         foreach (var queue in queues)
             _listener.StartListening(queue);
     }
@@ -35,6 +34,8 @@ public class Worker : BackgroundService
     private async Task  OnMessageArrived(object? sender, MessageArrivedEventArgs e
         , CancellationToken cancelationToken = default)
     {
-        await _mediator.Send(new ConfirmReplicationLogRequest(e.ReferenceId, e.Message), cancelationToken);
+        using var scope = _services.CreateScope();
+        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        await mediator.Send(new ConfirmReplicationLogRequest(e.ReferenceId, e.Message), cancelationToken);
     }
 }

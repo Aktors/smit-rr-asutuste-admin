@@ -11,8 +11,8 @@ public static class ServiceCollectionExtensions
     {
         builder.Services.AddDbContext<AsutusContext>(options => {
             options.UseNpgsql(builder.Configuration.GetConnectionString("AsutusConnection"));
-        }, ServiceLifetime.Singleton);
-        builder.Services.AddSingleton<IMessageLogRepository, MessageLogRepository>();
-        builder.Services.AddSingleton<IAsutusRepository, AsutusRepository>();
+        });
+        builder.Services.AddScoped<IMessageLogRepository, MessageLogRepository>();
+        builder.Services.AddScoped<IAsutusRepository, AsutusRepository>();
     }
 }

@@ -21,6 +21,6 @@ export class ReplicationLogComponent implements OnInit{
   }
 
   refreshTable(): void {
-    this.logDataProvider.paginator?.firstPage();
+    this.logDataProvider.filter$.next([])
   }
 }
