@@ -3,7 +3,7 @@ services:
     container_name: api
     build:
       context: ./core
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.api
     ports:
       - "8080:8080"
     environment:
@@ -23,6 +23,17 @@ services:
       - "4200:4200"
     depends_on:
       - api
+
+  worker:
+    container_name: worker
+    build:
+      context: ./core
+      dockerfile: Dockerfile.worker
+    environment:
+      - DOTNET_ENVIRONMENT=Container
+    depends_on:
+      - db
+      - mq
 
   mq:
     image: rabbitmq:4.0-management

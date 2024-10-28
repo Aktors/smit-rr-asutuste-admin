@@ -1,5 +1,4 @@
-﻿using asutus.api.Configuration;
-using asutus.api.services;
+﻿using asutus.bl.Services;
 using asutus.domain.Data;
 using asutus.domain.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -42,35 +41,21 @@ public static class ServiceCollectionExtensions
             });
         });
     }
-
-    public static void AddRabbitMqImplementation(this IServiceCollection services,
-        RabbitMqOptions rabbitMqOptions,
-        Action<ConnectionFactory> setupAction)
+    
+    public static void AddRabbitMqPublisher(this IServiceCollection services)
     {
-        var factory = new ConnectionFactory
-        {
-            HostName = rabbitMqOptions.HostName,
-            Port = rabbitMqOptions.Port,
-            UserName = rabbitMqOptions.UserName,
-            Password = rabbitMqOptions.Password,
-            VirtualHost = rabbitMqOptions.VirtualHost
-        };
-        setupAction?.Invoke(factory);
-        services.AddSingleton(factory);
-        
-        services.AddScoped<IReplicationService, ReplicationService>();
+        services.AddScoped<IReplicationPublisherService, ReplicationPublisherService>();
         services.AddScoped<IMessagePublisherService, RabbitMqPublisherService>();
         services.AddScoped<IMessageLogService, DbMessageLogService>();
-        //TODO: should be running separately, Web app does not fit for the purpose.
-        services.AddScoped<IMessageListener, RabbitMqListener>();
     }
-
+    
     public static void AddPostgresDbStorageImplementation(this IHostApplicationBuilder builder)
     {
         builder.Services.AddDbContext<AsutusContext>(options => {
             options.UseNpgsql(builder.Configuration.GetConnectionString("AsutusConnection"));
         });
-        builder.Services.AddScoped<IMessageLogRepository, DbMessageLogRepository>();
-        builder.Services.AddScoped<IAsutusRepository, DbAsutusRepository>();
+        builder.Services.AddScoped<IMessageLogRepository, MessageLogRepository>();
+        builder.Services.AddScoped<IAsutusRepository, AsutusRepository>();
+        builder.Services.AddScoped<IInformationSystemRepository, InformationSystemRepository>();
     }
 }

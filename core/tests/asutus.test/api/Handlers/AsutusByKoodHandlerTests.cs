@@ -1,5 +1,5 @@
-﻿using asutus.api.Commands;
-using asutus.api.Handlers;
+﻿using asutus.bl.Commands;
+using asutus.bl.Handlers;
 using asutus.common.Model;
 using asutus.domain.Data.Repositories;
 using Moq;

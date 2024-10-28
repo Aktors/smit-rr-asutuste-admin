@@ -1,9 +1,9 @@
 using System.Reflection;
-using asutus.api.Configuration;
 using asutus.api.Extensions;
 using asutus.api.Filters;
+using asutus.bl.Extensions;
+using asutus.common.Configuration;
 using FluentValidation;
-using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,14 +22,16 @@ builder.Services.AllowCors();
 var rabbitMqOptions = builder.Configuration.GetSection("RabbitMQ").Get<RabbitMqOptions>();
 if(rabbitMqOptions == null)
     throw new ArgumentException("RabbitMQ configuration is missing");
-builder.Services.AddRabbitMqImplementation(rabbitMqOptions, factory =>
+builder.Services.AddRabbitMqFactory(rabbitMqOptions, factory =>
 {
     factory.AutomaticRecoveryEnabled = true; 
 });
+builder.Services.AddRabbitMqPublisher();
+
 
 builder.AddPostgresDbStorageImplementation();
 
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatrResource();
 
 var app = builder.Build();
 

@@ -29,7 +29,7 @@ public class AsutusRepositoryTests
         ResetInMemoryDatabase();
         var options = CreateInMemoryDatabaseOptions();
         await using var context = new AsutusContext(options);
-        var repository = new DbAsutusRepository(context);
+        var repository = new AsutusRepository(context);
 
         var asutusDto = new AsutusDto { Code = "TEST", Name = "Test Name" };
 
@@ -60,7 +60,7 @@ public class AsutusRepositoryTests
 
         await using (var context = new AsutusContext(options))
         {
-            var repository = new DbAsutusRepository(context);
+            var repository = new AsutusRepository(context);
 
             // Act
             await repository.AddOrUpdateAsync(updatedDto);
@@ -89,7 +89,7 @@ public class AsutusRepositoryTests
 
         await using (var context = new AsutusContext(options))
         {
-            var repository = new DbAsutusRepository(context);
+            var repository = new AsutusRepository(context);
 
             // Act
             var result = await repository.SearchAsync(query);
@@ -123,7 +123,7 @@ public class AsutusRepositoryTests
 
         await using (var context = new AsutusContext(options))
         {
-            var repository = new DbAsutusRepository(context);
+            var repository = new AsutusRepository(context);
 
             // Act
             var result = await repository.SearchAsync(query);

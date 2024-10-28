@@ -1,6 +1,7 @@
-﻿using asutus.api.Commands;
+﻿using asutus.api.Helpers;
 using asutus.api.Model;
 using asutus.api.Model.Model;
+using asutus.bl.Commands;
 using asutus.common.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,7 @@ public class AsutusController : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
-        var searchQuery = new AsutusteLoeteluRequest(query);
+        var searchQuery = new AsutusteLoeteluRequest(query.Map());
         return Ok(await _mediator.Send(searchQuery));
     }
     

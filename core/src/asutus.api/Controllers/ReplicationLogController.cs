@@ -1,6 +1,6 @@
-﻿using asutus.api.Commands;
-using asutus.api.Helpers;
+﻿using asutus.api.Helpers;
 using asutus.api.Model;
+using asutus.bl.Commands;
 using asutus.common.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
