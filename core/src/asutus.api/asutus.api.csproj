@@ -31,8 +31,4 @@
       <ProjectReference Include="..\asutus.domain\asutus.domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Domain\Enums\" />
-    </ItemGroup>
-
 </Project>

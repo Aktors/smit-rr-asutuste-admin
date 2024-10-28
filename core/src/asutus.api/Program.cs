@@ -1,6 +1,7 @@
 using System.Reflection;
 using asutus.api.Configuration;
 using asutus.api.Extensions;
+using asutus.api.Filters;
 using FluentValidation;
 using MediatR;
 
@@ -12,7 +13,8 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => 
+    options.Filters.Add<DomainExceptionFilter>());
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AllowCors();

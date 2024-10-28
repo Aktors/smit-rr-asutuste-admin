@@ -1,6 +1,6 @@
 ﻿using asutus.api.Commands;
-using asutus.api.Exceptions;
 using asutus.api.services;
+using asutus.common.Exceptions;
 using asutus.domain.Data.Repositories;
 using MediatR;
 
@@ -19,10 +19,15 @@ public class ReplicateAsutusHandler: IRequestHandler<ReplicateAsutusRequest, Uni
 
     public async Task<Unit> Handle(ReplicateAsutusRequest request, CancellationToken cancellationToken)
     {
-        var asutus = await _asutusRepository.GetAsutusAsync(request.Code, cancellationToken);
-        if (asutus == null)
-            throw new InvalidParamArgumentException("Invalid code : " + request.Code);
-        await _replicationService.ReplicateAsync(asutus, request.Replication, cancellationToken);
+        try
+        {
+            var asutus = await _asutusRepository.GetAsutusAsync(request.Code, cancellationToken);
+            await _replicationService.ReplicateAsync(asutus, request.Replication, cancellationToken);
+        }
+        catch (NotFoundDomainException e)
+        {            
+            throw new InvalidArgumentDomainException("Invalid code : " + request.Code, e);
+        }
         return Unit.Value;
     }
 }

@@ -1,4 +1,5 @@
-﻿using asutus.common.Model;
+﻿using asutus.common.Exceptions;
+using asutus.common.Model;
 using asutus.domain.Entities;
 using asutus.domain.Helpers.Mappers;
 using Microsoft.EntityFrameworkCore;
@@ -37,14 +38,24 @@ public class DbAsutusRepository : IAsutusRepository
 
         await _asutusContext.SaveChangesAsync(cancellationToken);
     }
-
-
-
+    
     public async Task<AsutusDto?> GetAsutusAsync(string code
         , CancellationToken cancellationToken = default)
     {
         var result = await GetByCodeAsync(code, cancellationToken);
-        return result?.Map();
+        if(result == null)
+            throw new NotFoundDomainException($"Entity of {nameof(Asutus)} not found by code:{code}");
+        return result.Map();
+    }
+
+    public async Task DeleteByCodeAsync(string asutusCode,
+        CancellationToken cancellationToken = default)
+    {
+        var result = await GetByCodeAsync(asutusCode, cancellationToken);
+        if(result == null)
+            throw new NotFoundDomainException($"Entity of {nameof(Asutus)} not found by code:{asutusCode}");
+        _asutusContext.Asutused.Remove(result);
+        await _asutusContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<QueryResultDto<AsutusShortDto>> SearchAsync(AsutusteQueryDto query
@@ -67,7 +78,6 @@ public class DbAsutusRepository : IAsutusRepository
         if (query.Pagination is { SortOrder: not null, SortBy: not null })
         {
             var isDesc = query.Pagination.SortOrder.ToLower().Equals("desc");
-            // Sorting
             queryable = query.Pagination.SortBy.ToLower() switch
             {
                 nameof(AsutusShortDto.Name) => isDesc
@@ -83,7 +93,6 @@ public class DbAsutusRepository : IAsutusRepository
             };
         }
 
-        // Pagination
         var totalEntries = queryable.Count();
         var totalPages = 0;
 
@@ -154,7 +163,6 @@ public class DbAsutusRepository : IAsutusRepository
                                      new Translation {LanguageId = lang.Id};
 
             asutus.Translations.Add(currentTranslation);
-            
             currentTranslation.Text = udpatedTranslation.Text;
         }
     }

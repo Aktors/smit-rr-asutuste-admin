@@ -1,8 +1,8 @@
 ﻿using asutus.api.Commands;
 using asutus.api.Model;
+using asutus.api.Model.Model;
 using asutus.common.Model;
 using MediatR;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -21,13 +21,20 @@ public class AsutusController : ControllerBase
         Summary = "Tagastab asutuse andmestiku", 
         Description = "Tagastab asutuse andmestiku koodi järgi.")]
     [SwaggerResponse(200, "Asutus leitud", typeof(AsutusDto))]
-    [SwaggerResponse(404, "Asutus antud koodiga ei eksisteeri")]
+    [SwaggerResponse(404, "Asutus antud koodiga ei eksisteeri", typeof(RequestFault))]
     public async Task<IActionResult> Get(string code)
     {
         var result = await _mediator.Send(new AsutusByKoodRequest(code));
-        if (result == null)
-            return NotFound();
         return Ok(result);
+    }
+    
+    [HttpDelete("{code}")]
+    [SwaggerOperation(Summary = "Eemaldab Asutuse koodi järgi")]
+    [SwaggerResponse(404, "Otsingu parameetrid ei ole valiidsed", typeof(RequestFault))]
+    public async Task<IActionResult> DeleteAsutus(string code)
+    {
+        await _mediator.Send(new DeleteAsutusByCodeRequest(code));
+        return NoContent();
     }
     
     [HttpGet("list")]
@@ -35,7 +42,7 @@ public class AsutusController : ControllerBase
         Summary = "Asutuste nimekiri", 
         Description = "Tagastab lühendatud andmestiku asutuste kohta.")]
     [SwaggerResponse(200, "Asutuste nimekiri", typeof(QueryResultDto<AsutusShortDto>))]
-    [SwaggerResponse(400, "Otsingu parameetrid ei ole valiidsed")]
+    [SwaggerResponse(400, "Otsingu parameetrid ei ole valiidsed", typeof(RequestFault))]
     public async Task<IActionResult> GetList(AsutusteQuery query)
     {
         if (!ModelState.IsValid)
@@ -50,7 +57,7 @@ public class AsutusController : ControllerBase
         Description = "Uuendab olemasoleva asutuse andmestiku koodi järgi.")]
     [SwaggerResponse(201, "Asutuse andmesik on edukalt uuendatud")]
     [SwaggerResponse(400, "Päringu sisu on vale")]
-    [SwaggerResponse(404, "Asutus selle koodiga ei leia")]
+    [SwaggerResponse(404, "Asutus selle koodiga ei leia", typeof(RequestFault))]
     public async Task<IActionResult> Update(
         [FromRoute]
         [SwaggerParameter(Description = "Asutuse kood")] 

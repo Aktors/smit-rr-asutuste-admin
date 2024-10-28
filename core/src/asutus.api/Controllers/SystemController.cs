@@ -1,7 +1,10 @@
 ﻿
 using asutus.api.Commands;
+using asutus.api.Model.Model;
+using asutus.common.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace asutus.api.Controllers;
 
@@ -16,12 +19,15 @@ public class SystemController : ControllerBase
     }
     
     [HttpGet("classifier/{group}/list")]
+    [SwaggerResponse(200, "Klassifikaatori väärtused", typeof(ClassifierDto[]))]
+    [SwaggerResponse(404, "Tundmatu grupp", typeof(RequestFault))]
     public async Task<IActionResult> GetClassifiers(string group)
     {
         return Ok(await _mediator.Send(new ClassifierByGroupRequest(group)));
     }
     
     [HttpGet("information-systems/list")]
+    [SwaggerResponse(200, "Alamsüsteemide loetelu", typeof(InformationSystemDto[]))]
     public async Task<IActionResult> GetSystems()
     {
         return Ok(await _mediator.Send(new ListSystemsRequest()));
