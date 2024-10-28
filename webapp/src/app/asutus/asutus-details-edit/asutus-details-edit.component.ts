@@ -73,6 +73,7 @@ export class AsutusDetailsEditComponent implements OnInit{
       }
     });
   }
+
   addTranslation(): void {
     const languageCode = this.form.controls.selectedLanguage.value;
     if (languageCode && !this.usedLanguages.has(languageCode)) {
@@ -96,13 +97,6 @@ export class AsutusDetailsEditComponent implements OnInit{
   }
 
   save(): void {
-    const code = this.form.controls.code.value;
-    if (!code) {
-      console.error('No code available for update');
-      return;
-    }
-
-    //TODO: add validation and fix from types.
     const asutusData: AsutusDto = {
       code: this.form.controls.code.value!,
       name: this.form.controls.name.value!,
@@ -115,10 +109,18 @@ export class AsutusDetailsEditComponent implements OnInit{
       }))
     };
 
-    this.asutusClient.update(code, asutusData).subscribe({
-      next: () => {
-        this.router.navigate(['/asutused']);
-      },
+    if (!this.asutusStore.activeAsutusCode.value) {
+      this.asutusClient.create(asutusData).subscribe({
+        next: () => this.goBack(),
+        error: (err) => {
+          console.error('Failed to update Asutus:', err);
+        }
+      });
+      return;
+    }
+
+    this.asutusClient.update(this.form.controls.code.value!, asutusData).subscribe({
+      next:  () => this.goBack(),
       error: (err) => {
         console.error('Failed to update Asutus:', err);
       }

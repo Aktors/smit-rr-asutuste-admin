@@ -74,4 +74,22 @@ public class AsutusController : ControllerBase
         await _mediator.Send(command);
         return Created();
     }
+    
+    [HttpPost("")]
+    [SwaggerOperation(Summary = "Loo uus asutus")]
+    [SwaggerResponse(201, "Asutuse andmesik on edukalt loodud")]
+    [SwaggerResponse(400, "Päringu sisu on vale")]
+    [SwaggerResponse(404, "Asutus selle koodiga ei leia", typeof(RequestFault))]
+    public async Task<IActionResult> Create(
+        [FromBody]
+        [SwaggerParameter(Description = "Asutuse andmestic")] 
+        AsutusDto asutus)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
+        var command = new UuendaAsutusRequest(asutus);
+        await _mediator.Send(command);
+        return Created();
+    }
 }

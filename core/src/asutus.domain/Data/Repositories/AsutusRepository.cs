@@ -25,7 +25,8 @@ public class AsutusRepository : IAsutusRepository
         {
             asutus = new Asutus
             {
-                Code = asutusDto.Code
+                Code = asutusDto.Code,
+                Translations = new List<Translation>()
             };
             _asutusContext.Asutused.Attach(asutus);
         }

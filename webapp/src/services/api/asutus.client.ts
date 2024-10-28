@@ -49,4 +49,10 @@ export class AsutusClient {
     url_ = url_.replace(/[?&]$/, "");
     return this.http.put<void>(url_,body);
   }
+
+  create(body: AsutusDto): Observable<void> {
+    let url_ = this.baseUrl + "/api/v1/asutus";
+    url_ = url_.replace(/[?&]$/, "");
+    return this.http.post<void>(url_,body);
+  }
 }
