@@ -12,7 +12,7 @@ public static class ReplicationLogMapper
             ReferenceId = entity.ReferenceId,
             Caption = entity.Caption,
             SentDate = entity.SentDate,
-            Content = entity.Caption
+            Content = entity.Content
         };
     }
     

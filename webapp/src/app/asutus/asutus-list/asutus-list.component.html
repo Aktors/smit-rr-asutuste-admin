@@ -1,6 +1,6 @@
 <h1>Asutused</h1>
 <hr>
-<app-asutuste-search-form (search)="onSearch($event)"></app-asutuste-search-form>
+<app-asutuste-search-form (search)="onSearch($event)" ></app-asutuste-search-form>
 <app-table [dataProvider]="asutusDataProvider">
   <app-table-link-column field="code" header="Kood" [locationPrefix]="'/asutused/manage'"></app-table-link-column>
   <app-table-text-column field="name" header="Asutuse nimi"></app-table-text-column>

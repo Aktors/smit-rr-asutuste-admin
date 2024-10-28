@@ -30,7 +30,6 @@ import {TableActionsColumnComponent} from './table-action-column/table-actions-c
 })
 export class TableComponent<T> implements  AfterViewInit {
   @Input() dataProvider!: DataProvider<T>;
-  @Input() expandedTemplate?: TemplateRef<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -40,10 +39,8 @@ export class TableComponent<T> implements  AfterViewInit {
   @ContentChildren(TableActionsColumnComponent) actions!: QueryList<TableActionsColumnComponent<T>>;
 
   displayedHeaders: string[] = [];
-  displayedHeadersWithDetails: string[] = [];
-  expandedElement: T | null = null;
 
-  constructor(private changeDetectorRef :ChangeDetectorRef) { }
+  constructor(public changeDetectorRef :ChangeDetectorRef) { }
 
   ngAfterViewInit(): void {
     this.dataProvider.sort = this.sort;
@@ -51,14 +48,6 @@ export class TableComponent<T> implements  AfterViewInit {
     this.table.dataSource = this.dataProvider;
 
     this.displayedHeaders =[...this.columns.map(col => col.field), ...this.actions.map(col => col.key)];
-    this.displayedHeadersWithDetails = [...this.displayedHeaders];
-    if(this.expandedTemplate){
-      this.displayedHeadersWithDetails.push("expanded");
-    }
     this.changeDetectorRef.detectChanges();
-  }
-
-  toggleRow(element: T) {
-    this.expandedElement = this.expandedElement === element ? null : element;
   }
 }

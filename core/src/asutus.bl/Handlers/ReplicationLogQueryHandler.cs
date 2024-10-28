@@ -17,6 +17,6 @@ public class ReplicationLogQueryHandler: IRequestHandler<ReplicationLogQueryRequ
     public async Task<QueryResultDto<ReplicationLogDto>> Handle(
         ReplicationLogQueryRequest request, CancellationToken cancellationToken)
     {
-        return await _messageLogRepository.GetLogsAsync(request.Query);
+        return await _messageLogRepository.GetLogsAsync(request.Query, cancellationToken);
     }
 }

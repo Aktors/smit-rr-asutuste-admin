@@ -1,21 +1,17 @@
-﻿table {
+table {
   width: 100%;
 }
 
-tr.example-detail-row {
+tr.expandable-row-details {
   height: 0;
 }
 
-tr.example-element-row:not(.example-expanded-row):hover {
+tr.expandable-row:not(.expanded-row):hover {
   background: whitesmoke;
 }
 
-tr.example-element-row:not(.example-expanded-row):active {
+tr.expandable-row:not(.expanded-row):active {
   background: #efefef;
-}
-
-.example-element-row td {
-  border-bottom-width: 0;
 }
 
 .example-element-detail {

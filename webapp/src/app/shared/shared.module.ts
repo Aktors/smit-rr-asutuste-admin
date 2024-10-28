@@ -25,6 +25,7 @@ import {MatSelect} from '@angular/material/select';
 import {RouterLink} from "@angular/router";
 import {TableButtonColumnComponent} from './table/table-button-column/table-button-column.component';
 import {TableActionsColumnComponent} from './table/table-action-column/table-actions-column.component';
+import {TableComponentWithDetails} from './table/table-with-details/table-with-details.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {TableActionsColumnComponent} from './table/table-action-column/table-act
     LoaderComponent,
     CardComponent,
     TableComponent,
+    TableComponentWithDetails,
     TableColumnComponent,
     TableTextColumnComponent,
     TableDateColumnComponent,
@@ -69,6 +71,7 @@ import {TableActionsColumnComponent} from './table/table-action-column/table-act
     LoaderComponent,
     CardComponent,
     TableComponent,
+    TableComponentWithDetails,
     TableTextColumnComponent,
     TableDateColumnComponent,
     TableTemplateColumnComponent,

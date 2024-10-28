@@ -39,6 +39,9 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {AsutusteSearchFormComponent} from './asutus-list/asutuste-search-form/asutuste-search-form.component';
+import {
+  ReplicationLogDetailsComponent
+} from './replication/replication-log/replication-log-details/replication-log-details.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,7 @@ import {AsutusteSearchFormComponent} from './asutus-list/asutuste-search-form/as
     ReplicationSystemItemComponent,
     AsutusComponent,
     ReplicationLogComponent,
+    ReplicationLogDetailsComponent,
   ],
   exports: [
   ],
