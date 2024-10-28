@@ -7,6 +7,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3C2FB13-5222-4C6C-AB9A-51959ADC964D}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asutus.common", "src\asutus.common\asutus.common.csproj", "{2E11B759-C36E-4DB3-B61E-733AF46AF34F}"
