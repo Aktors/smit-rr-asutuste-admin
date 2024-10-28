@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import {SideMenuComponent} from './components/nav/side-menu/side-menu.component';
 import {HeaderComponent} from './components/nav/header/header.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {HeaderComponent} from './components/nav/header/header.component';
     MatIconModule,
     MatListModule,
     NgOptimizedImage,
+    MatSnackBarModule,
   ],
   providers: [
     provideHttpClient(),

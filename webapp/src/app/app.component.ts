@@ -10,7 +10,7 @@ import {SideMenuItem} from './components/nav/side-menu/side-menu.model';
 export class AppComponent {
   title = 'webapp';
   navigationItems: SideMenuItem[] = [{
-    label: 'Asutus',
+    label: 'Asutused',
     location: '/asutused',
     icon: 'apartment'
   }];

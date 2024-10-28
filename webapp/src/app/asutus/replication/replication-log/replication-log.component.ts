@@ -7,6 +7,7 @@ import {ReplicationLogDataProvider} from './replication-log.model';
 @Component({
   selector: 'app-replication-log',
   templateUrl: './replication-log.component.html',
+  styleUrls: ['./replication-log.component.scss'],
 })
 export class ReplicationLogComponent implements OnInit{
   items: ReplicationLog[] = [];
@@ -17,5 +18,9 @@ export class ReplicationLogComponent implements OnInit{
 
   ngOnInit(): void {
     this.logDataProvider = new ReplicationLogDataProvider(this.replicationService);
+  }
+
+  refreshTable(): void {
+    this.logDataProvider.paginator?.firstPage();
   }
 }

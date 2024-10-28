@@ -1,4 +1,8 @@
-﻿<app-table [dataProvider]="logDataProvider" [expandedTemplate]="recordDetails">
+﻿<div class="table-header">
+  <h2>Replitseerimise logid</h2>
+  <button class="v-button v-button--neutral v-button--md" (click)="refreshTable()"><span aria-hidden="true" class="material-icons">refresh</span>Värskenda</button>
+</div>
+<app-table [dataProvider]="logDataProvider" [expandedTemplate]="recordDetails">
   <app-table-text-column field="caption" header="Destination" />
   <app-table-date-column field="sentDate" header="Confirmed at:" />
   <app-table-text-column field="referenceId" header="Id:" />

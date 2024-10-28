@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '../../../../environments/environment';
 import {ReplicationSystemDto} from '../../../shared/model/replication.model';
 import {AsutusFormStore} from '../../asutus-form/asutus-form.store';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-replication-details',
@@ -24,7 +25,8 @@ export class ReplicationDetailsComponent implements OnInit {
     private fb: FormBuilder,
     private asutusFormStore: AsutusFormStore,
     private informationSystemsStore: InformationSystemsStore,
-    private replicationClient: ReplicationClient
+    private replicationClient: ReplicationClient,
+    private snackBar: MatSnackBar
   ) {
     this.form = this.fb.group<ReplicationDetailsFormGroup>({
       selectedSystem: new FormControl<string | null>(null),
@@ -90,9 +92,18 @@ export class ReplicationDetailsComponent implements OnInit {
       this.replicationClient
         .publish(this.asutusFormStore.activeAsutusCode.value,data)
         .subscribe(() => {
-          console.log("saved");
-          console.log(data);
+          this.form.controls.replicationSystems.clear();
+          this.usedSystems.clear();
+          this.showNotification('Replitseerimise päring saadetud');
         });
     }
+  }
+
+  showNotification(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    });
   }
 }

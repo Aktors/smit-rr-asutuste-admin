@@ -1,0 +1,16 @@
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px; /* Adjust as needed for spacing */
+  border-bottom: 1px solid #e0e0e0; /* Optional: to give a visual separation */
+}
+
+.table-header h2 {
+  margin: 0; /* Remove default margin to align better */
+  font-size: 1.5rem; /* Adjust font size as needed */
+}
+
+.table-header button {
+  align-self: center; /* Center the button vertically */
+}
