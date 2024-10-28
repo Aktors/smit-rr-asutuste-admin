@@ -2,8 +2,10 @@ using System.Reflection;
 using asutus.api.Extensions;
 using asutus.api.Filters;
 using asutus.bl.Extensions;
+using asutus.bl.Handlers;
 using asutus.common.Configuration;
 using FluentValidation;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,8 +32,11 @@ builder.Services.AddRabbitMqPublisher();
 
 
 builder.AddPostgresDbStorageImplementation();
-
-builder.Services.AddMediatrResource();
+builder.Services.AddMediatR(cfg=>
+    cfg.RegisterServicesFromAssemblies(
+        Assembly.GetExecutingAssembly(),
+        Assembly.GetAssembly(typeof(AsutusByKoodHandler))
+        ));
 
 var app = builder.Build();
 

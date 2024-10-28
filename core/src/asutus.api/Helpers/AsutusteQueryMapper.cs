@@ -15,7 +15,7 @@ public static class AsutusteQueryMapper
             EndDate =  query.EndDate,
             Pagination = new Pagination
             {
-                Page = query.Page ?? 1,
+                Page = query.Page.GetValueOrDefault(),
                 PageSize = query.PageSize ?? 10,
                 SortBy = query.SortBy ?? nameof(AsutusteQuery.Code),
                 SortOrder = query.SortOrder ?? "asc"

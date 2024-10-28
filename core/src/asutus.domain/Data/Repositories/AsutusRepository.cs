@@ -100,7 +100,7 @@ public class AsutusRepository : IAsutusRepository
         {
             totalPages = (int)Math.Ceiling(totalEntries / (double)query.Pagination.PageSize);
             queryable = queryable
-                .Skip((query.Pagination.Page.Value - 1) * query.Pagination.PageSize.Value)
+                .Skip((query.Pagination.Page.Value) * query.Pagination.PageSize.Value)
                 .Take(query.Pagination.PageSize.Value);
         }
 

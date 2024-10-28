@@ -1,10 +1,14 @@
+using System.Reflection;
+using asutus.bl.Commands;
 using asutus.bl.Extensions;
+using asutus.bl.Handlers;
 using asutus.bl.Services;
 using asutus.common.Configuration;
 using asutus.domain.Data.Repositories;
 using asutus.worker;
 using asutus.worker.Extensions;
 using asutus.worker.services;
+using MediatR;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.Configuration
@@ -26,6 +30,9 @@ builder.Services.AddSingleton<IMessageLogService, DbMessageLogService>();
 builder.Services.AddSingleton<IMessageListener, RabbitMqListener>();
 builder.Services.AddSingleton<IMessageLogRepository, MessageLogRepository>();
 builder.Services.AddSingleton<IInformationSystemRepository, InformationSystemRepository>();
+
+builder.Services.AddMediatR(cfg=> cfg.RegisterServicesFromAssemblies(    Assembly.GetExecutingAssembly()));
+builder.Services.AddScoped<IRequestHandler<ConfirmReplicationLogRequest, Unit>, ConfirmReplicationLogHandler>();
 
 builder.AddPostgresDbStorageImplementation();
 
