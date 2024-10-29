@@ -52,6 +52,8 @@ Projekt on Docker konteinerites, kasutades docker-compose'i, mis võimaldab liht
    ```
    See koostab ja käivitab kõik vajalikud teenused (`api`, `web-ui`, `mq`, `db`, `worker`).
 
+   Veendu, et kõik konteinerid on käivitanud. Esimese käivitamise puhul võivad konteinerid sõtuvuse pärast peatuda, kui sõltuv moodul ei jõudnud kõike asju initsialiseeruda (heartbeat jäi lihtsamal tasemel realiseeritud mida ei ole piisavalt). 
+
 3. **Juurdepääs rakendusele**:
    - **Veebi liides**: [http://localhost:4200](http://localhost:4200)
    - **REST Api**: [http://localhost:8080/swagger](http://localhost:8080/swagger)
