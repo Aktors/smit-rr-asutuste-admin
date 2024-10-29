@@ -1,43 +1,44 @@
-# Provitöö
+# Proovitöö
 
 ## Põhimõtted
 
 ### Liides
 
-Disainimisel on kasutatud Veera disainisüsteemi (veera.eesti.ee), mida kasutatakse riiklike teenuste arendamisel.
-Veera disainisüsteemi elemendid vastavad ligipääsetavuse standardi WCAG 2.2 nõuetele. Hetkel valminud prototüübis on osaliselt implementeeritud Veera disainisüsteemi. 
+Valminud prototüübi disainimisel on osaliselt kasutatud Veera disainisüsteemi (veera.eesti.ee), mida kasutatakse riiklike teenuste arendamisel.
+Veera disainisüsteemi elemendid vastavad ligipääsetavuse standardi WCAG 2.2 nõuetele.
 
-### Tesimine
+### Testimine
 
-Rakendusel on näidistestid, kuid kogu rakendust ei kata testid. Testitud on ainult mõned klassid igast kihist.
+Rakendusele on loodud 6 näidistesti. Igast kihist on testitud mõned klassid.
 
 ### Replikatsiooni logid
 #### 4. Peab olema võimalik veenduda, et sõnum jõudis sõnumiruumi (näha ka sõnumi sisu):
- Valisin viisi sõnumilogide kinnitamiseks, kuulates loodud järjekorda ja sõnumeid sellest järjekorrast. Kui töötaja näeb sõnumit, otsib ta andmebaasist sõnumi päringu logi viite ID järgi ja uuendab seda sõnumist saadud sisuga. Sel viisil sisaldab sõnumilogi täpselt järjekorda saadetud sõnumit.
+ Nimeruumi sõnumi kinnitamiseks on kasutatud teavitused mida "worker" programm saab nimeruumidest. Sõnumi kohalejõudmisel otsib lahendus andmebaasist vastava sõnumi viite järgi ja taidab saadetud sõnumi logi sisu saadud sõnumi sisuga. Nii saab veenduda, et sõnum oli jõudnud nimeruumi ja logides on näha just seda andmestikku (kuju) mida oli saadetud. Kasutaja liidesest saab sõnumi logi tabelist näha ka sõnumi sisu JSON kujul. 
 
 ### Replikatsiooni süsteemid
 
-Andmestruktuur toetab teadaolevate süsteemide, nende instantside ja instantsitüüpide, keelte laiendamist, kuid selle andmestiku haldamine ei kuulu projekti skoopi. Süsteemil on eelkonfigureeritud sihtrakendused koos nende instantsidega.
+Andmestruktuur toetab teadaolevate süsteemide, nende instantside ja instantsitüüpide, keelte loetelu laiendamist, kuid selle andmestiku haldamine ei kuulu projekti skoopi. Süsteemil on eelkonfigureeritud sihtrakendused koos nende instantsidega.
 
 ### Andmemudel 
-Andmemudel on üsna lihtne. See kasutab surrogaate võtmeid koos naturaalse võtmega. Ressursse, millele pääsetakse väliselt ligi, kasutatakse naturaalse võtmega, kuid sisemised seosed luuakse surrogaatsõlme abil. See lahendus on valitud võimaldamaks pehme kustutamise tuleviku rakendamist.
+
+Andmemudel on üsna lihtne. See kasutab surrogaatvõtmeid koos naturaalse võtmetega. Ressursse, millele pääsetakse väliselt ligi, kasutatakse naturaalse võtmega, kuid sisemised seosed luuakse surrogaatvõtme abil. See lahendus on valitud võimaldamaks soft-delete kustutamise rakendamist tulevikus.
 
 ## Projekti Struktuur
 
 Projekt jaguneb mitmeks osaks:
 
-1. **Backend API (`api`)**: REST API, mis on ehitatud .NET 8 abil. See sisaldab kontrollereid, teenuseid ja asutuste haldamiseks. 
-3. **Frontend (`web-ui`)**: Veebi kasutaja liides mis kasutab REST api
+1. **Backend API (`api`)**: REST API, mis on ehitatud .NET 8 abil. See sisaldab kontrollereid ja teenuseid asutuste haldamiseks. 
+3. **Frontend (`web-ui`)**: Veebi kasutaja liides, mis kasutab REST api-d.
 4. **RabbitMQ (`mq`)**: Replikatsiooni vahend.
 5. **Andmebaas (`db`)**:  andmebaas.
-6. **Taustateenus(`worker`)**: Taustateenus, mis kinnitab sõnumi saatmis siis kui sõnum on nimeruumis ilmunud.
+6. **Taustateenus(`worker`)**: Taustateenus, mis kinnitab sõnumi saatmise siis kui sõnum on nimeruumis ilmunud.
 
-Projekt on konteineriseeritud, kasutades Docker Compose'i, mis võimaldab lihtsat seadistust ja juurutamist.
+Projekt on Docker konteinerites, kasutades docker-compose'i, mis võimaldab lihtsat seadistust ja juurutamist.
 
 
 ## Alustamine
 
-### Rakenduse Käivitamine
+### Rakenduse käivitamine
 
 1. **Klooni repositoorium**:
    ```sh
